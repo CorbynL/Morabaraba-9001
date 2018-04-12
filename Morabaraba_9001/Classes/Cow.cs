@@ -6,13 +6,13 @@ namespace Morabaraba_9001.Classes
 {
     public class Cow : ICow
     {
-        public int Position => throw new NotImplementedException();
+        public int Position { get; private set; }
 
-        public int PlayerID => throw new NotImplementedException();
+        public int PlayerID { get; private set; }
 
         public void Move(int Destination)
         {
-            throw new NotImplementedException();
+            Position = Destination;
         }
     }
 }
