@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Morabaraba_9001.Classes
 {
-    class GameSession
+    public class GameSession
     {
     }
 }
