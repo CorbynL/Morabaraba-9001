@@ -1,0 +1,10 @@
+language: csharp
+solution: Morabaraba_9001.sln
+dotnet: 2.1.4
+script:
+  - dotnet test Morabaraba_9001.Test
+matrix:
+  include:
+    - dotnet: 2.0.0
+    os: osx    
+    - dotnet: 2.1.4
