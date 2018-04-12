@@ -6,5 +6,5 @@ script:
 matrix:
   include:
     - dotnet: 2.0.0
-    os: osx    
-    - dotnet: 2.1.4 
+      os: osx    
+    - dotnet: 2.1.4
