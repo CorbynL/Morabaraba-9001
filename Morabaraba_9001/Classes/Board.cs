@@ -8,6 +8,8 @@ namespace Morabaraba_9001.Classes
     {
         public IEnumerable<Cow> Cows => throw new NotImplementedException();
 
+        public Board() { }
+
         public void DrawBoard()
         {
             throw new NotImplementedException();
