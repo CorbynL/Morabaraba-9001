@@ -6,5 +6,8 @@ namespace Morabaraba_9001
 {
     public interface IGameSession
     {
+        IPlayer Winner();
+        bool IsDraw();
+        void Play();
     }
 }

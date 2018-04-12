@@ -4,8 +4,15 @@ using System.Text;
 
 namespace Morabaraba_9001.Classes
 {
-    class Cow : ICow
+    public class Cow : ICow
     {
-        
+        public int Position => throw new NotImplementedException();
+
+        public int PlayerID => throw new NotImplementedException();
+
+        public void Move(int Destination)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

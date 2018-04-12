@@ -4,7 +4,13 @@ using System.Text;
 
 namespace Morabaraba_9001.Classes
 {
-    class Player
+    public class Player : IPlayer
     {
+        public int ID => throw new NotImplementedException();
+
+        public int GetMove()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
