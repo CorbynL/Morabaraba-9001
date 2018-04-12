@@ -5,6 +5,9 @@ using System.Text;
 namespace Morabaraba_9001
 {
     public interface ICow
-    {        
+    {
+        int Position { get; }
+        int PlayerID { get; }
+        void Move(int Destination);
     }
 }

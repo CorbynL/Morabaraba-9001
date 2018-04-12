@@ -6,5 +6,7 @@ namespace Morabaraba_9001
 {
     public interface IPlayer
     {
+        int GetMove();
+        int ID { get; }
     }
 }
