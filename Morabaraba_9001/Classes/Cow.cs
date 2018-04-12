@@ -10,6 +10,11 @@ namespace Morabaraba_9001.Classes
 
         public int PlayerID { get; private set; }
 
+        public Cow(int Position = -1, int PlayerID = -1)
+        {
+            this.Position = Position;
+            this.PlayerID = PlayerID;
+        }
         public void Move(int Destination)
         {
             Position = Destination;
