@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Morabaraba_9001.Classes
 {
-    class Cow
+    class Cow : ICow
     {
+        
     }
 }
