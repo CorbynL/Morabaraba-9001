@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using System.Linq;
-using Morabaraba_9001;
+using Morabaraba_9001.Classes;
 
 namespace Morabaraba_9001.Test
 {
@@ -14,6 +14,10 @@ namespace Morabaraba_9001.Test
         public void BoardIsEmptyWhenGameStarts ()
         {
             //TODO: Check that the board is empty when the game starts
+            Board b = new Board();
+            Cow[] c = b.Cows.Where(x => x.PlayerID == -1).ToArray();
+            Assert.That(c.Length == 24);
+
         }
 
         [Test]        
