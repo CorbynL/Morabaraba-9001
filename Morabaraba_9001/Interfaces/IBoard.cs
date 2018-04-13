@@ -9,11 +9,11 @@ namespace Morabaraba_9001
     {
         IEnumerable<Cow> Cows { get; }
 
-        void Place(int Destination);
+        void Place(int ID, int Destination);
 
-        void Move(int firstDestination , int secondDestination);
+        void Move(int ID, int firstDestination , int secondDestination);
 
-        void KillCow(int Destination);        
+        void KillCow(int ID, int Destination);        
 
         void DrawBoard();
 
