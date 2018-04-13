@@ -11,8 +11,8 @@ namespace Morabaraba_9001.Classes
 
         private IEnumerable<string> BoardPopulation(IEnumerable<Cow> cows)
         {
-            string[] a = cows.Select(x => (x.Symbol.ToString())).ToArray();
-            return a;
+            return cows.Select(x => (x.Symbol.ToString())).ToArray();
+
         }
 
         public Board()
