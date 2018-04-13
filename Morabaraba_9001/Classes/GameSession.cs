@@ -6,13 +6,18 @@ namespace Morabaraba_9001.Classes
 {
     public class GameSession : IGameSession
     {
+        public enum Player { Red = 0, Blue = 1 }
+
+        private Player CurrentPlayer; //Switch between players each turn
+
         public GameSession()
         {
             board = new Board();
+            CurrentPlayer = Player.Red;
             Play();
         }
 
-        public IBoard board { get; private set; }
+        public IBoard board { get; private set; }        
 
         //For General input of anything
         public int CastInput() //Like a spell, 'cause you're a wizzzard, Harry...

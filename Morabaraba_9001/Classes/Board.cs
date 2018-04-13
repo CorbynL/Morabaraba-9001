@@ -12,11 +12,11 @@ namespace Morabaraba_9001.Classes
         private IEnumerable<string> BoardPopulation(IEnumerable<Cow> cows)
         {
             return cows.Select(x => (x.Symbol.ToString())).ToArray();
-        }        
+        } 
 
         public Board()
         {
-            initialiseCows();
+            initialiseCows();            
         }
 
         private void initialiseCows()
@@ -52,7 +52,7 @@ namespace Morabaraba_9001.Classes
 
         public void Place(int Destination)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void KillCow(int Destination)
