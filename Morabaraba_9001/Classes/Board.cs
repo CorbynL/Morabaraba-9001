@@ -23,10 +23,7 @@ namespace Morabaraba_9001.Classes
         private void initiliseCows()
         {
             Cows = new Cow[24];
-            for (int i = 0; i < 23; i++)
-            {
-                Cows = Cows.Select(x => new Cow(i, -1)).ToArray();
-            }
+            Cows = Cows.Select((x,index) => new Cow(index, -1)).ToArray();
         }
 
         public void DrawBoard()
