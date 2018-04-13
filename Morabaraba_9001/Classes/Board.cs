@@ -17,10 +17,10 @@ namespace Morabaraba_9001.Classes
 
         public Board()
         {
-            initiliseCows();
+            initialiseCows();
         }
 
-        private void initiliseCows()
+        private void initialiseCows()
         {
             Cows = new Cow[24];
             Cows = Cows.Select((x,index) => new Cow(index, -1)).ToArray();
