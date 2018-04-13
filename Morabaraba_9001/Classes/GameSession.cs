@@ -78,7 +78,7 @@ namespace Morabaraba_9001.Classes
             board.DrawBoard();
         }
 
-        public IPlayer Winner()
+        public void Winner()
         {
             throw new NotImplementedException();
         }
