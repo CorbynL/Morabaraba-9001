@@ -8,6 +8,7 @@ namespace Morabaraba_9001
     {
         int Position { get; }
         int PlayerID { get; }
+        char Symbol { get; }
         void Move(int Destination);
     }
 }
