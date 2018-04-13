@@ -9,6 +9,7 @@ namespace Morabaraba_9001
         IBoard board { get; }
         IPlayer Winner();
         bool IsDraw();
+        int CastInput();
         void Play();
     }
 }
