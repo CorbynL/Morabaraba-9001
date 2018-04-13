@@ -5,8 +5,7 @@ using System.Text;
 namespace Morabaraba_9001
 {
     public interface IPlayer
-    {
-        
-        int ID { get; }
+    {         
+        int ID { get; }        
     }
 }

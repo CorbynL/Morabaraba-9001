@@ -12,12 +12,10 @@ namespace Morabaraba_9001.Test
 
         [Test]
         public void BoardIsEmptyWhenGameStarts ()
-        {
-            //TODO: Check that the board is empty when the game starts
+        {            
             Board b = new Board();
             Cow[] c = b.Cows.Where(x => x.PlayerID == -1).ToArray();
             Assert.That(c.Length == 24);
-
         }
 
         [Test]        
