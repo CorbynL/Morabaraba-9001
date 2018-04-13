@@ -6,6 +6,12 @@ namespace Morabaraba_9001.Classes
 {
     public class GameSession : IGameSession
     {
+        public GameSession()
+        {
+            board = new Board();
+            Play();
+        }
+
         public IBoard board { get; private set; }
 
         public bool IsDraw()
@@ -15,7 +21,7 @@ namespace Morabaraba_9001.Classes
 
         public void Play()
         {
-            throw new NotImplementedException();
+            board.DrawBoard();
         }
 
         public IPlayer Winner()
