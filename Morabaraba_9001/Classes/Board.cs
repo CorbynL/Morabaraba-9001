@@ -12,7 +12,21 @@ namespace Morabaraba_9001.Classes
 
         public void DrawBoard()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("\n\n\n\n\t     1     2     3     4     5     6     7\n\n"
+           + "\t A ({0}) ------------({1})-------------({2})    \n\n"
+           + "\t     |   \\             |        /       |    \n\n"
+           + "\t B   |   ({0})-------({1})-------({2})  |    \n\n"
+           + "\t     |     |  \\        |    /      |    |    \n\n"
+           + "\t C   |     |   ({0})-({1})-({2})   |    |    \n\n"
+           + "\t     |     |     |           |     |    |    \n\n"
+           + "\t D ({0})-({1})-({2})       ({3})-({4})-({5})\n\n"
+           + "\t     |     |     |           |     |    |    \n\n"
+           + "\t E   |     |   ({0})-({1})-({2})   |    |    \n\n"
+           + "\t     |     | /         |         \\ |    |    \n\n"
+           + "\t F   |   ({0})-------({1})-------({2})  |    \n\n"
+           + "\t     | /               |             \\  |    \n\n"
+           + "\t G ({0}) ------------({1})-------------({2})    ");
+            Console.ReadLine();
         }
 
         public void KillCow(Cow cow)
