@@ -1,12 +1,15 @@
 ﻿using System;
+using Morabaraba_9001.Classes;
 
 namespace Morabaraba_9001
 {
     class Program
     {
+        private static IGameSession gameSession;
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            gameSession = new GameSession();
         }
     }
 }
