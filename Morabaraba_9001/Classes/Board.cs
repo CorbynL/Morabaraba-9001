@@ -51,22 +51,22 @@ namespace Morabaraba_9001.Classes
             return builder.ToString();
         }
 
-        public void Place()
+        public void Place(int Destination)
         {
             throw new NotImplementedException();
         }
 
-        public void KillCow(Cow cow)
+        public void KillCow(int Destination)
         {
             throw new NotImplementedException();
         }
 
-        private void Remove(int Position)
+        private void Remove(int Destination)
         {
             throw new NotImplementedException();
         }
 
-        public void Move(Cow cow, int Destination)
+        public void Move(int firstDestination, int secondDestination)
         {
             throw new NotImplementedException();
         }
