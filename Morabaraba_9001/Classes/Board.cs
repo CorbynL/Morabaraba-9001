@@ -24,5 +24,10 @@ namespace Morabaraba_9001.Classes
         {
             throw new NotImplementedException();
         }
+
+        public int getMove()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

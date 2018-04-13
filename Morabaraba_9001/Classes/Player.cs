@@ -7,10 +7,6 @@ namespace Morabaraba_9001.Classes
     public class Player : IPlayer
     {
         public int ID => throw new NotImplementedException();
-
-        public int GetMove()
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }
