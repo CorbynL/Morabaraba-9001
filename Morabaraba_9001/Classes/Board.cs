@@ -50,6 +50,11 @@ namespace Morabaraba_9001.Classes
             return builder.ToString();
         }
 
+        public bool isCowAt(int pos)
+        {
+            return Cows.ElementAt(pos).Position != -1;
+        }
+
         public void Place(int ID, int Destination)
         {
             if (Cows.ElementAt(Destination).PlayerID != -1)
