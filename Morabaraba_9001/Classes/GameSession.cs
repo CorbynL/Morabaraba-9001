@@ -1,23 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Morabaraba_9001.Classes;
 
 namespace Morabaraba_9001.Classes
 {
     public class GameSession : IGameSession
     {
-        public enum Player { Red = 0, Blue = 1 }
+        public IBoard board { get; private set; }
+
+        private enum Player { Red = 0, Blue = 1 };
+        private enum Phase { Placing, Moving };
 
         private Player CurrentPlayer; //Switch between players each turn
+        private Phase CurrentPhase;
 
         public GameSession()
         {
+            //Start game
             board = new Board();
             CurrentPlayer = Player.Red;
+            CurrentPhase = Phase.Placing;
             Play();
         }
-
-        public IBoard board { get; private set; }        
+        
 
         //For General input of anything
         public int CastInput() //Like a spell, 'cause you're a wizzzard, Harry...
