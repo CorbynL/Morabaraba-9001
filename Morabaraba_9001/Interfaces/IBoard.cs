@@ -17,6 +17,8 @@ namespace Morabaraba_9001
 
         void DrawBoard();
 
+        bool CanPlaceAt(int Position);
+
         int getMove();
     }
 }

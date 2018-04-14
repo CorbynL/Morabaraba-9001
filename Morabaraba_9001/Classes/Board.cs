@@ -56,9 +56,12 @@ namespace Morabaraba_9001.Classes
 
         public void Place(int ID, int Destination)
         {
-            if (Cows.ElementAt(Destination).PlayerID != -1)
-                throw new Exception(); //Maybe a fancier, more meaningful exception?
-            else Cows = Cows.Select(x => (x.Position != Destination) ? x : new Cow(Destination, ID)); //I feel like this could be done better because it still runs through the whole list of cows 
+            Cows = Cows.Select(x => (x.Position != Destination) ? x : new Cow(Destination, ID)); //I feel like this could be done better because it still runs through the whole list of cows 
+        }
+
+        public bool CanPlaceAt(int Position)
+        {
+            return Cows.ElementAt(Position).PlayerID == -1;
         }
 
         public void KillCow(int ID, int Destination)
