@@ -28,7 +28,6 @@ namespace Morabaraba_9001.Classes
         public void DrawBoard()
         {
             Console.WriteLine(String.Format(getBoardString(),(object[])BoardPopulation(Cows)));
-            Console.ReadLine();
         }
 
         private string getBoardString()

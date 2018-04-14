@@ -11,7 +11,7 @@ namespace Morabaraba_9001.Classes
         public IBoard board { get; private set; }
 
         private enum Player { Red = 0, Blue = 1 };
-        private enum Phase { Placing, Moving };
+        private enum Phase { Placing, Moving, Winner };
 
         private Player CurrentPlayer; //Switch between players each turn
         private Phase CurrentPhase;
@@ -34,11 +34,11 @@ namespace Morabaraba_9001.Classes
 
             while (true)
             {
-                Console.ReadKey();
                 input = ConvertUserInput(Console.ReadLine());
                 if (input == -1)
                 {
-                    Console.WriteLine("Invalid coordinate input. Please enter a VALID coordinate:");
+                    board.DrawBoard();
+                    Console.WriteLine("\n\tInvalid coordinate input. Please enter a VALID coordinate:");
                     continue;
                 }
                 else break;
@@ -121,8 +121,22 @@ namespace Morabaraba_9001.Classes
 
         public void Play()
         {
-            board.DrawBoard();
+            while (CurrentPhase != Phase.Winner)
+            {
+                board.DrawBoard();
+                int input = CastInput();
+
+                switch (CurrentPhase)
+                {
+                    case Phase.Placing:
+                        board.Place((int)CurrentPlayer, input);
+                        break;
+                }
+                Console.Clear();
+            }
         }
+
+
 
         public void Winner()
         {
