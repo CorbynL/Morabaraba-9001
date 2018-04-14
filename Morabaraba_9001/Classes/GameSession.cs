@@ -119,6 +119,12 @@ namespace Morabaraba_9001.Classes
             throw new NotImplementedException();
         }
 
+        private void SwitchPlayer()
+        {
+            if (CurrentPlayer == Player.Red) CurrentPlayer = Player.Blue;
+            else CurrentPlayer = Player.Red;
+        }
+
         public void Play()
         {
             while (CurrentPhase != Phase.Winner)
@@ -128,9 +134,22 @@ namespace Morabaraba_9001.Classes
 
                 switch (CurrentPhase)
                 {
+                    //
+                    // Move to method when completed
+                    //
                     case Phase.Placing:
-                        board.Place((int)CurrentPlayer, input);
+                        if (board.CanPlaceAt(input))
+                        {
+                            board.Place((int)CurrentPlayer, input);
+                            SwitchPlayer();
+                        }
                         break;
+
+                    case Phase.Moving:
+                        throw new NotImplementedException();
+
+                    case Phase.Winner:
+                        throw new NotImplementedException();
                 }
                 Console.Clear();
             }
