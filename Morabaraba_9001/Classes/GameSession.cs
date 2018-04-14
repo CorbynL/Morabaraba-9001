@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Morabaraba_9001.Classes;
+using System.Linq;
 
 namespace Morabaraba_9001.Classes
 {
@@ -43,6 +44,40 @@ namespace Morabaraba_9001.Classes
                 else break;
             }
             return input;            
+        }
+
+        //Is there an algorithm to get all the moves from a certain position?
+        private int[][] MoveSets = new int[][]
+        {
+         new int[] {1,3,9},
+         new int[] {0,2,4},
+         new int[] {1,5,14},  
+         new int[] {0,4,6},
+         new int[] {1,3,5,7},
+         new int[] {2,4,8,13},
+         new int[] {4,7,11},
+         new int[] {4,6,8},
+         new int[] {5,7,12},
+         new int[] {0,10,21},
+         new int[] {3,9,11,18},
+         new int[] {6,10,15},
+         new int[] {8,13,17},
+         new int[] {5,12,14,20},
+         new int[] {2,13,23},
+         new int[] {11,16,18},
+         new int[] {15,17,19},
+         new int[] {12,16,20},
+         new int[] {10,15,19,21},
+         new int[] {16,18,20,22},
+         new int[] {13,17,19,23},
+         new int[] {9,18,22},
+         new int[] {19,21,23},
+         new int[] {14,20,22},
+        };
+
+        private bool isValidMove(int pos, int newPos)
+        {
+            return MoveSets[pos].Contains(newPos);
         }
 
         private int ConvertUserInput (string s)
