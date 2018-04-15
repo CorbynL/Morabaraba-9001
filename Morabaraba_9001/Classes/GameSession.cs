@@ -8,8 +8,8 @@ namespace Morabaraba_9001.Classes
     {
         public IBoard board { get; private set; }
 
-        private enum Player { Red = 0, Blue = 1 };
-        private enum Phase { Placing, Moving, Winner };
+        public enum Player { Red = 0, Blue = 1 };
+        public enum Phase { Placing, Moving, Winner };
 
         private Player CurrentPlayer; //Switch between players each turn
         private Phase CurrentPhase;
