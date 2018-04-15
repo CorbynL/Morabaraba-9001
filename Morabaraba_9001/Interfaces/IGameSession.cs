@@ -9,7 +9,7 @@ namespace Morabaraba_9001
         IBoard board { get; }
         int CastInput();
         bool IsDraw();
-        void Play();
+        void Play(int input);
         void Winner();
     }
 }

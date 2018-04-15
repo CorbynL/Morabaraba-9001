@@ -31,6 +31,11 @@ namespace Morabaraba_9001.Classes
             Cows = Cows.Select((x, index) => new Cow(index, -1)).ToArray();
         }
 
+        public IEnumerable<Cow> getCowsByPlayer(int ID)
+        {
+            return Cows.Where(x => (int)x.PlayerID == ID);
+        }
+
         // Create empty array of empty mills
         public Mill[] initialiseMills()
         {

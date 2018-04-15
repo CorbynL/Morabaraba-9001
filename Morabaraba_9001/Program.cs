@@ -4,11 +4,12 @@ namespace Morabaraba_9001
 {
     class Program
     {
-        private static IGameSession gameSession;
+        private static GameSession gameSession;
 
         static void Main(string[] args)
         {
             gameSession = new GameSession();
+            gameSession.Start();
         }
     }
 }

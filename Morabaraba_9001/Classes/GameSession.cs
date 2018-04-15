@@ -6,6 +6,8 @@ namespace Morabaraba_9001.Classes
 {
     public class GameSession : IGameSession
     {
+        public int CowsLeft;
+
         public IBoard board { get; private set; }
 
         public enum Player { Red = 0, Blue = 1 };
@@ -23,12 +25,17 @@ namespace Morabaraba_9001.Classes
             board = new Board();
             CurrentPlayer = Player.Red;
             CurrentPhase = Phase.Placing;
-            Play();
+            CowsLeft = 24;
         }
 
         public void Start()
         {
-            Play();
+
+            while(CurrentPhase != Phase.Winner)
+            {
+                int input = getInput();
+                Play(input);
+            }
         }
 
         // Sets Console properties, such as height width etc
@@ -43,6 +50,8 @@ namespace Morabaraba_9001.Classes
         public virtual int CastInput() //Like a spell, 'cause you're a wizzzard, Harry...
         {
             int input = -1;
+            Console.Clear();
+            board.DrawBoard();
             Console.WriteLine("\nPlease enter a coordinate:");
 
             while (true)
@@ -50,6 +59,8 @@ namespace Morabaraba_9001.Classes
                 input = ConvertUserInput(Console.ReadLine());
                 if (input == -1)
                 {
+                    Console.Clear();
+                    board.DrawBoard();
                     Console.WriteLine("\nInvalid coordinate input. Please enter a VALID coordinate:");
                     continue;
                 }
@@ -94,17 +105,18 @@ namespace Morabaraba_9001.Classes
 
         // Loops until an input is recieved that is not ontop of another cow       
 
-        public virtual void ValidInputAndPlace()
+        public virtual int getInput()
 
         {
             int input = CastInput();
             while (!board.CanPlaceAt(input))
             {
+                Console.Clear();
+                board.DrawBoard();
                 Console.WriteLine("\nCan't Place there!");
                 input = CastInput();
             }
-            board.Place((int)CurrentPlayer, input);
-            SwitchPlayer();
+            return input;
         }
 
         // Selects a cow owned by the current player with prompt dialog
@@ -146,11 +158,8 @@ namespace Morabaraba_9001.Classes
             else CurrentPlayer = Player.Red;
         }
 
-        public virtual void Play()
-        {
-            int CowsLeft = 6;                                                   // ********************** Set to 6 for testing ****************************
-            while (CurrentPhase != Phase.Winner)
-            {
+        public virtual void Play(int input)
+        {            
                 board.DrawBoard();
 
                 switch (CurrentPhase)
@@ -159,13 +168,13 @@ namespace Morabaraba_9001.Classes
                     // Move to method when completed
                     //
                     case Phase.Placing:
-                        Console.WriteLine(String.Format("Player {0}: You have {1} cows left to move", (int)CurrentPlayer, (CowsLeft + 1) / 2));
-                        ValidInputAndPlace();               // Loops until a valid input is recieved 
-                        CowsLeft--;
-                        if (CowsLeft == 0)                  // If there are no Cows left, Change to moving phase
-                            CurrentPhase = Phase.Moving;
-                        SwitchPlayer();
-                        break;
+                    Console.WriteLine(String.Format("Player {0}: You have {1} cows left to move", (int)CurrentPlayer, (CowsLeft + 1) / 2));
+                    CowsLeft--;
+                    if (CowsLeft == 0)                  // If there are no Cows left, Change to moving phase
+                         CurrentPhase = Phase.Moving;
+                    board.Place((int)CurrentPlayer, input);
+                    SwitchPlayer();
+                    break;
 
                     case Phase.Moving:
                         if (board.numCowRemaining((int)CurrentPlayer) <= 2)     // Winning state (Current player has less than 2 cows
@@ -188,11 +197,10 @@ namespace Morabaraba_9001.Classes
                 }
                 Console.Clear();
             }
-        }
 
         public void Winner()
         {
             throw new NotImplementedException();
-        }
-    }
+        }      
+    }       
 }

@@ -5,28 +5,7 @@ using System.Linq;
 using Morabaraba_9001.Classes;
 
 namespace Morabaraba_9001.Test
-{
-    
-    public class ModGameSession : GameSession
-    {       
-        
-        public ModGameSession() { }
-
-        public override int CastInput()
-        {
-            return 0;
-        }
-
-        public override void ValidInputAndPlace(int input)
-        {
-            base.ValidInputAndPlace(input);
-        }
-
-        public override void Play()
-        {
-            base.Play();
-        }
-    }
+{       
 
     [TestFixture]
     public class Tests
@@ -65,7 +44,9 @@ namespace Morabaraba_9001.Test
         [Test]
         public void Only12CowsPlacedForEachPlayer ()
         {
-            //TODO: Each Player must only be able to place (at least) 12 cows          
+            GameSession g = new GameSession();
+            g.Play(0);
+
             
         }
 

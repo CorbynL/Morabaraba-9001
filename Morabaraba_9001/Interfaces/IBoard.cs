@@ -28,5 +28,7 @@ namespace Morabaraba_9001
         bool isCowAt(int input);
 
         int numCowRemaining(int currentPlayer);
+
+        IEnumerable<Cow> getCowsByPlayer(int ID);
     }
 }
