@@ -114,7 +114,7 @@ namespace Morabaraba_9001.Classes
 
         public void Play()
         {
-            int CowsLeft = 24;
+            int CowsLeft = 2;
             while (CurrentPhase != Phase.Winner)
             {
                 board.DrawBoard();
@@ -129,12 +129,35 @@ namespace Morabaraba_9001.Classes
                     case Phase.Placing:
                         ValidInputAndPlace(input);       // Loops until a valid input is recieved 
                         CowsLeft--;
-                        if (CowsLeft == 0)              // If there are no Cows left, Change to moving phase
+                        if (CowsLeft > 0)               // If there are no Cows left, Change to moving phase
                             CurrentPhase = Phase.Moving;
                         break;
 
                     case Phase.Moving:
-                        throw new NotImplementedException();
+                        while(true)
+                        {
+                            if()
+                            Console.WriteLine("Please select the cow you want to move");
+                            input = ConvertUserInput(Console.ReadLine());
+                            while (input != -1 && board.isPlayerCow((int)CurrentPlayer, input))
+                            {
+                                Console.WriteLine("Please select One of YOUR cows");
+                                input = ConvertUserInput(Console.ReadLine());
+                            }
+
+                            Console.WriteLine("Please select where you want you cow to move");
+                            input = ConvertUserInput(Console.ReadLine());
+                            while (input != -1 && board.CanPlaceAt(input))
+                            {
+                                Console.WriteLine("Please select a valid possition where there are no cows!");
+                                input = ConvertUserInput(Console.ReadLine());
+                            }
+                            board.DrawBoard();
+
+                        }
+
+
+                        break;
 
                     case Phase.Winner:
                         throw new NotImplementedException();

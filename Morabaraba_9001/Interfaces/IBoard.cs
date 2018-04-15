@@ -22,5 +22,9 @@ namespace Morabaraba_9001
         bool CanPlaceAt(int Position);
 
         int getMove();
+
+        bool isPlayerCow(int currentPlayer, int input);
+
+        bool isCowAt(int input);
     }
 }

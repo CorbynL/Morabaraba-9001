@@ -126,6 +126,14 @@ namespace Morabaraba_9001.Classes
             Cows[firstDestination] = new Cow();
         }
 
+        // Returns true if the cow is owned by the player
+        public bool isPlayerCow(int playerId, int pos)
+        {
+            return Cows[pos].PlayerID == playerId;
+        }
+
+
+
         #endregion
 
         #region Mill Functions
@@ -133,6 +141,22 @@ namespace Morabaraba_9001.Classes
         public void UpdateMills()
         {
             throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Cow Funcitons
+
+        // Returns the number of cows remaining on the board for the given player
+        public int numCowRemaining(int playerID)
+        {
+            int count = 0;
+            foreach(Cow current in Cows)
+            {
+                if (current.PlayerID == playerID)
+                    count++;
+            }
+            return count;
         }
 
         #endregion
