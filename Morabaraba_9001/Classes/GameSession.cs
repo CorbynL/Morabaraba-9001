@@ -22,7 +22,8 @@ namespace Morabaraba_9001.Classes
             //Start game
             board = new Board();
             CurrentPlayer = Player.Red;
-            CurrentPhase = Phase.Placing;            
+            CurrentPhase = Phase.Placing;
+            Play();
         }
 
         public void Start()
@@ -49,7 +50,6 @@ namespace Morabaraba_9001.Classes
                 input = ConvertUserInput(ReadLine());
                 if (input == -1)
                 {
-                    board.DrawBoard();
                     Console.WriteLine("\nInvalid coordinate input. Please enter a VALID coordinate:");
                     continue;
                 }
@@ -58,11 +58,15 @@ namespace Morabaraba_9001.Classes
             return input;            
         }
 
+<<<<<<< HEAD
         public string ReadLine()
         {
             return Console.ReadLine();
         }
 
+=======
+        // Converts the the coordinates to index        (returns -1 if invalid)
+>>>>>>> 4884cf321677aad29cab4dcce72cd67d3ef5dd52
         public int ConvertUserInput (string s)
         {
             switch (s.ToLower())
@@ -97,8 +101,13 @@ namespace Morabaraba_9001.Classes
         }
 
         // Loops until an input is recieved that is not ontop of another cow
+<<<<<<< HEAD
         public virtual void ValidInputAndPlace(int input)
+=======
+        private void ValidInputAndPlace()
+>>>>>>> 4884cf321677aad29cab4dcce72cd67d3ef5dd52
         {
+            int input = CastInput();
             while (!board.CanPlaceAt(input))
             {
                 Console.WriteLine("\nCan't Place there!");
@@ -106,6 +115,32 @@ namespace Morabaraba_9001.Classes
             }
             board.Place((int)CurrentPlayer, input);
             SwitchPlayer();
+        }
+
+        // Selects a cow owned by the current player with prompt dialog
+        private int selectCow()
+        {
+            Console.WriteLine("Please select the cow you want to move");
+            int posFrom = ConvertUserInput(Console.ReadLine());
+            while (posFrom != -1 && !board.isPlayerCow((int)CurrentPlayer, posFrom))
+            {
+                Console.WriteLine("Please select One of YOUR cows");
+                posFrom = ConvertUserInput(Console.ReadLine());
+            }
+            return posFrom;
+        }
+
+        // Selects a new possition for the cow to move to with prompt dialog 
+        private int selectNewPos()
+        {
+            Console.WriteLine("Please select where you want you cow to move");
+            int posTo = ConvertUserInput(Console.ReadLine());
+            while (posTo != -1 && !board.CanPlaceAt(posTo))
+            {
+                Console.WriteLine("Please select a valid possition where there are no cows!");
+                posTo = ConvertUserInput(Console.ReadLine());
+            }
+            return posTo;
         }
 
         #endregion      
@@ -123,27 +158,40 @@ namespace Morabaraba_9001.Classes
 
         public virtual void Play()
         {
-            int CowsLeft = 24;
+            int CowsLeft = 6;                                                   // ********************** Set to 6 for testing ****************************
             while (CurrentPhase != Phase.Winner)
             {
                 board.DrawBoard();
-                Console.WriteLine(String.Format("You have {0}",(CowsLeft+1)/2));
-                int input = CastInput();
-                
+
                 switch (CurrentPhase)
                 {
                     //
                     // Move to method when completed
                     //
                     case Phase.Placing:
-                        ValidInputAndPlace(input);       // Loops until a valid input is recieved 
+                        Console.WriteLine(String.Format("Player {0}: You have {1} cows left to move", (int)CurrentPlayer, (CowsLeft + 1) / 2));
+                        ValidInputAndPlace();               // Loops until a valid input is recieved 
                         CowsLeft--;
-                        if (CowsLeft == 0)              // If there are no Cows left, Change to moving phase
+                        if (CowsLeft == 0)                  // If there are no Cows left, Change to moving phase
                             CurrentPhase = Phase.Moving;
+                        SwitchPlayer();
                         break;
 
                     case Phase.Moving:
-                        throw new NotImplementedException();
+                        if (board.numCowRemaining((int)CurrentPlayer) <= 2)     // Winning state (Current player has less than 2 cows
+                        {
+                            CurrentPhase = Phase.Winner;
+                            SwitchPlayer();
+                            break;
+                        }
+                        // Select cow
+                        int posFrom = selectCow();
+                        // Get new cow position
+                        int posTo = selectNewPos();
+                        // Move cow
+                        board.Move((int)CurrentPlayer, posFrom, posTo);
+                        SwitchPlayer();
+                        break;
 
                     case Phase.Winner:
                         throw new NotImplementedException();

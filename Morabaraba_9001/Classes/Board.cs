@@ -69,7 +69,7 @@ namespace Morabaraba_9001.Classes
         private string getBoardString()
         {
             StringBuilder builder = new StringBuilder("\n\n\n\n\t     1     2     3     4     5     6     7\n\n");
-            builder.Append("\t G   ({0}) -------------({1})---------------({2})\n\n");
+            builder.Append("\t A   ({0}) -------------({1})---------------({2})\n\n");
             builder.Append("\t     |   \\             |              /  |    \n\n");
             builder.Append("\t B   |    ({3})---------({4})---------({5})    |\n\n");
             builder.Append("\t     |     |  \\        |       /   |     |    \n\n");
@@ -126,6 +126,14 @@ namespace Morabaraba_9001.Classes
             Cows[firstDestination] = new Cow();
         }
 
+        // Returns true if the cow is owned by the player
+        public bool isPlayerCow(int playerId, int pos)
+        {
+            return Cows[pos].PlayerID == playerId;
+        }
+
+
+
         #endregion
 
         #region Mill Functions
@@ -136,6 +144,22 @@ namespace Morabaraba_9001.Classes
         }
 
         #endregion
+
+        #region Cow Funcitons
+
+        // Returns the number of cows remaining on the board for the given player
+        public int numCowRemaining(int playerID)
+        {
+            int count = 0;
+            foreach(Cow current in Cows)
+            {
+                if (current.PlayerID == playerID)
+                    count++;
+            }
+            return count;
+        }
+
+
 
         public bool isCowAt(int pos)
         {
@@ -159,6 +183,8 @@ namespace Morabaraba_9001.Classes
         {
             return Cows.ElementAt(Position).PlayerID == -1;
         }
+
+        #endregion
 
         // Removes a cow at a given destination
         public void KillCow(int ID, int Destination)
