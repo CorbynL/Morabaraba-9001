@@ -128,6 +128,10 @@ namespace Morabaraba_9001.Classes
 
         #endregion
 
+        #region Mill Functions
+
+        #endregion
+
         public bool isCowAt(int pos)
         {
             return Cows.ElementAt(pos).Position != -1;
