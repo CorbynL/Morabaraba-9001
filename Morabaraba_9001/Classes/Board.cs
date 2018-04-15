@@ -130,6 +130,11 @@ namespace Morabaraba_9001.Classes
 
         #region Mill Functions
 
+        public void UpdateMills()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         public bool isCowAt(int pos)
