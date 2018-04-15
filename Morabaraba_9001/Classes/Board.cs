@@ -16,6 +16,8 @@ namespace Morabaraba_9001.Classes
             return cows.Select(x => (x.Symbol.ToString())).ToArray();
         }
 
+        #region Initialise Board
+
         public Board()
         {
             initialiseCows();
@@ -55,6 +57,8 @@ namespace Morabaraba_9001.Classes
                 new Mill(new int[] { 17, 20, 23 })      // E5, F6, G7
             };
         }
+
+        #endregion
 
         public void DrawBoard()
         {
