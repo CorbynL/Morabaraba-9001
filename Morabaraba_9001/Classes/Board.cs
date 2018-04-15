@@ -116,7 +116,7 @@ namespace Morabaraba_9001.Classes
 
         public void Place(int ID, int Destination)
         {
-            Cows[Destination].changeID(Destination);
+            Cows[Destination].changeID(ID);
 
             // Remove this if everyone is happy with the update
             //Cows = Cows.Select(x => (x.Position != Destination) ? x : new Cow(Destination, ID)); // I feel like this could be done better because it still runs through the whole list of cows 

@@ -10,5 +10,6 @@ namespace Morabaraba_9001
         int PlayerID { get; }
         char Symbol { get; }
         void Move(int Destination);
+        void changeID(int ID);
     }
 }
