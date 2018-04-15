@@ -160,7 +160,7 @@ namespace Morabaraba_9001.Classes
             return count;
         }
 
-        #endregion
+
 
         public bool isCowAt(int pos)
         {
@@ -184,6 +184,8 @@ namespace Morabaraba_9001.Classes
         {
             return Cows.ElementAt(Position).PlayerID == -1;
         }
+
+        #endregion
 
         // Removes a cow at a given destination
         public void KillCow(int ID, int Destination)

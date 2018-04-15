@@ -93,8 +93,9 @@ namespace Morabaraba_9001.Classes
         }
 
         // Loops until an input is recieved that is not ontop of another cow
-        private void ValidInputAndPlace(int input)
+        private void ValidInputAndPlace()
         {
+            int input = CastInput();
             while (!board.CanPlaceAt(input))
             {
                 Console.WriteLine("\nCan't Place there!");
@@ -124,7 +125,7 @@ namespace Morabaraba_9001.Classes
             {
                 board.DrawBoard();
                 Console.WriteLine(String.Format("You have {0}",(CowsLeft+1)/2));
-                int input = CastInput();
+                //int input = CastInput();
                 
                 switch (CurrentPhase)
                 {
@@ -132,10 +133,13 @@ namespace Morabaraba_9001.Classes
                     // Move to method when completed
                     //
                     case Phase.Placing:
-                        ValidInputAndPlace(input);       // Loops until a valid input is recieved 
+                        ValidInputAndPlace();       // Loops until a valid input is recieved 
                         CowsLeft--;
-                        if (CowsLeft == 1)               // If there are no Cows left, Change to moving phase
+                        if (CowsLeft == 0)               // If there are no Cows left, Change to moving phase
+                        {
                             CurrentPhase = Phase.Moving;
+                            SwitchPlayer();
+                        }
                         break;
 
                     case Phase.Moving:
@@ -144,20 +148,23 @@ namespace Morabaraba_9001.Classes
                         {
                             //
                             Console.WriteLine("Please select the cow you want to move");
-                            input = ConvertUserInput(Console.ReadLine());
-                            while (input != -1 && board.isPlayerCow((int)CurrentPlayer, input))
+                            int posFrom = ConvertUserInput(Console.ReadLine());
+                            while (posFrom != -1 && !board.isPlayerCow((int)CurrentPlayer, posFrom))
                             {
                                 Console.WriteLine("Please select One of YOUR cows");
-                                input = ConvertUserInput(Console.ReadLine());
+                                posFrom = ConvertUserInput(Console.ReadLine());
                             }
 
                             Console.WriteLine("Please select where you want you cow to move");
-                            input = ConvertUserInput(Console.ReadLine());
-                            while (input != -1 && board.CanPlaceAt(input))
+                            int posTo = ConvertUserInput(Console.ReadLine());
+                            while (posTo != -1 && !board.CanPlaceAt(posTo))
                             {
                                 Console.WriteLine("Please select a valid possition where there are no cows!");
-                                input = ConvertUserInput(Console.ReadLine());
+                                posTo = ConvertUserInput(Console.ReadLine());
                             }
+                            board.Move((int)CurrentPlayer, posFrom, posTo);
+
+                            SwitchPlayer();
                             board.DrawBoard();
 
                         }
