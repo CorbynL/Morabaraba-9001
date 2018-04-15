@@ -8,7 +8,7 @@ namespace Morabaraba_9001.Classes
     public class Board : IBoard
     {
         //public IEnumerable<Cow> Cows { get; private set; }        // Remove this if everyone is happy with it
-        public Cow[] Cows { get; private set; }                                          // Note the change to an array to simplify placing cows
+        public Cow[] Cows { get; set; }                                          // Note the change to an array to simplify placing cows
         public Mill[] Mills { get; private set; }
 
         private IEnumerable<string> BoardPopulation(IEnumerable<Cow> cows)
@@ -25,7 +25,7 @@ namespace Morabaraba_9001.Classes
         }
 
         // Create an array of default cows
-        private void initialiseCows()
+        public void initialiseCows()
         {
             Cows = new Cow[24];
             Cows = Cows.Select((x, index) => new Cow(index, -1)).ToArray();
@@ -95,7 +95,7 @@ namespace Morabaraba_9001.Classes
         #region Move functions
 
         // Is there an algorithm to get all the moves from a certain position?
-        private int[][] MoveSets = new int[][]
+        public int[][] MoveSets = new int[][]
         {
          new int[] {1,3,9},
          new int[] {0,2,4},
