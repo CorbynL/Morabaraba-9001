@@ -5,7 +5,32 @@ using System.Linq;
 using Morabaraba_9001.Classes;
 
 namespace Morabaraba_9001.Test
+<<<<<<< HEAD
 {       
+=======
+{
+    
+    public class ModGameSession : GameSession
+    {       
+        
+        public ModGameSession() { }
+
+        public override int CastInput()
+        {
+            return 0;
+        }
+
+        public override void ValidInputAndPlace()//int input)
+        {
+            base.ValidInputAndPlace();// input);
+        }
+
+        public override void Play()
+        {
+            base.Play();
+        }
+    }
+>>>>>>> 40cc527f9f55e955ef1a60e47bcaa370cb375521
 
     [TestFixture]
     public class Tests
@@ -16,7 +41,7 @@ namespace Morabaraba_9001.Test
         public void BoardIsEmptyWhenGameStarts ()
         {            
             IBoard b = new Board();
-            Cow[] c = b.Cows.Where(x => x.PlayerID == -1).ToArray();
+            ICow[] c = b.Cows.Where(x => x.PlayerID == -1).ToArray();
             Assert.That(c.Length == 24);
         }
 

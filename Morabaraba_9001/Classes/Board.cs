@@ -9,7 +9,7 @@ namespace Morabaraba_9001.Classes
     {
         //public IEnumerable<Cow> Cows { get; private set; }        // Remove this if everyone is happy with it
         public Cow[] Cows { get; private set; }                                          // Note the change to an array to simplify placing cows
-        public Mill[] Mills;
+        public Mill[] Mills { get; private set; }
 
         private IEnumerable<string> BoardPopulation(IEnumerable<Cow> cows)
         {
@@ -37,9 +37,9 @@ namespace Morabaraba_9001.Classes
         }
 
         // Create empty array of empty mills
-        public Mill[] initialiseMills()
+        public void initialiseMills()
         {
-            return new Mill[] {
+            Mills = new Mill[] {
                 new Mill(new int[] { 0, 1, 2 }),        // A1, A4, A7
                 new Mill(new int[] { 3, 4, 5 } ),       // B2, B4, B6
                 new Mill(new int[] { 6, 7, 8 }),        // C3, C4, C5
@@ -131,6 +131,11 @@ namespace Morabaraba_9001.Classes
             Cows[firstDestination] = new Cow();
         }
 
+        public bool IsValidMove(int pos, int newPos)
+        {
+            return MoveSets[pos].Contains(newPos);
+        }
+
         // Returns true if the cow is owned by the player
         public bool isPlayerCow(int playerId, int pos)
         {
@@ -145,7 +150,36 @@ namespace Morabaraba_9001.Classes
 
         public void UpdateMills()
         {
-            throw new NotImplementedException();
+            foreach(Mill current in Mills)
+            {
+                int playerID = Cows[current.Positions[0]].PlayerID;
+                if (playerID == Cows[current.Positions[1]].PlayerID && playerID == Cows[current.Positions[2]].PlayerID)
+                {
+                    if (current.isNew)
+                        current.noLongerNew();
+                    else if (current.Id != playerID && playerID != -1 && !current.isNew)
+                    {
+                        // New mill
+                        current.updateMill(playerID);
+                    }
+                }
+                    
+            }
+        }
+
+        public bool areNewMills(int playerID)
+        {
+            foreach (Mill mill in Mills)
+            {
+                if (mill.Id == playerID && mill.isNew) { return true; }
+            }
+            return false;
+        }
+
+        // Removes a cow at a given destination
+        public void KillCow(int Destination)
+        {
+            Cows[Destination] = new Cow();
         }
 
         #endregion
@@ -164,17 +198,11 @@ namespace Morabaraba_9001.Classes
             return count;
         }
 
-
-
         public bool isCowAt(int pos)
         {
             return Cows.ElementAt(pos).Position != -1;
         }
 
-        private bool IsValidMove(int pos, int newPos)
-        {
-            return MoveSets[pos].Contains(newPos);
-        }
 
         public void Place(int ID, int Destination)
         {
@@ -191,12 +219,6 @@ namespace Morabaraba_9001.Classes
 
         #endregion
 
-        // Removes a cow at a given destination
-        public void KillCow(int ID, int Destination)
-        {
-            Cows[Destination] = new Cow();
-        }
- 
         public int getMove()
         {
             throw new NotImplementedException();

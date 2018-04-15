@@ -106,7 +106,6 @@ namespace Morabaraba_9001.Classes
         // Loops until an input is recieved that is not ontop of another cow       
 
         public virtual int getInput()
-
         {
             int input = CastInput();
             while (!board.CanPlaceAt(input))
@@ -124,25 +123,31 @@ namespace Morabaraba_9001.Classes
         {
             Console.WriteLine("Please select the cow you want to move");
             int posFrom = ConvertUserInput(Console.ReadLine());
-            while (posFrom != -1 && !board.isPlayerCow((int)CurrentPlayer, posFrom))
+            while(true)
             {
+                if(posFrom != -1 && board.isPlayerCow((int)CurrentPlayer, posFrom))
+                {
+                    return posFrom;
+                }
                 Console.WriteLine("Please select One of YOUR cows");
                 posFrom = ConvertUserInput(Console.ReadLine());
             }
-            return posFrom;
         }
 
         // Selects a new possition for the cow to move to with prompt dialog 
-        private int selectNewPos()
+        private int selectNewPos(int oldPos)
         {
             Console.WriteLine("Please select where you want you cow to move");
             int posTo = ConvertUserInput(Console.ReadLine());
-            while (posTo != -1 && !board.CanPlaceAt(posTo))
+            while (true)
             {
+                if(posTo != -1 && board.CanPlaceAt(posTo) && board.IsValidMove(oldPos, posTo))
+                {
+                    return posTo;
+                }
                 Console.WriteLine("Please select a valid possition where there are no cows!");
                 posTo = ConvertUserInput(Console.ReadLine());
             }
-            return posTo;
         }
 
         #endregion      
@@ -158,9 +163,31 @@ namespace Morabaraba_9001.Classes
             else CurrentPlayer = Player.Red;
         }
 
+
+        private void checkForMills()
+        {
+            board.UpdateMills();
+            if (board.areNewMills((int)CurrentPlayer))
+            {
+                Console.WriteLine("You have formed a MILL! Select a cow to KILL!!!");
+                int pos = CastInput();
+                while (true)
+                {
+                    if (board.Cows[pos].PlayerID == (int)CurrentPlayer || board.Cows[pos].PlayerID == -1)
+                    {
+                        Console.WriteLine("Can't kill that one! Pick another one.");
+                        pos = CastInput();
+                    }
+                    else { break; }
+                }
+                board.KillCow(pos);
+            }
+        }
+
         public virtual void Play(int input)
-        {            
-                board.DrawBoard();
+        { 
+            board.DrawBoard();
+            board.UpdateMills();
 
                 switch (CurrentPhase)
                 {
@@ -168,11 +195,13 @@ namespace Morabaraba_9001.Classes
                     // Move to method when completed
                     //
                     case Phase.Placing:
+
                     Console.WriteLine(String.Format("Player {0}: You have {1} cows left to move", (int)CurrentPlayer, (CowsLeft + 1) / 2));
                     CowsLeft--;
                     if (CowsLeft == 0)                  // If there are no Cows left, Change to moving phase
                          CurrentPhase = Phase.Moving;
                     board.Place((int)CurrentPlayer, input);
+                    checkForMills();
                     SwitchPlayer();
                     break;
 
@@ -186,9 +215,10 @@ namespace Morabaraba_9001.Classes
                         // Select cow
                         int posFrom = selectCow();
                         // Get new cow position
-                        int posTo = selectNewPos();
+                        int posTo = selectNewPos(posFrom);
                         // Move cow
                         board.Move((int)CurrentPlayer, posFrom, posTo);
+                        checkForMills();
                         SwitchPlayer();
                         break;
 
