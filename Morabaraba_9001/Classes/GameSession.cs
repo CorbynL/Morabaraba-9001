@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Morabaraba_9001.Classes;
 using System.Linq;
 
 namespace Morabaraba_9001.Classes

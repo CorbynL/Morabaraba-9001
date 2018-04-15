@@ -7,7 +7,8 @@ namespace Morabaraba_9001.Classes
 {
     public class Board : IBoard
     {
-        public IEnumerable<Cow> Cows { get; private set; }
+        //public IEnumerable<Cow> Cows { get; private set; }        // Remove this if everyone is happy with it
+        public Cow[] Cows;                                          // Note the change to an array to simplify placing cows
 
         private IEnumerable<string> BoardPopulation(IEnumerable<Cow> cows)
         {
@@ -56,7 +57,10 @@ namespace Morabaraba_9001.Classes
 
         public void Place(int ID, int Destination)
         {
-            Cows = Cows.Select(x => (x.Position != Destination) ? x : new Cow(Destination, ID)); //I feel like this could be done better because it still runs through the whole list of cows 
+            Cows[Destination].changeID(Destination);
+
+            // Remove this if everyone is happy with the update
+            //Cows = Cows.Select(x => (x.Position != Destination) ? x : new Cow(Destination, ID)); // I feel like this could be done better because it still runs through the whole list of cows 
         }
 
         public bool CanPlaceAt(int Position)

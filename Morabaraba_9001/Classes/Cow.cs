@@ -24,6 +24,12 @@ namespace Morabaraba_9001.Classes
             Position = Destination;
         }
 
+        public void changeID(int ID)
+        {
+            PlayerID = ID;
+            getSymbol();
+        }
+
         private void getSymbol()
         {
             switch (PlayerID)
