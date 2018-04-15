@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using NSubstitute;
 using System.Linq;
 using Morabaraba_9001.Classes;
 
@@ -13,7 +14,7 @@ namespace Morabaraba_9001.Test
         [Test]
         public void BoardIsEmptyWhenGameStarts ()
         {            
-            Board b = new Board();
+            IBoard b = new Board();
             Cow[] c = b.Cows.Where(x => x.PlayerID == -1).ToArray();
             Assert.That(c.Length == 24);
         }
@@ -23,6 +24,8 @@ namespace Morabaraba_9001.Test
         {
             //TODO: Make sure that the the player who goes first has the dark cows
             Assert.That(false);
+            IGameSession g = Substitute.For<IGameSession>();
+            g.
         }
 
         [Test]
