@@ -140,7 +140,7 @@ namespace Morabaraba_9001.Classes
                     case Phase.Moving:
                         while(true)
                         {
-                            if()
+                            //
                             Console.WriteLine("Please select the cow you want to move");
                             input = ConvertUserInput(Console.ReadLine());
                             while (input != -1 && board.isPlayerCow((int)CurrentPlayer, input))
