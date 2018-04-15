@@ -60,6 +60,7 @@ namespace Morabaraba_9001.Classes
 
         #endregion
 
+        #region Output to Console
         public void DrawBoard()
         {
             Console.WriteLine(String.Format(getBoardString(), (object[])BoardPopulation(Cows)));
@@ -84,10 +85,7 @@ namespace Morabaraba_9001.Classes
             return builder.ToString();
         }
 
-        public bool isCowAt(int pos)
-        {
-            return Cows.ElementAt(pos).Position != -1;
-        }
+        #endregion
 
         #region Move functions
 
@@ -129,6 +127,11 @@ namespace Morabaraba_9001.Classes
         }
 
         #endregion
+
+        public bool isCowAt(int pos)
+        {
+            return Cows.ElementAt(pos).Position != -1;
+        }
 
         private bool IsValidMove(int pos, int newPos)
         {
