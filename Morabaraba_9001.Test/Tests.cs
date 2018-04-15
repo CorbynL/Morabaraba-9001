@@ -5,7 +5,7 @@ using System.Linq;
 using Morabaraba_9001.Classes;
 
 namespace Morabaraba_9001.Test
-
+{ 
     [TestFixture]
     public class Tests
     {
@@ -38,15 +38,24 @@ namespace Morabaraba_9001.Test
             // Check that you can place a cow at a blank possition
             Assert.That(b.CanPlaceAt(1));
             //TODO: Check to see that when we place a cow, that it can only be placed on an empty space
-        }       
+        }
 
         [Test]
-        public void Only12CowsPlacedForEachPlayer ()
+        public void Only12CowsPlacedForEachPlayer()
         {
             GameSession g = new GameSession();
-            g.Play(0);
+            for (int i = 0; i < 24; i++)
+            {
+                g.Play(i);
+            }
 
-            
+            //Placing phase is over
+            Assert.True(g.CurrentPhase == GameSession.Phase.Moving);
+
+            Cow[] player1Cows = g.board.getCowsByPlayer(0).ToArray();
+            Cow[] player2Cows = g.board.getCowsByPlayer(1).ToArray();
+
+            Assert.True(player1Cows.Length == 12 && player2Cows.Length == 12);
         }
 
         [Test]

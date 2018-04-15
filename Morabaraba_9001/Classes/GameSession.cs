@@ -14,7 +14,7 @@ namespace Morabaraba_9001.Classes
         public enum Phase { Placing, Moving, Winner };
 
         public Player CurrentPlayer { get; private set; } //Switch between players each turn
-        public Phase CurrentPhase { get; private set; }
+        public Phase CurrentPhase { get ; private set; }
 
         public GameSession()
         {
