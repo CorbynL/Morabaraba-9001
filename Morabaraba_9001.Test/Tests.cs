@@ -5,32 +5,6 @@ using System.Linq;
 using Morabaraba_9001.Classes;
 
 namespace Morabaraba_9001.Test
-<<<<<<< HEAD
-{       
-=======
-{
-    
-    public class ModGameSession : GameSession
-    {       
-        
-        public ModGameSession() { }
-
-        public override int CastInput()
-        {
-            return 0;
-        }
-
-        public override void ValidInputAndPlace()//int input)
-        {
-            base.ValidInputAndPlace();// input);
-        }
-
-        public override void Play()
-        {
-            base.Play();
-        }
-    }
->>>>>>> 40cc527f9f55e955ef1a60e47bcaa370cb375521
 
     [TestFixture]
     public class Tests
