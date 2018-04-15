@@ -82,7 +82,7 @@ namespace Morabaraba_9001.Classes
         }
 
         // Loops until an input is recieved that is not ontop of another cow
-        private void ValidInputToPlace(int input)
+        private void ValidInputAndPlace(int input)
         {
             while (!board.CanPlaceAt(input))
             {
@@ -125,7 +125,7 @@ namespace Morabaraba_9001.Classes
                     // Move to method when completed
                     //
                     case Phase.Placing:
-                        ValidInputToPlace(input);       // Loops until a valid input is recieved 
+                        ValidInputAndPlace(input);       // Loops until a valid input is recieved 
                         CowsLeft--;
                         if (CowsLeft == 0)              // If there are no Cows left, Change to moving phase
                             CurrentPhase = Phase.Moving;
