@@ -8,7 +8,7 @@ namespace Morabaraba_9001.Classes
     public class Board : IBoard
     {
         //public IEnumerable<Cow> Cows { get; private set; }        // Remove this if everyone is happy with it
-        public Cow[] Cows;                                          // Note the change to an array to simplify placing cows
+        public Cow[] Cows { get; private set; }                                          // Note the change to an array to simplify placing cows
         public Mill[] Mills;
 
         private IEnumerable<string> BoardPopulation(IEnumerable<Cow> cows)
