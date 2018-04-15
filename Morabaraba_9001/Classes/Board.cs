@@ -122,7 +122,10 @@ namespace Morabaraba_9001.Classes
 
         public void Move(int ID, int firstDestination, int secondDestination)
         {
-            throw new NotImplementedException();
+            if(Cows[firstDestination].PlayerID != ID)
+                throw new Exception("This is an invalid move. The cow is not owned by this player");
+            Cows[secondDestination] = Cows[firstDestination];
+            Cows[firstDestination] = new Cow();
         }
 
         #endregion
