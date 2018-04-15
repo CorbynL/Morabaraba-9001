@@ -39,14 +39,14 @@ namespace Morabaraba_9001.Classes
         #region User Input
 
         //For General input of anything
-        public int CastInput() //Like a spell, 'cause you're a wizzzard, Harry...
+        public virtual int CastInput() //Like a spell, 'cause you're a wizzzard, Harry...
         {
             int input = -1;
             Console.WriteLine("\nPlease enter a coordinate:");
 
             while (true)
             {
-                input = ConvertUserInput(Console.ReadLine());
+                input = ConvertUserInput(ReadLine());
                 if (input == -1)
                 {
                     board.DrawBoard();
@@ -56,6 +56,11 @@ namespace Morabaraba_9001.Classes
                 else break;
             }
             return input;            
+        }
+
+        public string ReadLine()
+        {
+            return Console.ReadLine();
         }
 
         public int ConvertUserInput (string s)
@@ -92,7 +97,7 @@ namespace Morabaraba_9001.Classes
         }
 
         // Loops until an input is recieved that is not ontop of another cow
-        private void ValidInputAndPlace(int input)
+        public virtual void ValidInputAndPlace(int input)
         {
             while (!board.CanPlaceAt(input))
             {
@@ -116,7 +121,7 @@ namespace Morabaraba_9001.Classes
             else CurrentPlayer = Player.Red;
         }
 
-        public void Play()
+        public virtual void Play()
         {
             int CowsLeft = 24;
             while (CurrentPhase != Phase.Winner)
