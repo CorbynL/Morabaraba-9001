@@ -61,8 +61,17 @@ namespace Morabaraba_9001.Test
         [Test]
         public void CowsCannotMoveDuringPlacement ()
         {
-            //TODO: Check to see that cows cannot move during the placement phase
-            Assert.That(false);
+            int counter = 0;
+
+            GameSession g = new GameSession();
+            for (int i = 0; i < 24; i++)
+            {
+                if (g.CurrentPhase == GameSession.Phase.Placing) { counter++; }
+                g.Play(i);
+                
+            }            
+            Assert.True(counter == 24);
+            Assert.True(g.CurrentPhase == GameSession.Phase.Moving);
         }
 
         #endregion
