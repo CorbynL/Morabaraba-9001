@@ -89,6 +89,8 @@ namespace Morabaraba_9001.Classes
             return Cows.ElementAt(pos).Position != -1;
         }
 
+        #region Move functions
+
         // Is there an algorithm to get all the moves from a certain position?
         private int[][] MoveSets = new int[][]
         {
@@ -118,6 +120,13 @@ namespace Morabaraba_9001.Classes
          new int[] {14,20,22},
         };
 
+        public void Move(int ID, int firstDestination, int secondDestination)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
         private bool IsValidMove(int pos, int newPos)
         {
             return MoveSets[pos].Contains(newPos);
@@ -141,16 +150,13 @@ namespace Morabaraba_9001.Classes
             throw new NotImplementedException();
         }
 
+        // Removes a cow at a given destination
         private void Remove(int ID, int Destination)
         {
             Cows[Destination] = new Cow();
         }
 
-        public void Move(int ID, int firstDestination, int secondDestination)
-        {
-            throw new NotImplementedException();
-        }
-
+ 
         public int getMove()
         {
             throw new NotImplementedException();
