@@ -47,7 +47,7 @@ namespace Morabaraba_9001.Classes
 
             while (true)
             {
-                input = ConvertUserInput(ReadLine());
+                input = ConvertUserInput(Console.ReadLine());
                 if (input == -1)
                 {
                     Console.WriteLine("\nInvalid coordinate input. Please enter a VALID coordinate:");
@@ -58,15 +58,7 @@ namespace Morabaraba_9001.Classes
             return input;            
         }
 
-<<<<<<< HEAD
-        public string ReadLine()
-        {
-            return Console.ReadLine();
-        }
-
-=======
         // Converts the the coordinates to index        (returns -1 if invalid)
->>>>>>> 4884cf321677aad29cab4dcce72cd67d3ef5dd52
         public int ConvertUserInput (string s)
         {
             switch (s.ToLower())
@@ -100,12 +92,10 @@ namespace Morabaraba_9001.Classes
             }
         }
 
-        // Loops until an input is recieved that is not ontop of another cow
-<<<<<<< HEAD
-        public virtual void ValidInputAndPlace(int input)
-=======
-        private void ValidInputAndPlace()
->>>>>>> 4884cf321677aad29cab4dcce72cd67d3ef5dd52
+        // Loops until an input is recieved that is not ontop of another cow       
+
+        private virtual void ValidInputAndPlace()
+
         {
             int input = CastInput();
             while (!board.CanPlaceAt(input))
