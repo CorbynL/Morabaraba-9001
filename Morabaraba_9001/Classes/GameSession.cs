@@ -94,7 +94,7 @@ namespace Morabaraba_9001.Classes
 
         // Loops until an input is recieved that is not ontop of another cow       
 
-        private virtual void ValidInputAndPlace()
+        public virtual void ValidInputAndPlace()
 
         {
             int input = CastInput();
