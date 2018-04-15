@@ -16,7 +16,7 @@ namespace Morabaraba_9001.Classes
         public GameSession()
         {
             // Set the stage
-            setConsoleProperties();
+            SetConsoleProperties();
             
             //Start game
             board = new Board();
@@ -46,7 +46,7 @@ namespace Morabaraba_9001.Classes
             return input;            
         }
 
-        //Is there an algorithm to get all the moves from a certain position?
+        // Is there an algorithm to get all the moves from a certain position?
         private int[][] MoveSets = new int[][]
         {
          new int[] {1,3,9},
@@ -75,7 +75,32 @@ namespace Morabaraba_9001.Classes
          new int[] {14,20,22},
         };
 
-        private bool isValidMove(int pos, int newPos)
+        // Set of all Mill Possitions
+        public int[][] MillSets = new int[][]
+        {
+            new int[] { 0, 1, 2 },          // A1, A4, A7
+            new int[] { 3, 4, 5 },          // B2, B4, B6
+            new int[] { 6, 7, 8 },          // C3, C4, C5
+            new int[] { 9, 10, 11 },        // D1, D2, D3
+            new int[] { 12, 13, 14 },       // D5, D6, D7
+            new int[] { 15, 16, 17 },       // E3, E4, E5
+            new int[] { 18, 19, 20 },       // F2, F4, F6
+            new int[] { 21, 22, 23 },       // G1, G4, G7
+            new int[] { 0, 9, 21 },         // A1, D1, G1
+            new int[] { 3, 10, 18 },        // B2, D2, F2
+            new int[] { 6, 11, 15 },        // C3, D3, E3
+            new int[] { 1, 4, 7 },          // A4, B4, C4
+            new int[] { 16, 19, 22 },       // E4, F4, G4
+            new int[] { 8, 12, 17 },        // C5, D5, E5
+            new int[] { 5, 13, 20 },        // B6, D6, F6
+            new int[] { 2, 14, 23 },        // A7, D7, G7
+            new int[] { 0, 3, 6 },          // A1, B2, C3
+            new int[] { 15, 18, 21 },       // E3, F2, G1
+            new int[] { 2, 5, 8 },          // C5, B6, A7
+            new int[] { 17, 20, 23 }        // E5, F6, G7
+        };
+
+        private bool IsValidMove(int pos, int newPos)
         {
             return MoveSets[pos].Contains(newPos);
         }
@@ -127,7 +152,7 @@ namespace Morabaraba_9001.Classes
         }
 
         // Sets Console properties, such as height width etc
-        private void setConsoleProperties()
+        private void SetConsoleProperties()
         {
             Console.SetWindowSize(70, 50);
         }
