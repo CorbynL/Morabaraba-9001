@@ -68,9 +68,8 @@ namespace Morabaraba_9001.Classes
 
         private string getBoardString()
         {
-            Console.Clear();
             StringBuilder builder = new StringBuilder("\n\n\n\n\t     1     2     3     4     5     6     7\n\n");
-            builder.Append("\t G   ({0}) -------------({1})---------------({2})\n\n");
+            builder.Append("\t A   ({0}) -------------({1})---------------({2})\n\n");
             builder.Append("\t     |   \\             |              /  |    \n\n");
             builder.Append("\t B   |    ({3})---------({4})---------({5})    |\n\n");
             builder.Append("\t     |     |  \\        |       /   |     |    \n\n");
