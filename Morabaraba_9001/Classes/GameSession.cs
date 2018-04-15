@@ -102,7 +102,6 @@ namespace Morabaraba_9001.Classes
                 input = CastInput();
             }
             board.Place((int)CurrentPlayer, input);
-            SwitchPlayer();
         }
 
         // Selects a cow owned by the current player with prompt dialog
@@ -159,11 +158,23 @@ namespace Morabaraba_9001.Classes
                     //
                     case Phase.Placing:
                         Console.WriteLine(String.Format("Player {0}: You have {1} cows left to move", (int)CurrentPlayer, (CowsLeft + 1) / 2));
-                        if(board.areNewMills((int)CurrentPlayer))
-                        {
-                            
-                        }
                         ValidInputAndPlace();               // Loops until a valid input is recieved 
+                        board.UpdateMills();
+                        if (board.areNewMills((int)CurrentPlayer))
+                        {
+                            Console.WriteLine("You have formed a MILL! Select a cow to KILL!!!");
+                            int pos = CastInput();
+                            while (true)
+                            {
+                                if (board.Cows[pos].PlayerID == (int)CurrentPlayer || board.Cows[pos].PlayerID == -1)
+                                {
+                                    Console.WriteLine("Can't kill that one! Pick another one.");
+                                    pos = CastInput();
+                                }
+                                else { break; }
+                            }
+                            board.KillCow(pos);
+                        }
                         CowsLeft--;
                         if (CowsLeft == 0)                  // If there are no Cows left, Change to moving phase
                             CurrentPhase = Phase.Moving;
