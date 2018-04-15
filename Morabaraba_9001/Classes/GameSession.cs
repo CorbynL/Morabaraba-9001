@@ -22,7 +22,8 @@ namespace Morabaraba_9001.Classes
             //Start game
             board = new Board();
             CurrentPlayer = Player.Red;
-            CurrentPhase = Phase.Placing;            
+            CurrentPhase = Phase.Placing;
+            Play();
         }
 
         public void Start()
@@ -118,7 +119,7 @@ namespace Morabaraba_9001.Classes
 
         public void Play()
         {
-            int CowsLeft = 2;
+            int CowsLeft = 4;
             while (CurrentPhase != Phase.Winner)
             {
                 board.DrawBoard();
@@ -133,12 +134,13 @@ namespace Morabaraba_9001.Classes
                     case Phase.Placing:
                         ValidInputAndPlace(input);       // Loops until a valid input is recieved 
                         CowsLeft--;
-                        if (CowsLeft > 0)               // If there are no Cows left, Change to moving phase
+                        if (CowsLeft == 1)               // If there are no Cows left, Change to moving phase
                             CurrentPhase = Phase.Moving;
                         break;
 
                     case Phase.Moving:
-                        while(true)
+                        board.DrawBoard();
+                        while (true)
                         {
                             //
                             Console.WriteLine("Please select the cow you want to move");
