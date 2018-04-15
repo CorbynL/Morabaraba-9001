@@ -17,9 +17,9 @@ namespace Morabaraba_9001.Test
             return 0;
         }
 
-        public override void ValidInputAndPlace(int input)
+        public override void ValidInputAndPlace()//int input)
         {
-            base.ValidInputAndPlace(input);
+            base.ValidInputAndPlace();// input);
         }
 
         public override void Play()

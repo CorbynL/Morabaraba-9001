@@ -93,9 +93,7 @@ namespace Morabaraba_9001.Classes
         }
 
         // Loops until an input is recieved that is not ontop of another cow       
-
         public virtual void ValidInputAndPlace()
-
         {
             int input = CastInput();
             while (!board.CanPlaceAt(input))
@@ -151,7 +149,6 @@ namespace Morabaraba_9001.Classes
             else CurrentPlayer = Player.Red;
         }
 
-<<<<<<< HEAD
         private void checkForMills()
         {
             board.UpdateMills();
@@ -172,10 +169,9 @@ namespace Morabaraba_9001.Classes
             }
         }
 
-        public void Play()
-=======
+        //public void Play();
+
         public virtual void Play()
->>>>>>> 1ff296f41eab93fd7e56a25cd21defc7240c375e
         {
             int CowsLeft = 24;                                                   // ********************** Set to 6 for testing ****************************
             while (CurrentPhase != Phase.Winner)
