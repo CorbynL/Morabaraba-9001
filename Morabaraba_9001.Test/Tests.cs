@@ -140,7 +140,39 @@ namespace Morabaraba_9001.Test
         public void MillIsInvalidIfCowsNotInConnectedLine ()
         {
             //TODO: Check that the cows that will form a mill are in a line and connected in spaces
-            Assert.That(false);
+
+            Board
+                b = new Board(), //Check mill forms if not in straight line
+                c = new Board(), //Check if mill forms if in straight line but one or two cows has different ID's
+                d = new Board(); //Check if 3 cows with the same ID's in a line form a mill
+
+            //Oblique line
+            b.Place(0, 0);
+            b.Place(0, 1);
+            b.Place(0, 3);
+
+            //In a line, but different cow
+            c.Place(0, 0);
+            c.Place(0, 1);
+            c.Place(1, 2);
+
+            //In a line
+            d.Place(0, 0);
+            d.Place(0, 1);
+            d.Place(0, 2);
+
+            //Check for any new mills
+            b.UpdateMills();
+            c.UpdateMills();
+            d.UpdateMills();
+
+            Mill[] b_mills = b.Mills.Where(x => x.Id == 0).ToArray();
+            Mill[] c_mills = c.Mills.Where(x => x.Id == 0).ToArray();
+            Mill[] d_mills = d.Mills.Where(x => x.Id == 0).ToArray();
+
+            Assert.That(b_mills.Length == 0);
+            Assert.That(c_mills.Length == 0);
+            Assert.That(d_mills.Length == 1);
         }
 
         [Test]
