@@ -19,7 +19,7 @@ namespace Morabaraba_9001
 
         void KillCow(int Destination);
 
-        void CanKillAt(int ID, int Destination);
+        bool CanKillAt(int ID, int Destination);
 
         void DrawBoard();
 
