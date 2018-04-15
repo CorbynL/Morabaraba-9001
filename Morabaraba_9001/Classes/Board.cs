@@ -124,7 +124,7 @@ namespace Morabaraba_9001.Classes
         };
 
         public void Move(int ID, int firstDestination, int secondDestination)
-        {
+        {           
             if(Cows[firstDestination].PlayerID != ID)
                 throw new Exception("This is an invalid move. The cow is not owned by this player");
             Cows[secondDestination] = Cows[firstDestination];
@@ -133,7 +133,7 @@ namespace Morabaraba_9001.Classes
 
         public bool IsValidMove(int pos, int newPos)
         {
-            return MoveSets[pos].Contains(newPos);
+            return MoveSets[pos].Contains(newPos) && CanPlaceAt(newPos);
         }
 
         // Returns true if the cow is owned by the player
@@ -211,6 +211,8 @@ namespace Morabaraba_9001.Classes
             // Remove this if everyone is happy with the update
             //Cows = Cows.Select(x => (x.Position != Destination) ? x : new Cow(Destination, ID)); // I feel like this could be done better because it still runs through the whole list of cows 
         }
+
+       
 
         public bool CanPlaceAt(int Position)
         {
