@@ -180,6 +180,7 @@ namespace Morabaraba_9001.Test
             Assert.That(false);
         }
 
+        // THIS IS BRIAN's PROPERTY SO GITTTT OFF MY PROPERTY
         [Test]
         public void MillIsInvalidIfCowsNotInConnectedLine ()
         {
