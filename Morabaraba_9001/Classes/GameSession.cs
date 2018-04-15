@@ -58,6 +58,7 @@ namespace Morabaraba_9001.Classes
             return input;            
         }
 
+        // Converts the the coordinates to index        (returns -1 if invalid)
         public int ConvertUserInput (string s)
         {
             switch (s.ToLower())
@@ -104,6 +105,7 @@ namespace Morabaraba_9001.Classes
             SwitchPlayer();
         }
 
+        // Selects a cow owned by the current player with prompt dialog
         private int selectCow()
         {
             Console.WriteLine("Please select the cow you want to move");
@@ -116,6 +118,7 @@ namespace Morabaraba_9001.Classes
             return posFrom;
         }
 
+        // Selects a new possition for the cow to move to with prompt dialog 
         private int selectNewPos()
         {
             Console.WriteLine("Please select where you want you cow to move");
