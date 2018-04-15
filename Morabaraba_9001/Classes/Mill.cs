@@ -23,5 +23,10 @@ namespace Morabaraba_9001.Classes
             Id = newID;
             isNew = true;
         }
+
+        public void noLongerNew()
+        {
+            isNew = false;
+        }
     }
 }

@@ -145,7 +145,9 @@ namespace Morabaraba_9001.Classes
                 int playerID = Cows[current.Positions[0]].PlayerID;
                 if (playerID == Cows[current.Positions[1]].PlayerID && playerID == Cows[current.Positions[2]].PlayerID)
                 {
-                    if(current.Id != playerID && playerID != -1 && !current.isNew)
+                    if (current.isNew)
+                        current.noLongerNew();
+                    else if (current.Id != playerID && playerID != -1 && !current.isNew)
                     {
                         // New mill
                         current.updateMill(playerID);
