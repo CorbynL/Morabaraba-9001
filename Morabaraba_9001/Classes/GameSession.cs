@@ -25,7 +25,14 @@ namespace Morabaraba_9001.Classes
             CurrentPhase = Phase.Placing;
             Play();
         }
-        
+
+        // Sets Console properties, such as height width etc
+        private void SetConsoleProperties()
+        {
+            Console.SetWindowSize(70, 50);
+        }
+
+        #region User Input
 
         //For General input of anything
         public int CastInput() //Like a spell, 'cause you're a wizzzard, Harry...
@@ -78,7 +85,6 @@ namespace Morabaraba_9001.Classes
                 
                 default: return -1;
             }
-
         }
 
         // Loops until an input is recieved that is not ontop of another cow
@@ -93,11 +99,7 @@ namespace Morabaraba_9001.Classes
             SwitchPlayer();
         }
 
-        // Sets Console properties, such as height width etc
-        private void SetConsoleProperties()
-        {
-            Console.SetWindowSize(70, 50);
-        }
+        #endregion      
 
         public bool IsDraw()
         {

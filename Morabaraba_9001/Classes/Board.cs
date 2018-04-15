@@ -148,17 +148,11 @@ namespace Morabaraba_9001.Classes
             return Cows.ElementAt(Position).PlayerID == -1;
         }
 
-        public void KillCow(int ID, int Destination)
-        {
-            throw new NotImplementedException();
-        }
-
         // Removes a cow at a given destination
-        private void Remove(int ID, int Destination)
+        public void KillCow(int ID, int Destination)
         {
             Cows[Destination] = new Cow();
         }
-
  
         public int getMove()
         {
