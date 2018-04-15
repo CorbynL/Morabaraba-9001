@@ -7,7 +7,7 @@ namespace Morabaraba_9001
 {
     public interface IBoard
     {
-        //IEnumerable<Cow> Cows { get; }
+        Cow[] Cows { get; }
 
         void Place(int ID, int Destination);
 

@@ -22,7 +22,11 @@ namespace Morabaraba_9001.Classes
             //Start game
             board = new Board();
             CurrentPlayer = Player.Red;
-            CurrentPhase = Phase.Placing;
+            CurrentPhase = Phase.Placing;            
+        }
+
+        public void Start()
+        {
             Play();
         }
 
