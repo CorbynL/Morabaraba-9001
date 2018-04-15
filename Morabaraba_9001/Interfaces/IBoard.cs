@@ -7,7 +7,7 @@ namespace Morabaraba_9001
 {
     public interface IBoard
     {
-        Cow[] Cows { get; }
+        Cow[] Cows { get; set; }
 
         Mill[] Mills { get;}
 
@@ -37,5 +37,6 @@ namespace Morabaraba_9001
 
         bool IsValidMove(int pos, int newPos);
 
+        void initialiseCows();
     }
 }

@@ -10,6 +10,6 @@ namespace Morabaraba_9001
         int CastInput();
         bool IsDraw();
         void Play(int input);
-        void Winner();       
+        void Winner();
     }
 }
