@@ -126,6 +126,11 @@ namespace Morabaraba_9001.Classes
             Cows[firstDestination] = new Cow();
         }
 
+        public bool IsValidMove(int pos, int newPos)
+        {
+            return MoveSets[pos].Contains(newPos);
+        }
+
         // Returns true if the cow is owned by the player
         public bool isPlayerCow(int playerId, int pos)
         {
@@ -193,10 +198,6 @@ namespace Morabaraba_9001.Classes
             return Cows.ElementAt(pos).Position != -1;
         }
 
-        private bool IsValidMove(int pos, int newPos)
-        {
-            return MoveSets[pos].Contains(newPos);
-        }
 
         public void Place(int ID, int Destination)
         {

@@ -32,5 +32,7 @@ namespace Morabaraba_9001
         int numCowRemaining(int currentPlayer);
 
         bool areNewMills(int currentPlayer);
+
+        bool IsValidMove(int pos, int newPos);
     }
 }

@@ -109,25 +109,31 @@ namespace Morabaraba_9001.Classes
         {
             Console.WriteLine("Please select the cow you want to move");
             int posFrom = ConvertUserInput(Console.ReadLine());
-            while (posFrom != -1 && !board.isPlayerCow((int)CurrentPlayer, posFrom))
+            while(true)
             {
+                if(posFrom != -1 && board.isPlayerCow((int)CurrentPlayer, posFrom))
+                {
+                    return posFrom;
+                }
                 Console.WriteLine("Please select One of YOUR cows");
                 posFrom = ConvertUserInput(Console.ReadLine());
             }
-            return posFrom;
         }
 
         // Selects a new possition for the cow to move to with prompt dialog 
-        private int selectNewPos()
+        private int selectNewPos(int oldPos)
         {
             Console.WriteLine("Please select where you want you cow to move");
             int posTo = ConvertUserInput(Console.ReadLine());
-            while (posTo != -1 && !board.CanPlaceAt(posTo))
+            while (true)
             {
+                if(posTo != -1 && board.CanPlaceAt(posTo) && board.IsValidMove(oldPos, posTo))
+                {
+                    return posTo;
+                }
                 Console.WriteLine("Please select a valid possition where there are no cows!");
                 posTo = ConvertUserInput(Console.ReadLine());
             }
-            return posTo;
         }
 
         #endregion      
@@ -165,7 +171,7 @@ namespace Morabaraba_9001.Classes
 
         public void Play()
         {
-            int CowsLeft = 6;                                                   // ********************** Set to 6 for testing ****************************
+            int CowsLeft = 24;                                                   // ********************** Set to 6 for testing ****************************
             while (CurrentPhase != Phase.Winner)
             {
                 board.DrawBoard();
@@ -196,7 +202,7 @@ namespace Morabaraba_9001.Classes
                         // Select cow
                         int posFrom = selectCow();
                         // Get new cow position
-                        int posTo = selectNewPos();
+                        int posTo = selectNewPos(posFrom);
                         // Move cow
                         board.Move((int)CurrentPlayer, posFrom, posTo);
                         checkForMills();
