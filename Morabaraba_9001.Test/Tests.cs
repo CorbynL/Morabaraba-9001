@@ -179,6 +179,18 @@ namespace Morabaraba_9001.Test
         public void KillingFromAMillHappensOnce ()
         {
             //TODO: When a mill is formed, it can only kill a cow once in the same turn it is formed and not again after if it continues to exist
+
+            GameSession g = new GameSession();
+
+            g.Play(0); // Player 1 to A1
+            g.Play(21); // Player 2 to G1
+            g.Play(1); // Player 1 to A4
+            g.Play(22); // Player 2 to G4
+            g.Play(2); // Player 1 to A7 - mill is formed
+
+            //Now in killing phase
+           // Assert.That(g.CurrentPhase == GameSession.Phase.)
+
             Assert.That(false);
         }
 
