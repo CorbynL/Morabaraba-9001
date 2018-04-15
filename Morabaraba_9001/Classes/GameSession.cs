@@ -120,7 +120,7 @@ namespace Morabaraba_9001.Classes
 
         public void Play()
         {
-            int CowsLeft = 4;
+            int CowsLeft = 6;
             while (CurrentPhase != Phase.Winner)
             {
                 board.DrawBoard();
@@ -144,9 +144,9 @@ namespace Morabaraba_9001.Classes
 
                     case Phase.Moving:
                         board.DrawBoard();
-                        while (true)
+                        while (board.numCowRemaining((int)CurrentPlayer) > 2)
                         {
-                            //
+                            // Get cow
                             Console.WriteLine("Please select the cow you want to move");
                             int posFrom = ConvertUserInput(Console.ReadLine());
                             while (posFrom != -1 && !board.isPlayerCow((int)CurrentPlayer, posFrom))
@@ -155,6 +155,7 @@ namespace Morabaraba_9001.Classes
                                 posFrom = ConvertUserInput(Console.ReadLine());
                             }
 
+                            // Get new position
                             Console.WriteLine("Please select where you want you cow to move");
                             int posTo = ConvertUserInput(Console.ReadLine());
                             while (posTo != -1 && !board.CanPlaceAt(posTo))
@@ -162,12 +163,16 @@ namespace Morabaraba_9001.Classes
                                 Console.WriteLine("Please select a valid possition where there are no cows!");
                                 posTo = ConvertUserInput(Console.ReadLine());
                             }
+
+                            // Move cow
                             board.Move((int)CurrentPlayer, posFrom, posTo);
 
                             SwitchPlayer();
                             board.DrawBoard();
-
                         }
+                        // Switch to the winner (There are less than 3 cows left for the current player)
+                        SwitchPlayer();
+                        CurrentPhase = Phase.Winner;
 
 
                         break;

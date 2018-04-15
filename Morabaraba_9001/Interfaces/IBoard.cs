@@ -26,5 +26,7 @@ namespace Morabaraba_9001
         bool isPlayerCow(int currentPlayer, int input);
 
         bool isCowAt(int input);
+
+        int numCowRemaining(int currentPlayer);
     }
 }
