@@ -22,10 +22,9 @@ namespace Morabaraba_9001.Test
         [Test]        
         public void PlayerWithRedCowsGoesFirst ()
         {
-            //TODO: Make sure that the the player who goes first has the dark cows
-            Assert.That(false);
-            IGameSession g = Substitute.For<IGameSession>();
-            g.
+            //TODO: Make sure that the the player who goes first has the dark cows            
+            GameSession g = Substitute.For<GameSession>();            
+            Assert.AreEqual(g.CurrentPlayer, GameSession.Player.Red);
         }
 
         [Test]

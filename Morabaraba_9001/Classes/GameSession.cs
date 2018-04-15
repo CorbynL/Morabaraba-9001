@@ -58,7 +58,7 @@ namespace Morabaraba_9001.Classes
             return input;            
         }
 
-        private int ConvertUserInput (string s)
+        public int ConvertUserInput (string s)
         {
             switch (s.ToLower())
             {
