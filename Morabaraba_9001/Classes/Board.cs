@@ -143,7 +143,7 @@ namespace Morabaraba_9001.Classes
 
         private void Remove(int ID, int Destination)
         {
-            throw new NotImplementedException();
+            Cows[Destination] = new Cow();
         }
 
         public void Move(int ID, int firstDestination, int secondDestination)
