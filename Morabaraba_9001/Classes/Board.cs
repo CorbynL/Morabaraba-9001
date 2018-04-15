@@ -182,6 +182,11 @@ namespace Morabaraba_9001.Classes
             Cows[Destination] = new Cow();
         }
 
+        public bool CanKillAt(int ID, int Destination)
+        {
+            return Cows[Destination].PlayerID != -1 && Cows[Destination].PlayerID != ID;
+        }
+
         #endregion
 
         #region Cow Funcitons

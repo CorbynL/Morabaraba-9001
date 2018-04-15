@@ -17,7 +17,9 @@ namespace Morabaraba_9001
 
         void UpdateMills();
 
-        void KillCow(int Destination);        
+        void KillCow(int Destination);
+
+        void CanKillAt(int ID, int Destination);
 
         void DrawBoard();
 
