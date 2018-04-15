@@ -11,7 +11,7 @@ namespace Morabaraba_9001.Classes
         public IBoard board { get; private set; }
 
         public enum Player { Red = 0, Blue = 1 };
-        public enum Phase { Placing, Moving, Winner };
+        public enum Phase { Placing, Moving, Killing, Winner };
 
         public Player CurrentPlayer { get; private set; } //Switch between players each turn
         public Phase CurrentPhase { get ; private set; }
@@ -108,14 +108,32 @@ namespace Morabaraba_9001.Classes
         public virtual int getInput()
         {
             int input = CastInput();
-            while (!board.CanPlaceAt(input))
+            switch (CurrentPhase)
             {
-                Console.Clear();
-                board.DrawBoard();
-                Console.WriteLine("\nCan't Place there!");
-                input = CastInput();
+                case Phase.Placing:
+                    while (!board.CanPlaceAt(input))
+                    {
+                        Console.Clear();
+                        board.DrawBoard();
+                        Console.WriteLine("\nCan't Place there!");
+                        input = CastInput();
+                    }
+                    return input;
+
+                case Phase.Killing:
+                    while (!board.CanKillAt((int)CurrentPlayer, input))
+                    {
+                        Console.Clear();
+                        board.DrawBoard();
+                        Console.WriteLine("\nCan't kill that cow!");
+                        input = CastInput();
+                    }
+                    return input;
+
+                default: return -1;
             }
-            return input;
+
+            
         }
 
         // Selects a cow owned by the current player with prompt dialog
@@ -145,7 +163,7 @@ namespace Morabaraba_9001.Classes
                 {
                     return posTo;
                 }
-                Console.WriteLine("Please select a valid possition where there are no cows!");
+                Console.WriteLine("Please select a valid position where there are no cows!");
                 posTo = ConvertUserInput(Console.ReadLine());
             }
         }
@@ -164,9 +182,8 @@ namespace Morabaraba_9001.Classes
         }
 
 
-        private void checkForMills()
-        {
-            board.UpdateMills();
+        /*private void checkForMills()
+        {            
             if (board.areNewMills((int)CurrentPlayer))
             {
                 Console.WriteLine("You have formed a MILL! Select a cow to KILL!!!");
@@ -182,7 +199,7 @@ namespace Morabaraba_9001.Classes
                 }
                 board.KillCow(pos);
             }
-        }
+        }*/
 
         public virtual void Play(int input)
         { 
@@ -191,39 +208,75 @@ namespace Morabaraba_9001.Classes
 
                 switch (CurrentPhase)
                 {
-                    //
-                    // Move to method when completed
-                    //
-                    case Phase.Placing:
-
+                //
+                // Move to method when completed
+                //
+                case Phase.Placing:
                     Console.WriteLine(String.Format("Player {0}: You have {1} cows left to move", (int)CurrentPlayer, (CowsLeft + 1) / 2));
                     CowsLeft--;
                     if (CowsLeft == 0)                  // If there are no Cows left, Change to moving phase
-                         CurrentPhase = Phase.Moving;
+                            CurrentPhase = Phase.Moving;
                     board.Place((int)CurrentPlayer, input);
-                    checkForMills();
+
+                    board.UpdateMills();
+                    if (board.areNewMills((int)CurrentPlayer))
+                    {
+                        CurrentPhase = Phase.Killing;
+                        Console.WriteLine("You formed a mill, choose an enemy cow to kill");
+                        break;
+                    }
+
                     SwitchPlayer();
                     break;
 
-                    case Phase.Moving:
-                        if (board.numCowRemaining((int)CurrentPlayer) <= 2)     // Winning state (Current player has less than 2 cows
-                        {
-                            CurrentPhase = Phase.Winner;
-                            SwitchPlayer();
-                            break;
-                        }
-                        // Select cow
-                        int posFrom = selectCow();
-                        // Get new cow position
-                        int posTo = selectNewPos(posFrom);
-                        // Move cow
-                        board.Move((int)CurrentPlayer, posFrom, posTo);
-                        checkForMills();
+                case Phase.Moving:
+                    if (board.numCowRemaining((int)CurrentPlayer) <= 2)     // Winning state (Current player has less than 2 cows
+                    {
+                        CurrentPhase = Phase.Winner;
                         SwitchPlayer();
                         break;
+                    }
+                    // Select cow
+                    int posFrom = selectCow();
+                    // Get new cow position
+                    int posTo = selectNewPos(posFrom);
+                    // Move cow
+                    board.Move((int)CurrentPlayer, posFrom, posTo);
 
-                    case Phase.Winner:
-                        throw new NotImplementedException();
+                    if (board.areNewMills((int)CurrentPlayer))
+                    {
+                        CurrentPhase = Phase.Killing;
+                        Console.WriteLine("You formed a mill, choose an enemy cow to kill");
+                        break;
+                    }
+
+                    SwitchPlayer();
+                    break;
+
+                case Phase.Killing:
+                    if (!board.CanKillAt((int)CurrentPlayer, input))
+                    {
+                        Console.WriteLine("You cannot kill that cow, choose a different enemy cow to kill");
+                        break;
+                    }
+
+                    board.KillCow(input);
+                    
+                    if (CowsLeft > 0)
+                    {
+                        CurrentPhase = Phase.Placing;
+                        SwitchPlayer();
+                        break;
+                    }
+                    else
+                    {
+                        CurrentPhase = Phase.Moving;
+                        SwitchPlayer();
+                        break;
+                    }                    
+
+                case Phase.Winner:
+                    throw new NotImplementedException();
                 }
                 Console.Clear();
             }
