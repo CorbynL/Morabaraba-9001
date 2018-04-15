@@ -15,7 +15,7 @@ namespace Morabaraba_9001.Test
         public void BoardIsEmptyWhenGameStarts ()
         {            
             IBoard b = new Board();
-            Cow[] c = b.Cows.Where(x => x.PlayerID == -1).ToArray();
+            ICow[] c = b.Cows.Where(x => x.PlayerID == -1).ToArray();
             Assert.That(c.Length == 24);
         }
 

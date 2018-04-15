@@ -150,6 +150,7 @@ namespace Morabaraba_9001.Classes
             while (CurrentPhase != Phase.Winner)
             {
                 board.DrawBoard();
+                board.UpdateMills();
 
                 switch (CurrentPhase)
                 {
@@ -158,6 +159,10 @@ namespace Morabaraba_9001.Classes
                     //
                     case Phase.Placing:
                         Console.WriteLine(String.Format("Player {0}: You have {1} cows left to move", (int)CurrentPlayer, (CowsLeft + 1) / 2));
+                        if(board.areNewMills((int)CurrentPlayer))
+                        {
+                            
+                        }
                         ValidInputAndPlace();               // Loops until a valid input is recieved 
                         CowsLeft--;
                         if (CowsLeft == 0)                  // If there are no Cows left, Change to moving phase

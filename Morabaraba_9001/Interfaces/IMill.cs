@@ -6,7 +6,10 @@ namespace Morabaraba_9001.Interfaces
 {
     public interface IMill
     {
-        bool isNew { get;}
-        int Id { get; }   
+        int[] Positions { get; }
+        bool isNew { get; }
+        int Id { get; }
+
+        void updateMill(int newID);
     }
 }

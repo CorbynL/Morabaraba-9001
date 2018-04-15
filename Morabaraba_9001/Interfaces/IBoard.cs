@@ -9,13 +9,15 @@ namespace Morabaraba_9001
     {
         Cow[] Cows { get; }
 
+        Mill[] Mills { get;}
+
         void Place(int ID, int Destination);
 
         void Move(int ID, int firstDestination , int secondDestination);
 
         void UpdateMills();
 
-        void KillCow(int ID, int Destination);        
+        void KillCow(int Destination);        
 
         void DrawBoard();
 
@@ -28,5 +30,7 @@ namespace Morabaraba_9001
         bool isCowAt(int input);
 
         int numCowRemaining(int currentPlayer);
+
+        bool areNewMills(int currentPlayer);
     }
 }
