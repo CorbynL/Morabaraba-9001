@@ -15,6 +15,9 @@ namespace Morabaraba_9001.Classes
 
         public GameSession()
         {
+            // Set the stage
+            setConsoleProperties();
+            
             //Start game
             board = new Board();
             CurrentPlayer = Player.Red;
@@ -27,7 +30,7 @@ namespace Morabaraba_9001.Classes
         public int CastInput() //Like a spell, 'cause you're a wizzzard, Harry...
         {
             int input = -1;
-            Console.WriteLine("Please enter a coordinate:");
+            Console.WriteLine("\nPlease enter a coordinate:");
 
             while (true)
             {
@@ -35,7 +38,7 @@ namespace Morabaraba_9001.Classes
                 if (input == -1)
                 {
                     board.DrawBoard();
-                    Console.WriteLine("\n\tInvalid coordinate input. Please enter a VALID coordinate:");
+                    Console.WriteLine("\nInvalid coordinate input. Please enter a VALID coordinate:");
                     continue;
                 }
                 else break;
@@ -111,6 +114,7 @@ namespace Morabaraba_9001.Classes
 
         }
 
+        // Loops until an input is recieved that is not ontop of another cow
         private void ValidInputToPlace(int input)
         {
             while (!board.CanPlaceAt(input))
@@ -120,6 +124,12 @@ namespace Morabaraba_9001.Classes
             }
             board.Place((int)CurrentPlayer, input);
             SwitchPlayer();
+        }
+
+        // Sets Console properties, such as height width etc
+        private void setConsoleProperties()
+        {
+            Console.SetWindowSize(70, 50);
         }
 
         public bool IsDraw()
