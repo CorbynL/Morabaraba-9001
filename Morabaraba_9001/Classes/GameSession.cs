@@ -111,6 +111,17 @@ namespace Morabaraba_9001.Classes
 
         }
 
+        private void ValidInputToPlace(int input)
+        {
+            while (!board.CanPlaceAt(input))
+            {
+                Console.WriteLine("\nCan't Place there!");
+                input = CastInput();
+            }
+            board.Place((int)CurrentPlayer, input);
+            SwitchPlayer();
+        }
+
         public bool IsDraw()
         {
             throw new NotImplementedException();
@@ -135,11 +146,7 @@ namespace Morabaraba_9001.Classes
                     // Move to method when completed
                     //
                     case Phase.Placing:
-                        if (board.CanPlaceAt(input))
-                        {
-                            board.Place((int)CurrentPlayer, input);
-                            SwitchPlayer();
-                        }
+                        ValidInputToPlace(input);       // Loops until a valid input is recieved 
                         break;
 
                     case Phase.Moving:
