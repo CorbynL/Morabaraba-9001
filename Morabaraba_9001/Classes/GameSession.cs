@@ -22,7 +22,7 @@ namespace Morabaraba_9001.Classes
             board = new Board();
             CurrentPlayer = Player.Red;
             CurrentPhase = Phase.Placing;
-            CowsLeft = 24;
+            CowsLeft = 8;
         }
 
 
@@ -56,10 +56,8 @@ namespace Morabaraba_9001.Classes
                     if (board.areNewMills((int)CurrentPlayer))
                     {
                         CurrentPhase = Phase.Killing;
-                        Console.WriteLine("You formed a mill, choose an enemy cow to kill");
                         break;
                     }
-
                     SwitchPlayer();
                     break;
                 #endregion
@@ -72,8 +70,7 @@ namespace Morabaraba_9001.Classes
                         SwitchPlayer();
                         break;
                     }
-                    if (input != -1)
-                        throw new Exception("The input was not taken properly... well... ");
+                                                            // Need to figure out a way to impliment the move function here...      (Search "quick fix" to make sense of this)
                     board.UpdateMills();
                     if (board.areNewMills((int)CurrentPlayer))
                     {
@@ -157,9 +154,8 @@ namespace Morabaraba_9001.Classes
                     int input = ConvertUserInput(Console.ReadLine());
                     while (true)
                     {
-                        if (input != -1)
-                            if(board.CanPlaceAt(input))
-                                return input;
+                        if (input != -1 && board.CanPlaceAt(input))
+                            return input;
                         Console.WriteLine("\nInvalid coordinate input. Please enter a VALID coordinate:");
                         input = ConvertUserInput(Console.ReadLine());
                     }
@@ -178,12 +174,15 @@ namespace Morabaraba_9001.Classes
                     int posTo = ConvertUserInput(Console.ReadLine());
                     while (true)
                     {
-                        if (posTo != -1 && board.IsValidMove(posFrom, posTo))
-                            if(board.CanPlaceAt(posTo))
-                            return posTo;
+                        if (posTo != -1 && board.IsValidMove(posFrom, posTo) && board.CanPlaceAt(posTo))
+                        {
+                            board.Move((int)CurrentPlayer, posFrom, posTo);                                         // This is a quick fix... I need to figure out a way to do the move from outside of this function
+                            return -1;
+                        } 
                         Console.WriteLine("\nPlease select a valid position where there are no cows!");
                         posTo = ConvertUserInput(Console.ReadLine());
                     }
+                    
 
                 case Phase.Killing:
                     Console.WriteLine("\nYou formed a mill, choose an enemy cow to kill");
