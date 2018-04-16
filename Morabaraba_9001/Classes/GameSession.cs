@@ -40,7 +40,6 @@ namespace Morabaraba_9001.Classes
         public virtual void Play(int input)
         {
             board.UpdateMills();
-
             switch (CurrentPhase)
             {
                 //
@@ -79,36 +78,26 @@ namespace Morabaraba_9001.Classes
                     if (board.areNewMills((int)CurrentPlayer))
                     {
                         CurrentPhase = Phase.Killing;
-                        Console.WriteLine("You formed a mill, choose an enemy cow to kill");
                         break;
                     }
-
                     SwitchPlayer();
                     break;
                 #endregion
 
                 #region Killing
                 case Phase.Killing:
-                    if (!board.CanKillAt((int)CurrentPlayer, input))
-                    {
-                        Console.WriteLine("You cannot kill that cow, choose a different enemy cow to kill");
-                        break;
-                    }
-
                     board.KillCow(input);
-
                     if (CowsLeft > 0)
                     {
                         CurrentPhase = Phase.Placing;
                         SwitchPlayer();
-                        break;
                     }
                     else
                     {
                         CurrentPhase = Phase.Moving;
                         SwitchPlayer();
-                        break;
                     }
+                    break;
                 #endregion
 
                 case Phase.Winner:
@@ -154,16 +143,16 @@ namespace Morabaraba_9001.Classes
             }
         }
 
-       
 
         // Bigger and better!
         public virtual int CastInput() //Like a spell, 'cause you're a wizzzard, Harry...
         {
             board.DrawBoard();
-            Console.WriteLine(String.Format("\nCurrent state: {0}", CurrentPhase));
+            Console.WriteLine(String.Format("\n{0} State \t Player {1}'s turn", CurrentPhase, (int)CurrentPlayer+1));
             switch (CurrentPhase)
             {
                 case Phase.Placing:
+                    Console.WriteLine(String.Format("\n{0} Cows left to place", (CowsLeft+1)/2));
                     Console.WriteLine("\nPlease enter a coordinate:");
                     int input = ConvertUserInput(Console.ReadLine());
                     while (true)
@@ -174,32 +163,44 @@ namespace Morabaraba_9001.Classes
                         Console.WriteLine("\nInvalid coordinate input. Please enter a VALID coordinate:");
                         input = ConvertUserInput(Console.ReadLine());
                     }
+
                 case Phase.Moving:
-                    Console.WriteLine("Please select the cow you want to move");
+                    Console.WriteLine("\nPlease select the cow you want to move");
                     int posFrom = ConvertUserInput(Console.ReadLine());
                     while (true)
                     {
                         if (posFrom != -1 && board.isPlayerCow((int)CurrentPlayer, posFrom))
                             break;
-                        Console.WriteLine("Please select One of YOUR cows");
+                        Console.WriteLine("\nPlease select One of YOUR cows");
                         posFrom = ConvertUserInput(Console.ReadLine());
                     }
-                    Console.WriteLine("Please select where you want you cow to move");
+                    Console.WriteLine("\nPlease select where you want you cow to move");
                     int posTo = ConvertUserInput(Console.ReadLine());
                     while (true)
                     {
                         if (posTo != -1 && board.IsValidMove(posFrom, posTo))
                             if(board.CanPlaceAt(posTo))
                             return posTo;
-                        Console.WriteLine("Please select a valid position where there are no cows!");
+                        Console.WriteLine("\nPlease select a valid position where there are no cows!");
                         posTo = ConvertUserInput(Console.ReadLine());
                     }
+
+                case Phase.Killing:
+                    Console.WriteLine("\nYou formed a mill, choose an enemy cow to kill");
+                    input = ConvertUserInput(Console.ReadLine());
+                    while (true)
+                    {
+                        if (board.CanKillAt((int)CurrentPlayer, input))
+                            return input;
+                        Console.WriteLine("\nYou cannot kill that cow, choose a different enemy cow to kill");
+                        input = ConvertUserInput(Console.ReadLine());
+                    }
+
+                case Phase.Winner:
+                    throw new Exception("No no, thats not right");
             }
             return -1;
         }
-
-
-
 
         #endregion
 
