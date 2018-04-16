@@ -30,7 +30,6 @@ namespace Morabaraba_9001.Classes
 
         public void Start()
         {
-
             while(CurrentPhase != Phase.Winner)
             {
                 int input = getInput();
@@ -50,7 +49,6 @@ namespace Morabaraba_9001.Classes
         public virtual int CastInput() //Like a spell, 'cause you're a wizzzard, Harry...
         {
             int input = -1;
-            Console.Clear();
             board.DrawBoard();
             Console.WriteLine("\nPlease enter a coordinate:");
 
@@ -59,7 +57,6 @@ namespace Morabaraba_9001.Classes
                 input = ConvertUserInput(Console.ReadLine());
                 if (input == -1)
                 {
-                    Console.Clear();
                     board.DrawBoard();
                     Console.WriteLine("\nInvalid coordinate input. Please enter a VALID coordinate:");
                     continue;
@@ -113,7 +110,6 @@ namespace Morabaraba_9001.Classes
                 case Phase.Placing:
                     while (!board.CanPlaceAt(input))
                     {
-                        Console.Clear();
                         board.DrawBoard();
                         Console.WriteLine("\nCan't Place there!");
                         input = CastInput();
@@ -123,7 +119,6 @@ namespace Morabaraba_9001.Classes
                 case Phase.Killing:
                     while (!board.CanKillAt((int)CurrentPlayer, input))
                     {
-                        Console.Clear();
                         board.DrawBoard();
                         Console.WriteLine("\nCan't kill that cow!");
                         input = CastInput();
@@ -212,7 +207,6 @@ namespace Morabaraba_9001.Classes
                 // Move to method when completed
                 //
                 case Phase.Placing:
-                    Console.WriteLine(String.Format("Player {0}: You have {1} cows left to move", (int)CurrentPlayer, (CowsLeft + 1) / 2));
                     CowsLeft--;
                     if (CowsLeft == 0)                  // If there are no Cows left, Change to moving phase
                             CurrentPhase = Phase.Moving;
