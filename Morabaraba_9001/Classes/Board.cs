@@ -185,6 +185,8 @@ namespace Morabaraba_9001.Classes
 
         public bool CanKillAt(int ID, int Destination)
         {
+            if (Destination == -1)
+                return false;
             //Long Check: First see if the cow you want to kill is not empty or your own, then check if it's in a mill but if all cows are in a mill then you can kill it.
             return (Cows[Destination].PlayerID != -1 && Cows[Destination].PlayerID != ID) && (!CowInAMill((ID + 1) % 2, Destination) || AreAllCowsInMills((ID + 1) % 2));
         }

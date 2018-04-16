@@ -32,14 +32,13 @@ namespace Morabaraba_9001.Classes
         {
             while(CurrentPhase != Phase.Winner)
             {
-                int input = getInput();
+                int input = CastInput();
                 Play(input);
             }
         }
 
         public virtual void Play(int input)
         {
-            board.DrawBoard();
             board.UpdateMills();
 
             switch (CurrentPhase)
@@ -68,19 +67,15 @@ namespace Morabaraba_9001.Classes
 
                 #region Moving
                 case Phase.Moving:
-                    if (board.numCowRemaining((int)CurrentPlayer) <= 2)     // Winning state (Current player has less than 2 cows
+                    if (board.numCowRemaining((int)CurrentPlayer) <= 2)     // Winning state (Current player has less than 2 cows)
                     {
                         CurrentPhase = Phase.Winner;
                         SwitchPlayer();
                         break;
                     }
-                    // Select cow
-                    int posFrom = selectCow();
-                    // Get new cow position
-                    int posTo = selectNewPos(posFrom);
-                    // Move cow
-                    board.Move((int)CurrentPlayer, posFrom, posTo);
-
+                    if (input != -1)
+                        throw new Exception("The input was not taken properly... well... ");
+                    board.UpdateMills();
                     if (board.areNewMills((int)CurrentPlayer))
                     {
                         CurrentPhase = Phase.Killing;
@@ -125,27 +120,6 @@ namespace Morabaraba_9001.Classes
 
         #region User Input
 
-        //For General input of anything
-        public virtual int CastInput() //Like a spell, 'cause you're a wizzzard, Harry...
-        {
-            int input = -1;
-            board.DrawBoard();
-            Console.WriteLine("\nPlease enter a coordinate:");
-
-            while (true)
-            {
-                input = ConvertUserInput(Console.ReadLine());
-                if (input == -1)
-                {
-                    board.DrawBoard();
-                    Console.WriteLine("\nInvalid coordinate input. Please enter a VALID coordinate:");
-                    continue;
-                }
-                else break;
-            }
-            return input;            
-        }
-
         // Converts the the coordinates to index        (returns -1 if invalid)
         public int ConvertUserInput (string s)
         {
@@ -180,65 +154,52 @@ namespace Morabaraba_9001.Classes
             }
         }
 
-        // Loops until an input is recieved that is not ontop of another cow      
-        public virtual int getInput()
+       
+
+        // Bigger and better!
+        public virtual int CastInput() //Like a spell, 'cause you're a wizzzard, Harry...
         {
-            int input = CastInput();
+            board.DrawBoard();
+            Console.WriteLine(String.Format("\nCurrent state: {0}", CurrentPhase));
             switch (CurrentPhase)
             {
                 case Phase.Placing:
-                    while (!board.CanPlaceAt(input))
+                    Console.WriteLine("\nPlease enter a coordinate:");
+                    int input = ConvertUserInput(Console.ReadLine());
+                    while (true)
                     {
-                        board.DrawBoard();
-                        Console.WriteLine("\nCan't Place there!");
-                        input = CastInput();
+                        if (input != -1)
+                            if(board.CanPlaceAt(input))
+                                return input;
+                        Console.WriteLine("\nInvalid coordinate input. Please enter a VALID coordinate:");
+                        input = ConvertUserInput(Console.ReadLine());
                     }
-                    return input;
-
-                case Phase.Killing:
-                    while (!board.CanKillAt((int)CurrentPlayer, input))
+                case Phase.Moving:
+                    Console.WriteLine("Please select the cow you want to move");
+                    int posFrom = ConvertUserInput(Console.ReadLine());
+                    while (true)
                     {
-                        board.DrawBoard();
-                        Console.WriteLine("\nCan't kill that cow!");
-                        input = CastInput();
+                        if (posFrom != -1 && board.isPlayerCow((int)CurrentPlayer, posFrom))
+                            break;
+                        Console.WriteLine("Please select One of YOUR cows");
+                        posFrom = ConvertUserInput(Console.ReadLine());
                     }
-                    return input;
-
-                default: return -1;
-            }   
-        }
-
-        // Selects a cow owned by the current player with prompt dialog
-        private int selectCow()
-        {
-            Console.WriteLine("Please select the cow you want to move");
-            int posFrom = ConvertUserInput(Console.ReadLine());
-            while(true)
-            {
-                if(posFrom != -1 && board.isPlayerCow((int)CurrentPlayer, posFrom))
-                {
-                    return posFrom;
-                }
-                Console.WriteLine("Please select One of YOUR cows");
-                posFrom = ConvertUserInput(Console.ReadLine());
+                    Console.WriteLine("Please select where you want you cow to move");
+                    int posTo = ConvertUserInput(Console.ReadLine());
+                    while (true)
+                    {
+                        if (posTo != -1 && board.IsValidMove(posFrom, posTo))
+                            if(board.CanPlaceAt(posTo))
+                            return posTo;
+                        Console.WriteLine("Please select a valid position where there are no cows!");
+                        posTo = ConvertUserInput(Console.ReadLine());
+                    }
             }
+            return -1;
         }
 
-        // Selects a new possition for the cow to move to with prompt dialog 
-        private int selectNewPos(int oldPos)
-        {
-            Console.WriteLine("Please select where you want you cow to move");
-            int posTo = ConvertUserInput(Console.ReadLine());
-            while (true)
-            {
-                if(posTo != -1 && board.CanPlaceAt(posTo) && board.IsValidMove(oldPos, posTo))
-                {
-                    return posTo;
-                }
-                Console.WriteLine("Please select a valid position where there are no cows!");
-                posTo = ConvertUserInput(Console.ReadLine());
-            }
-        }
+
+
 
         #endregion
 
@@ -290,6 +251,92 @@ namespace Morabaraba_9001.Classes
                 board.KillCow(pos);
             }
         }
+
+
+         // Loops until an input is recieved that is not ontop of another cow      
+        public virtual int getInput()
+        {
+            board.DrawBoard();
+            Console.WriteLine(String.Format("\nCurrent state: {0}", CurrentPhase));
+            switch (CurrentPhase)
+            {
+                case Phase.Placing:
+                    int input = CastInput();
+                    while (!board.CanPlaceAt(input))
+                    {
+                        Console.WriteLine("\nCan't Place there!");
+                        input = CastInput();
+                    }
+                    return input;
+
+                case Phase.Moving:
+                    // Select cow
+                    int posFrom = selectCow();
+                    // Get new cow position
+                    int posTo = selectNewPos(posFrom);
+                    // Move cow
+                    board.Move((int)CurrentPlayer, posFrom, posTo);
+                    return -1;  // Move completed
+
+                case Phase.Killing:
+                    input = CastInput();
+                    while (!board.CanKillAt((int)CurrentPlayer, input))
+                    {
+                        Console.WriteLine("\nCan't kill that cow!");
+                        input = CastInput();
+                    }
+                    return input;
+
+                default: return -1;
+            }   
+        }
+
+
+        
+        //For General input of anything
+        public virtual int CastInput() //Like a spell, 'cause you're a wizzzard, Harry...
+        {
+            Console.WriteLine("\nPlease enter a coordinate:");
+            int input = ConvertUserInput(Console.ReadLine());
+            while (true)
+            {
+                if (input != -1)
+                    return input;
+                Console.WriteLine("\nInvalid coordinate input. Please enter a VALID coordinate:");
+                input = ConvertUserInput(Console.ReadLine());
+            }
+        }
+
+        // Selects a cow owned by the current player with prompt dialog
+        private int selectCow()
+        {
+            Console.WriteLine("Please select the cow you want to move");
+            int posFrom = ConvertUserInput(Console.ReadLine());
+            while(true)
+            {
+                if(posFrom != -1 && board.isPlayerCow((int)CurrentPlayer, posFrom))
+                    return posFrom;
+                Console.WriteLine("Please select One of YOUR cows");
+                posFrom = ConvertUserInput(Console.ReadLine());
+            }
+        }
+
+        // Selects a new possition for the cow to move to with prompt dialog 
+        private int selectNewPos(int oldPos)
+        {
+            Console.WriteLine("Please select where you want you cow to move");
+            int posTo = ConvertUserInput(Console.ReadLine());
+            while (true)
+            {
+                if(posTo != -1 && board.CanPlaceAt(posTo) && board.IsValidMove(oldPos, posTo))
+                    return posTo;
+                Console.WriteLine("Please select a valid position where there are no cows!");
+                posTo = ConvertUserInput(Console.ReadLine());
+            }
+        }
+
+
+
 
 
         */
