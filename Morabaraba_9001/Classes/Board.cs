@@ -149,7 +149,7 @@ namespace Morabaraba_9001.Classes
 
         #region Mill Functions
 
-        public void UpdateMills()           // I need to redo this... If it is called twice, the mill is marked at not new and then never formed
+        public void UpdateMills()           // This should be private... once we figure out how to use it for testing
         {
             foreach (Mill current in Mills)
             {
@@ -173,6 +173,7 @@ namespace Morabaraba_9001.Classes
 
         public bool areNewMills(int playerID)
         {
+            UpdateMills();
             foreach (Mill mill in Mills)
             {
                 if (mill.Id == playerID && mill.isNew) { return true; }

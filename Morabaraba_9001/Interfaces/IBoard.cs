@@ -15,7 +15,7 @@ namespace Morabaraba_9001
 
         void Move(int ID, int firstDestination , int secondDestination);
 
-        void UpdateMills();
+        //void UpdateMills();
 
         void KillCow(int Destination);
 

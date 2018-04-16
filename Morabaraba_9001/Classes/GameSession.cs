@@ -39,7 +39,6 @@ namespace Morabaraba_9001.Classes
 
         public virtual void Play(int input)
         {
-            board.UpdateMills();
             switch (CurrentPhase)
             {
                 //
@@ -52,7 +51,6 @@ namespace Morabaraba_9001.Classes
                         CurrentPhase = Phase.Moving;
                     board.Place((int)CurrentPlayer, input);
 
-                    board.UpdateMills();
                     if (board.areNewMills((int)CurrentPlayer))
                     {
                         CurrentPhase = Phase.Killing;
@@ -72,7 +70,6 @@ namespace Morabaraba_9001.Classes
                     }
 
                     // Need to figure out a way to impliment the move function here...      (Search "quick fix" to make sense of this)
-                    board.UpdateMills();
                     if (board.areNewMills((int)CurrentPlayer))
                     {
                         CurrentPhase = Phase.Killing;
@@ -85,7 +82,6 @@ namespace Morabaraba_9001.Classes
                 #region Killing
                 case Phase.Killing:
                     board.KillCow(input);
-                    board.UpdateMills();
 
                     if (CowsLeft > 0)
                     {
