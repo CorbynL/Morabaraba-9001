@@ -17,10 +17,7 @@ namespace Morabaraba_9001.Classes
         public Phase CurrentPhase { get ; private set; }
 
         public GameSession()
-        {
-            // Set the stage
-            SetConsoleProperties();
-            
+        {  
             //Start game
             board = new Board();
             CurrentPlayer = Player.Red;
@@ -35,12 +32,6 @@ namespace Morabaraba_9001.Classes
                 int input = getInput();
                 Play(input);
             }
-        }
-
-        // Sets Console properties, such as height width etc
-        private void SetConsoleProperties()
-        {
-            Console.SetWindowSize(70, 50);
         }
 
         #region User Input
@@ -100,8 +91,7 @@ namespace Morabaraba_9001.Classes
             }
         }
 
-        // Loops until an input is recieved that is not ontop of another cow       
-
+        // Loops until an input is recieved that is not ontop of another cow      
         public virtual int getInput()
         {
             int input = CastInput();
@@ -126,9 +116,7 @@ namespace Morabaraba_9001.Classes
                     return input;
 
                 default: return -1;
-            }
-
-            
+            }   
         }
 
         // Selects a cow owned by the current player with prompt dialog
@@ -163,38 +151,18 @@ namespace Morabaraba_9001.Classes
             }
         }
 
-        #endregion      
+        #endregion
 
-        public bool IsDraw()
-        {
-            throw new NotImplementedException();
-        }
-
+        #region Change states
         private void SwitchPlayer()
         {
             if (CurrentPlayer == Player.Red) CurrentPlayer = Player.Blue;
             else CurrentPlayer = Player.Red;
         }
 
+        #endregion
 
-        /*private void checkForMills()
-        {            
-            if (board.areNewMills((int)CurrentPlayer))
-            {
-                Console.WriteLine("You have formed a MILL! Select a cow to KILL!!!");
-                int pos = CastInput();
-                while (true)
-                {
-                    if (board.Cows[pos].PlayerID == (int)CurrentPlayer || board.Cows[pos].PlayerID == -1)
-                    {
-                        Console.WriteLine("Can't kill that one! Pick another one.");
-                        pos = CastInput();
-                    }
-                    else { break; }
-                }
-                board.KillCow(pos);
-            }
-        }*/
+        #region Game Play
 
         public virtual void Play(int input)
         { 
@@ -275,9 +243,48 @@ namespace Morabaraba_9001.Classes
                 Console.Clear();
             }
 
+        #endregion
+
+        #region TO DO STILL
+        public bool IsDraw()
+        {
+            throw new NotImplementedException();
+        }
+
+
         public void Winner()
         {
             throw new NotImplementedException();
-        }      
-    }       
+        }
+        #endregion
+
+
+
+
+        #region Nolonger usefull Code
+        /*
+
+        private void checkForMills()
+        {            
+            if (board.areNewMills((int)CurrentPlayer))
+            {
+                Console.WriteLine("You have formed a MILL! Select a cow to KILL!!!");
+                int pos = CastInput();
+                while (true)
+                {
+                    if (board.Cows[pos].PlayerID == (int)CurrentPlayer || board.Cows[pos].PlayerID == -1)
+                    {
+                        Console.WriteLine("Can't kill that one! Pick another one.");
+                        pos = CastInput();
+                    }
+                    else { break; }
+                }
+                board.KillCow(pos);
+            }
+        }
+
+
+        */
+        #endregion
+    }
 }
