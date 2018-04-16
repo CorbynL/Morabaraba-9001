@@ -4,6 +4,7 @@ using NSubstitute;
 using System.Linq;
 using Morabaraba_9001.Classes;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Morabaraba_9001.Test
 { 
@@ -89,10 +90,10 @@ namespace Morabaraba_9001.Test
          new int[] {1,3,9},
          new int[] {0,2,4},
          new int[] {1,5,14},
-         new int[] {0,4,6},
+         new int[] {0,4,6,10},
          new int[] {1,3,5,7},
          new int[] {2,4,8,13},
-         new int[] {4,7,11},
+         new int[] {3,7,11},
          new int[] {4,6,8},
          new int[] {5,7,12},
          new int[] {0,10,21},
@@ -111,24 +112,24 @@ namespace Morabaraba_9001.Test
          new int[] {19,21,23},
          new int[] {14,20,22},
         };
-            
-            for(int i = 0; i < ExpectedMoves.Length; i++)
+            g.board.initialiseCows();
+            for (int i = 0; i < ExpectedMoves.Length; i++)
             {
-                g.board.initialiseCows();
-                g.board.Cows[i] = new Cow(i, -1);
+               
+
+                Debug.WriteLine("asedwqaer wretwewesrfsrgsrf\n\n\n\n\n\n\n\n");
                 foreach (int move in ExpectedMoves[i])
                 {
                     Assert.That(g.board.IsValidMove(i, move));
                 }
                 int[] invalidMoves = allMoves.Where(x => !ExpectedMoves[i].Contains(x)).ToArray();
 
-                foreach(int move in invalidMoves)
+                foreach (int move in invalidMoves)
                 {
                     Assert.That(!g.board.IsValidMove(i, move));
                 }
             }
         
-
     }
 
         
@@ -230,11 +231,56 @@ namespace Morabaraba_9001.Test
             }
         }
 
-        [Test]
-        public void MoveCreatesNoDuplicates ()
+        static object[] MovethisPieceToImmidateSurroundings = new object[]
         {
-            //TODO: The number of cows must on increase or decrease after a move
-            Assert.That(false);
+         new object[] { 0, new int[] {1,3,9} },
+         new object[] { 1, new int[] {0,2,4} },
+         new object[] { 2, new int[] {1,5,14} },
+         new object[] { 3, new int[] {0,4,6,10} },
+         new object[] { 4, new int[] {1,3,5,7} },
+         new object[] { 5, new int[] {2,4,8,13} },
+         new object[] { 6, new int[] {3,7,11} },
+         new object[] { 7, new int[] {4,6,8} },
+         new object[] { 8, new int[] {5,7,12} },
+         new object[] { 9, new int[] {0,10,21} },
+         new object[] { 10, new int[] {3,9,11,18} },
+         new object[] { 11, new int[] {6,10,15} },
+         new object[] { 12, new int[] {8,13,17} },
+         new object[] { 13, new int[] {5,12,14,20} },
+         new object[] { 14, new int[] {2,13,23} },
+         new object[] { 15, new int[] {11,16,18} },
+         new object[] { 16, new int[] {15,17,19} },
+         new object[] { 17, new int[] {12,16,20} },
+         new object[] { 18, new int[] {10,15,19,21} },
+         new object[] { 19, new int[] {16,18,20,22} },
+         new object[] { 20, new int[] {13,17,19,23} },
+         new object[] { 21, new int[] {9,18,22} },
+         new object[] { 22, new int[] {19,21,23} },
+         new object[] { 23, new int[] {14,20,22} },
+        };
+
+        [Test]
+        [TestCaseSource(nameof(MovethisPieceToImmidateSurroundings))]
+        public void MoveCreatesNoDuplicates (int piece, int[] moves)
+        {
+            Board b = new Board();
+
+            foreach (int i in moves)
+            {
+                b.initialiseCows();
+                b.Place(0, piece);
+                b.Move(0, piece, i);
+                int[] numCows = b.Cows.Select(x => (int)x.PlayerID).ToArray();
+                int num = 0;
+
+                for(int j = 0; j < numCows.Length; j++)
+                {
+                    if(numCows[j] == 0) { num++; }
+                }
+
+                Assert.That(num == 1);
+            }
+
         }
 
         [Test]
