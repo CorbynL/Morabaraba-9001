@@ -139,6 +139,58 @@ namespace Morabaraba_9001.Classes
             }
         }
 
+        public int getPlaceInput()
+        {
+            Console.WriteLine(String.Format("\n{0} Cows left to place", (CowsLeft + 1) / 2));
+            Console.WriteLine("\nPlease enter a coordinate:");
+
+            int input = ConvertUserInput(Console.ReadLine());
+            while (true)
+            {
+                if (input != -1 && board.CanPlaceAt(input))
+                    return input;
+                Console.WriteLine("\nInvalid coordinate input. Please enter a VALID coordinate:");
+                input = ConvertUserInput(Console.ReadLine());
+            }
+        }
+
+        public int getMoveInput()
+        {
+            Console.WriteLine("\nPlease select the cow you want to move");
+            int posFrom = ConvertUserInput(Console.ReadLine());
+            while (true)
+            {
+                if (posFrom != -1 && board.isPlayerCow((int)CurrentPlayer, posFrom))
+                    break;
+                Console.WriteLine("\nPlease select One of YOUR cows");
+                posFrom = ConvertUserInput(Console.ReadLine());
+            }
+            Console.WriteLine("\nPlease select where you want you cow to move");
+            int posTo = ConvertUserInput(Console.ReadLine());
+            while (true)
+            {
+                if (posTo != -1 && board.IsValidMove(posFrom, posTo) && board.CanPlaceAt(posTo))
+                {
+                    board.Move((int)CurrentPlayer, posFrom, posTo);                                         // This is a quick fix... I need to figure out a way to do the move from outside of this function
+                    return -1;
+                }
+                Console.WriteLine("\nPlease select a valid position where there are no cows!");
+                posTo = ConvertUserInput(Console.ReadLine());
+            }
+        }
+
+        public int getKillInput()
+        {
+            Console.WriteLine("\nYou formed a mill, choose an enemy cow to kill");
+            int input = ConvertUserInput(Console.ReadLine());
+            while (true)
+            {
+                if (board.CanKillAt((int)CurrentPlayer, input))
+                    return input;
+                Console.WriteLine("\nYou cannot kill that cow, choose a different enemy cow to kill");
+                input = ConvertUserInput(Console.ReadLine());
+            }
+        }
 
         // Bigger and better!
         public virtual int CastInput() //Like a spell, 'cause you're a wizzzard, Harry...
@@ -148,51 +200,13 @@ namespace Morabaraba_9001.Classes
             switch (CurrentPhase)
             {
                 case Phase.Placing:
-                    Console.WriteLine(String.Format("\n{0} Cows left to place", (CowsLeft+1)/2));
-                    Console.WriteLine("\nPlease enter a coordinate:");
-                    int input = ConvertUserInput(Console.ReadLine());
-                    while (true)
-                    {
-                        if (input != -1 && board.CanPlaceAt(input))
-                            return input;
-                        Console.WriteLine("\nInvalid coordinate input. Please enter a VALID coordinate:");
-                        input = ConvertUserInput(Console.ReadLine());
-                    }
+                     return getPlaceInput();
 
                 case Phase.Moving:
-                    Console.WriteLine("\nPlease select the cow you want to move");
-                    int posFrom = ConvertUserInput(Console.ReadLine());
-                    while (true)
-                    {
-                        if (posFrom != -1 && board.isPlayerCow((int)CurrentPlayer, posFrom))
-                            break;
-                        Console.WriteLine("\nPlease select One of YOUR cows");
-                        posFrom = ConvertUserInput(Console.ReadLine());
-                    }
-                    Console.WriteLine("\nPlease select where you want you cow to move");
-                    int posTo = ConvertUserInput(Console.ReadLine());
-                    while (true)
-                    {
-                        if (posTo != -1 && board.IsValidMove(posFrom, posTo) && board.CanPlaceAt(posTo))
-                        {
-                            board.Move((int)CurrentPlayer, posFrom, posTo);                                         // This is a quick fix... I need to figure out a way to do the move from outside of this function
-                            return -1;
-                        } 
-                        Console.WriteLine("\nPlease select a valid position where there are no cows!");
-                        posTo = ConvertUserInput(Console.ReadLine());
-                    }
-                    
+                    return getMoveInput();
 
                 case Phase.Killing:
-                    Console.WriteLine("\nYou formed a mill, choose an enemy cow to kill");
-                    input = ConvertUserInput(Console.ReadLine());
-                    while (true)
-                    {
-                        if (board.CanKillAt((int)CurrentPlayer, input))
-                            return input;
-                        Console.WriteLine("\nYou cannot kill that cow, choose a different enemy cow to kill");
-                        input = ConvertUserInput(Console.ReadLine());
-                    }
+                    return getKillInput();
 
                 case Phase.Winner:
                     throw new Exception("No no, thats not right");
