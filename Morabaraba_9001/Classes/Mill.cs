@@ -18,10 +18,10 @@ namespace Morabaraba_9001.Classes
             this.Id = Id;
         }
 
-        public void updateMill(int newID)
+        public void updateMill(int newID, bool isNew)
         {
             Id = newID;
-            isNew = true;
+            this.isNew = isNew;
         }
 
         public void noLongerNew()

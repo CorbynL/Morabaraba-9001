@@ -70,7 +70,8 @@ namespace Morabaraba_9001.Classes
                         SwitchPlayer();
                         break;
                     }
-                                                            // Need to figure out a way to impliment the move function here...      (Search "quick fix" to make sense of this)
+
+                    // Need to figure out a way to impliment the move function here...      (Search "quick fix" to make sense of this)
                     board.UpdateMills();
                     if (board.areNewMills((int)CurrentPlayer))
                     {
@@ -84,6 +85,8 @@ namespace Morabaraba_9001.Classes
                 #region Killing
                 case Phase.Killing:
                     board.KillCow(input);
+                    board.UpdateMills();
+
                     if (CowsLeft > 0)
                     {
                         CurrentPhase = Phase.Placing;

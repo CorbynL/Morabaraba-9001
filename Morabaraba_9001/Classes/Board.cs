@@ -149,24 +149,27 @@ namespace Morabaraba_9001.Classes
 
         #region Mill Functions
 
-        public void UpdateMills()
+        public void UpdateMills()           // I need to redo this... If it is called twice, the mill is marked at not new and then never formed
         {
-            foreach(Mill current in Mills)
+            foreach (Mill current in Mills)
             {
                 int playerID = Cows[current.Positions[0]].PlayerID;
                 if (playerID == Cows[current.Positions[1]].PlayerID && playerID == Cows[current.Positions[2]].PlayerID)
                 {
-                    if (current.isNew)
-                        current.noLongerNew();
-                    else if (current.Id != playerID && playerID != -1 && !current.isNew)
+                    if (current.Id != playerID)
                     {
-                        // New mill
-                        current.updateMill(playerID);
+                        current.updateMill(playerID, true);
                     }
+                    else if (current.Id == playerID)
+                        current.updateMill(playerID, false);
                 }
-                    
+                else if (current.Id != -1)
+                {
+                    current.updateMill(-1, false);
+                }
             }
         }
+            
 
         public bool areNewMills(int playerID)
         {

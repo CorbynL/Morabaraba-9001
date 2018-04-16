@@ -10,6 +10,6 @@ namespace Morabaraba_9001.Interfaces
         bool isNew { get; }
         int Id { get; }
 
-        void updateMill(int newID);
+        void updateMill(int newID,bool isNew);
     }
 }
