@@ -47,6 +47,7 @@ namespace Morabaraba_9001.Classes
                 //
                 // Move to method when completed
                 //
+                #region Placing
                 case Phase.Placing:
                     CowsLeft--;
                     if (CowsLeft == 0)                  // If there are no Cows left, Change to moving phase
@@ -63,7 +64,9 @@ namespace Morabaraba_9001.Classes
 
                     SwitchPlayer();
                     break;
+                #endregion
 
+                #region Moving
                 case Phase.Moving:
                     if (board.numCowRemaining((int)CurrentPlayer) <= 2)     // Winning state (Current player has less than 2 cows
                     {
@@ -87,7 +90,9 @@ namespace Morabaraba_9001.Classes
 
                     SwitchPlayer();
                     break;
+                #endregion
 
+                #region Killing
                 case Phase.Killing:
                     if (!board.CanKillAt((int)CurrentPlayer, input))
                     {
@@ -109,11 +114,11 @@ namespace Morabaraba_9001.Classes
                         SwitchPlayer();
                         break;
                     }
+                #endregion
 
                 case Phase.Winner:
                     throw new NotImplementedException();
             }
-            Console.Clear();
         }
 
         #endregion
