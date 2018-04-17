@@ -537,7 +537,17 @@ namespace Morabaraba_9001.Test
         public void CowsShotAreRemoved ()
         {
             //TODO: A cow that has been killed must be removed from the board and replaced by an empty space
-            Assert.That(false);
+            GameSession g = new GameSession();
+
+            g.Play(0); // Player 1 to A1
+            g.Play(21); // Player 2 to G1
+            g.Play(1); // Player 1 to A4
+            g.Play(22); // Player 2 to G4
+            g.Play(2); // Player 1 to A7 - first mill is formed (A1,A4,A7)
+            g.Play(22); // Kill cow at G4
+
+            //Player 2's cow at G4 is now dead and should now be an empty cow
+            Assert.That(g.board.Cows[22].PlayerID == -1); //Assert that G4 is now an empty space
         }
 
         [Test]
