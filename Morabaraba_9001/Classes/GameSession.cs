@@ -238,12 +238,6 @@ namespace Morabaraba_9001.Classes
 
         #region TO DO
 
-        public bool IsDraw()
-        {
-            throw new NotImplementedException();
-        }
-
-
         public void Winner()
         {
             throw new NotImplementedException();
