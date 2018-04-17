@@ -302,8 +302,25 @@ namespace Morabaraba_9001.Test
         [Test]
         public void CowSelectedHasEmptySpacesToMoveTo ()
         {
-            //TODO: Check that if we select a cow to move, that it can actually move i.e. there is an empty connected space next to it
-            Assert.That(false);
+            GameSession g = new GameSession();
+
+            //Place initial piece
+            g.board.Place(0, 0);
+
+            // Initial pieces' connected spaces
+            int[] validMoves = new int[] { 1, 3, 9 };
+
+            //Surround initial piece
+            foreach(int i in validMoves)
+            {
+                g.board.Place(0, i);
+            }
+            
+            //Assert that it cannot move to any connected spaces
+            foreach (int i in validMoves)
+            {
+                Assert.False(g.board.canMoveCow(0));
+            }
         }
 
         #endregion
