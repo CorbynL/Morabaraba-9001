@@ -372,8 +372,19 @@ namespace Morabaraba_9001.Test
         [Test]
         public void ThreePlayerCowsInAlineFormsAMill ()
         {
-            //TODO: Check that a mill is formed when 3 cows that have the same playerID are in a line
-            Assert.That(false);
+            GameSession g = new GameSession();
+
+            //Place two cows in a row
+            g.board.Place(0, 0);
+            g.board.Place(0, 1);
+
+            //Assert that no new mills have been formed
+            g.board.UpdateMills();
+            Assert.False(g.board.areNewMills(0));
+
+            //place third cow in a row and assert that a mill has been formed
+            g.board.Place(0, 2);
+            Assert.True(g.board.areNewMills(0));
         }
 
         [Test]
