@@ -515,16 +515,20 @@ namespace Morabaraba_9001.Test
         public void PlayerCannotShootOwnCows ()
         {
             //TODO: You cannot kill your own cows when you are about to kill
-            
+            GameSession g = new GameSession();
 
+            g.Play(0); // Player 1 to A1
+            g.Play(21); // Player 2 to G1
 
+            //Try kill Player 1's cows A1 and B2 as Player 1
+            Assert.False(g.board.CanKillAt(0, 0)); //Assert that you can't kill cow at A1 since it belongs to player 1        
         }
 
         [Test]
         public void PlayerCannotShootEmptySpaces ()
         {
             //TODO: You cannot shoot an empty space
-            Assert.That(false);
+            
         }
 
         [Test]
