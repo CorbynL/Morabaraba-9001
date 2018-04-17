@@ -140,7 +140,6 @@ namespace Morabaraba_9001.Test
             }
         
     }
-
         
         static bool isCowtoPlace(int idx, int[] places)
         {
@@ -328,12 +327,44 @@ namespace Morabaraba_9001.Test
         #region TESTS: Flying Phase
 
         [Test]
-        public void CanCowsFlyAtFlyPhase ()
+        public void CanCowsFlyAtFlyPhase()
         {
-            //TODO: Cows can move to any empty space when the player only has 3 cows left
-            Assert.That(false);
-        }
+            int[] positions = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
+            int[][] ExpectedMoves = new int[][]
+        {
+         new int[] {1,3,9},
+         new int[] {0,2,4},
+         new int[] {1,5,14},
+         new int[] {0,4,6,10},
+         new int[] {1,3,5,7},
+         new int[] {2,4,8,13},
+         new int[] {3,7,11},
+         new int[] {4,6,8},
+         new int[] {5,7,12},
+         new int[] {0,10,21},
+         new int[] {3,9,11,18},
+         new int[] {6,10,15},
+         new int[] {8,13,17},
+         new int[] {5,12,14,20},
+         new int[] {2,13,23},
+         new int[] {11,16,18},
+         new int[] {15,17,19},
+         new int[] {12,16,20},
+         new int[] {10,15,19,21},
+         new int[] {16,18,20,22},
+         new int[] {13,17,19,23},
+         new int[] {9,18,22},
+         new int[] {19,21,23},
+         new int[] {14,20,22},
+        };
 
+            GameSession g = new GameSession();
+
+            foreach (int place in positions)
+            {
+                int[] unconnectSpaces = positions.Where(x => !ExpectedMoves[place].Contains(x)).ToArray();
+            }
+        }
         #endregion
 
         #region TESTS: General        
