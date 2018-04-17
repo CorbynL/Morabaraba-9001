@@ -134,7 +134,16 @@ namespace Morabaraba_9001.Classes
 
         public bool IsValidMove(int pos, int newPos)
         {
-            return MoveSets[pos].Contains(newPos) && CanPlaceAt(newPos);
+            Cow c = getCowAt(pos);
+            if (typeof(FlyingCow) == c.GetType())
+                return CanPlaceAt(newPos);
+
+            else return MoveSets[pos].Contains(newPos) && CanPlaceAt(newPos);
+        }
+
+        public Cow getCowAt(int pos)
+        {
+            return Cows[pos];
         }
 
         // Returns true if the cow is owned by the player
@@ -143,7 +152,15 @@ namespace Morabaraba_9001.Classes
             return Cows[pos].PlayerID == playerId;
         }
 
-
+        //Check if none flying cow is surrounded
+        public bool canMoveCow(int pos)
+        {
+            foreach(int c in MoveSets[pos])
+            {
+                if (Cows[c].PlayerID == -1) { return true; }
+            }
+            return false;
+        }
 
         #endregion
 
