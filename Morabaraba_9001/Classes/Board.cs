@@ -278,5 +278,15 @@ namespace Morabaraba_9001.Classes
             throw new NotImplementedException();
         }
         
+        public void makeCowsFly(int player)
+        {
+            Cows = Cows.Select(x =>
+                {
+                    if ((int)x.PlayerID == player) { return new FlyingCow(x.Position, x.PlayerID); }
+                    else return x;
+                }
+                ).ToArray();
+        }
+
     }
 }
