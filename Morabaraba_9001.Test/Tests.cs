@@ -390,8 +390,16 @@ namespace Morabaraba_9001.Test
         [Test]
         public void MillIsInvalidIfCowsAreDifferentIDs ()
         {
-            //TODO: Check that mills can't be formed if any of the 3 cows is different in playerID
-            Assert.That(false);
+            GameSession g = new GameSession();
+
+            //Place two cows 3 in a row, with differnt player Id's
+            g.board.Place(0, 0);
+            g.board.Place(1, 1);
+            g.board.Place(0, 2);
+
+            //Assert that no player has a new mill
+            Assert.False(g.board.areNewMills(0));
+            Assert.False(g.board.areNewMills(1));
         }
 
         // THIS IS BRIAN's PROPERTY SO GITTTT OFF MY PROPERTY
