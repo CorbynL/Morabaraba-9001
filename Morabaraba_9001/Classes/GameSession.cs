@@ -61,7 +61,8 @@ namespace Morabaraba_9001.Classes
                 #endregion
 
                 #region Moving
-                case Phase.Moving:
+                case Phase.Moving:                    
+
                     if (board.numCowRemaining((int)CurrentPlayer) <= 2)     // Winning state (Current player has less than 2 cows)
                     {
                         CurrentPhase = Phase.Winner;
@@ -156,14 +157,27 @@ namespace Morabaraba_9001.Classes
 
         public int getMoveInput()
         {
+            if (board.numCowRemaining((int)CurrentPlayer) == 3)
+            {
+                board.makeCowsFly((int)CurrentPlayer);
+            }
             Console.WriteLine("\nPlease select the cow you want to move");
             int posFrom = ConvertUserInput(Console.ReadLine());
             while (true)
             {
-                if (posFrom != -1 && board.isPlayerCow((int)CurrentPlayer, posFrom))
+                if(!board.canMoveCow(posFrom))
+                {
+                    Console.WriteLine("\n That cow is surrounded and cannot move!");
+                    posFrom = ConvertUserInput(Console.ReadLine());
+                }
+                else if (posFrom != -1 && board.isPlayerCow((int)CurrentPlayer, posFrom))
                     break;
-                Console.WriteLine("\nPlease select One of YOUR cows");
-                posFrom = ConvertUserInput(Console.ReadLine());
+
+                else
+                {
+                    Console.WriteLine("\nPlease select One of YOUR cows");
+                    posFrom = ConvertUserInput(Console.ReadLine());
+                }
             }
             Console.WriteLine("\nPlease select where you want you cow to move");
             int posTo = ConvertUserInput(Console.ReadLine());
