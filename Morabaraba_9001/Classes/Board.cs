@@ -124,21 +124,10 @@ namespace Morabaraba_9001.Classes
          new int[] {14,20,22},          //23
         };
 
-        public void Move(int ID, int firstDestination, int secondDestination)
-        {           
-            if(Cows[firstDestination].PlayerID != ID)
-                throw new Exception("This is an invalid move. The cow is not owned by this player");
-            Cows[secondDestination] = Cows[firstDestination];
-            Cows[firstDestination] = new Cow();
-        }
-
-        public bool IsValidMove(int pos, int newPos)
-        {
-            Cow c = getCowAt(pos);
-            if (typeof(FlyingCow) == c.GetType())
-                return CanPlaceAt(newPos);
-
-            else return MoveSets[pos].Contains(newPos) && CanPlaceAt(newPos);
+        public void Move(int firstDestination, int secondDestination)
+        {        
+            Cows[secondDestination] = new Cow(secondDestination, Cows[firstDestination].PlayerID);
+            Cows[firstDestination] = new Cow(firstDestination);
         }
 
         public Cow getCowAt(int pos)
@@ -153,15 +142,33 @@ namespace Morabaraba_9001.Classes
         }
 
         //Check if none flying cow is surrounded
-        public bool canMoveCow(int pos)
-        {
-            foreach(int c in MoveSets[pos])
+        public bool canMoveFrom(int ID, int Destination)
+        {            
+            if (numCowRemaining(ID) == 3)
             {
-                if (Cows[c].PlayerID == -1) { return true; }
-            }
-            return false;
+                makeCowsFly(ID);
+            }       
+
+            int[] EmptyNeighbours = MoveSets[Destination].Where(x => Cows[x].PlayerID == -1).ToArray();
+            if (EmptyNeighbours.Length == 0 && typeof(FlyingCow) != Cows[Destination].GetType())
+                return false;
+
+            return Cows[Destination].PlayerID == ID; 
+                
         }
 
+        public bool canMoveTo(int ID, int firstDestination, int secondDestination)
+        {
+            Cow c = getCowAt(firstDestination);
+            if (typeof(FlyingCow) == Cows[firstDestination].GetType())
+                return CanPlaceAt(secondDestination);
+
+            int[] EmptyNeighbours = MoveSets[firstDestination].Where(x => Cows[x].PlayerID == -1).ToArray();
+            if (EmptyNeighbours.Length == 0)
+                return false;
+
+            return Cows[secondDestination].PlayerID == -1 && MoveSets[firstDestination].Contains(secondDestination);
+        }
         #endregion
 
         #region Mill Functions

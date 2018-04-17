@@ -13,7 +13,7 @@ namespace Morabaraba_9001
 
         void Place(int ID, int Destination);
 
-        void Move(int ID, int firstDestination , int secondDestination);
+        void Move(int firstDestination , int secondDestination);
 
         //void UpdateMills();
 
@@ -37,14 +37,14 @@ namespace Morabaraba_9001
 
         bool areNewMills(int currentPlayer);
 
-        bool IsValidMove(int pos, int newPos);
+        bool canMoveFrom(int ID, int Destination);
+
+        bool canMoveTo(int ID, int firstDestination, int secondDestination);
 
         void makeCowsFly(int player);
 
         void initialiseCows();
 
-        void UpdateMills();
-
-        bool canMoveCow(int pos);
+        void UpdateMills();        
     }
 }

@@ -22,7 +22,7 @@ namespace Morabaraba_9001.Classes
             board = new Board();
             CurrentPlayer = Player.Red;
             CurrentPhase = Phase.Placing;
-            CowsLeft = 8;
+            CowsLeft = 24;
         }
 
 
@@ -43,9 +43,9 @@ namespace Morabaraba_9001.Classes
         }
 
         public virtual void Play(int input)
-        {
+        {           
             switch (CurrentPhase)
-            {                
+            {
                 #region Placing
                 case Phase.Placing:
                     CowsLeft--;
@@ -63,16 +63,27 @@ namespace Morabaraba_9001.Classes
                 #endregion
 
                 #region Moving
-                case Phase.Moving:                    
+                case Phase.Moving:                   
 
-                    if (board.numCowRemaining((int)CurrentPlayer) <= 2)     // Winning state (Current player has less than 2 cows)
+                    if (input == -42)
                     {
                         CurrentPhase = Phase.Winner;
                         SwitchPlayer();
+                        Winner();
                         break;
                     }
+                    if (input == -420)
+                    {
+                        CurrentPhase = Phase.Winner;
+                        Winner();
+                        break;
+                    }
+                    //Carried 2 inputs on a single number
+                    int posFrom = input / 100;
+                    int posTo = input - (posFrom * 100);                 
 
-                    // Need to figure out a way to impliment the move function here...      (Search "quick fix" to make sense of this)
+                    board.Move(posFrom, posTo);
+                    
                     if (board.areNewMills((int)CurrentPlayer))
                     {
                         CurrentPhase = Phase.Killing;
@@ -95,13 +106,10 @@ namespace Morabaraba_9001.Classes
                     {
                         CurrentPhase = Phase.Moving;
                         SwitchPlayer();
-                    }
-                    break;
-                #endregion
+                    }                   
 
-                case Phase.Winner:
-                    Winner();
                     break;
+                #endregion                
             }
         }
 
@@ -160,39 +168,49 @@ namespace Morabaraba_9001.Classes
 
         public int getMoveInput()
         {
-            if (board.numCowRemaining((int)CurrentPlayer) == 3)
-            {
-                board.makeCowsFly((int)CurrentPlayer);
+            if (board.numCowRemaining((int)CurrentPlayer) == 2)
+            {                
+                return -42; //To be specific to ensure no numbers are confused in actual input
             }
+
+            if (board.numCowRemaining(((int) CurrentPlayer + 1) % 2) == 2)
+            {
+                return -420; //To be specific to ensure no numbers are confused in actual input
+            }
+
             Console.WriteLine("\nPlease select the cow you want to move");
             int posFrom = ConvertUserInput(Console.ReadLine());
             while (true)
             {
-                if(!board.canMoveCow(posFrom))
+                if (posFrom == -1 || !board.canMoveFrom((int) CurrentPlayer, posFrom))
                 {
-                    Console.WriteLine("\n That cow is surrounded and cannot move!");
+                    Console.WriteLine("\nInvalid choice. Please choose a VALID cow:");
                     posFrom = ConvertUserInput(Console.ReadLine());
                 }
-                else if (posFrom != -1 && board.isPlayerCow((int)CurrentPlayer, posFrom))
-                    break;
-
-                else
-                {
-                    Console.WriteLine("\nPlease select One of YOUR cows");
-                    posFrom = ConvertUserInput(Console.ReadLine());
-                }
+                else break;
             }
             Console.WriteLine("\nPlease select where you want you cow to move");
             int posTo = ConvertUserInput(Console.ReadLine());
             while (true)
             {
-                if (posTo != -1 && board.IsValidMove(posFrom, posTo) && board.CanPlaceAt(posTo))
+                if (posTo == -1 || !board.canMoveTo((int) CurrentPlayer, posFrom, posTo))
                 {
-                    board.Move((int)CurrentPlayer, posFrom, posTo);                                         // This is a quick fix... I need to figure out a way to do the move from outside of this function
-                    return -1;
+                    Console.WriteLine("\nInvalid choice. Please choose a VALID cow:");
+                    posTo = ConvertUserInput(Console.ReadLine());
                 }
-                Console.WriteLine("\nPlease select a valid position where there are no cows!");
-                posTo = ConvertUserInput(Console.ReadLine());
+                else
+                {
+                    //I kinda like what I did here, and yes I know its lazy and probably breaks a principle
+                    string input1 = posFrom.ToString();
+                    string input2 = posTo.ToString();
+                    if (input1.Length == 1)
+                        input1 = "0" + input1;
+                    if (input2.Length == 1)
+                        input2 = "0" + input2;
+
+                    return Convert.ToInt32(input1 + input2);
+                }
+                
             }
         }
 
@@ -223,10 +241,7 @@ namespace Morabaraba_9001.Classes
                     return getMoveInput();
 
                 case Phase.Killing:
-                    return getKillInput();
-
-                case Phase.Winner:
-                    throw new Exception("No no, thats not right");
+                    return getKillInput();               
             }
             return -1;
         }

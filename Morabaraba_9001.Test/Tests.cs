@@ -90,56 +90,24 @@ namespace Morabaraba_9001.Test
         
         [Test]
         public void CowCanOnlyMoveToConnectedSpace ()
-        {
-            int[] allMoves = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
+        {            
             GameSession g = new GameSession();
+            int[] possibleMoves = { 1, 3, 9 }, invalidMoves = { 0, 2, 4, 23 };
 
-            int[][] ExpectedMoves = new int[][]
-        {
-         new int[] {1,3,9},
-         new int[] {0,2,4},
-         new int[] {1,5,14},
-         new int[] {0,4,6,10},
-         new int[] {1,3,5,7},
-         new int[] {2,4,8,13},
-         new int[] {3,7,11},
-         new int[] {4,6,8},
-         new int[] {5,7,12},
-         new int[] {0,10,21},
-         new int[] {3,9,11,18},
-         new int[] {6,10,15},
-         new int[] {8,13,17},
-         new int[] {5,12,14,20},
-         new int[] {2,13,23},
-         new int[] {11,16,18},
-         new int[] {15,17,19},
-         new int[] {12,16,20},
-         new int[] {10,15,19,21},
-         new int[] {16,18,20,22},
-         new int[] {13,17,19,23},
-         new int[] {9,18,22},
-         new int[] {19,21,23},
-         new int[] {14,20,22},
-        };
-            g.board.initialiseCows();
+            g.Play(0);
 
-            for (int i = 0; i < ExpectedMoves.Length; i++)
-            {       
-                //Move cow to each possible poition from it's placement
-                foreach (int move in ExpectedMoves[i])
-                {
-                    Assert.That(g.board.IsValidMove(i, move));
-                }
-                int[] invalidMoves = allMoves.Where(x => !ExpectedMoves[i].Contains(x)).ToArray();
-
-                // Try to move cow to all other unconnected spaces
-                foreach (int move in invalidMoves)
-                {
-                    Assert.That(!g.board.IsValidMove(i, move));
-                }
+            foreach (int move in possibleMoves)
+            {
+                Assert.That(g.board.canMoveFrom(0, 0));
+                Assert.That(g.board.canMoveTo(0, 0, move));
+            }            
+            foreach (int move in invalidMoves)
+            {
+                Assert.That(g.board.canMoveFrom(0, 0));
+                Assert.That(!g.board.canMoveTo(0, 0, move));
             }
-        
-    }
+        }       
+    
         
         static bool isCowtoPlace(int idx, int[] places)
         {
@@ -222,20 +190,20 @@ namespace Morabaraba_9001.Test
                 g.board.Cows = a[i];
                 foreach(int move in ExpectedMoves[i])
                 {
-                    Assert.That(!g.board.IsValidMove(i,move));
+                    Assert.That(!g.board.canMoveFrom(0, i));
+                    Assert.That(!g.board.canMoveTo(0, i, move));
                 }
             }
 
             //Reset board
             g.board.initialiseCows();
+            g.Play(0);
 
             //Can move to unoccupied spaces
-            for (int i = 0; i < 1; i++)
-            {
-                foreach (int move in ExpectedMoves[i])
-                {
-                    Assert.That(g.board.IsValidMove(i, move));
-                }
+            foreach (int move in ExpectedMoves[0])
+            {               
+                Assert.That(g.board.canMoveFrom(0, 0));
+                Assert.That(g.board.canMoveTo(0, 0, move));                
             }
         }
 
@@ -281,7 +249,7 @@ namespace Morabaraba_9001.Test
                     b.Place(0, allMoves[i]);
 
                     //Move cow to all connected spaces from it's current poisition
-                    b.Move(0, i, ExpectedMoves[i][z]);
+                    b.Move(i, ExpectedMoves[i][z]);
 
                     //Get number of cows on board
                     int[] numCows = b.Cows.Select(x => (int)x.PlayerID).ToArray();
@@ -314,12 +282,9 @@ namespace Morabaraba_9001.Test
             {
                 g.board.Place(0, i);
             }
-            
+
             //Assert that it cannot move to any connected spaces
-            foreach (int i in validMoves)
-            {
-                Assert.False(g.board.canMoveCow(0));
-            }
+            Assert.False(g.board.canMoveFrom(0, 0));
         }
 
         #endregion
