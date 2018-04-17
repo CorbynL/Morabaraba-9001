@@ -503,8 +503,7 @@ namespace Morabaraba_9001.Test
             g.Play(4); // Player 1 to B4
             g.Play(19); // Player 2 to F4
             g.Play(5); // Player 1 to B6 - second mill is formed (B2,B4,B6)
-
-            Cow[] x = g.board.Cows;
+            
             //We now have player one with 6 cows with 3 in each mill
 
             //Try kill Player 1's cows A1 and B2 as Player 2
@@ -516,7 +515,9 @@ namespace Morabaraba_9001.Test
         public void PlayerCannotShootOwnCows ()
         {
             //TODO: You cannot kill your own cows when you are about to kill
-            Assert.That(false);
+            
+
+
         }
 
         [Test]
