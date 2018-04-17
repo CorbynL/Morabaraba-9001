@@ -528,7 +528,9 @@ namespace Morabaraba_9001.Test
         public void PlayerCannotShootEmptySpaces ()
         {
             //TODO: You cannot shoot an empty space
-            
+            GameSession g = new GameSession();
+            //Just try see if player 1 can kill any empty space (empty A1 in this case)
+            Assert.False(g.board.CanKillAt(0, 0)); //Assert that you can't kill cow at A1 since it is empty
         }
 
         [Test]
