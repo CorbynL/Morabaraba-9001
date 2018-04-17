@@ -22,7 +22,7 @@ namespace Morabaraba_9001.Classes
             board = new Board();
             CurrentPlayer = Player.Red;
             CurrentPhase = Phase.Placing;
-            CowsLeft = 24;
+            CowsLeft = 8;
         }
 
 
@@ -35,6 +35,11 @@ namespace Morabaraba_9001.Classes
                 int input = CastInput();
                 Play(input);
             }
+        }
+
+        public void Winner()
+        {
+            Console.WriteLine(string.Format("Player {0} is the winner!\nIf you would like to play again, type y and q to quit.\n", (int)CurrentPlayer + 1));
         }
 
         public virtual void Play(int input)
@@ -95,7 +100,8 @@ namespace Morabaraba_9001.Classes
                 #endregion
 
                 case Phase.Winner:
-                    throw new NotImplementedException();
+                    Winner();
+                    break;
             }
         }
 
@@ -236,14 +242,6 @@ namespace Morabaraba_9001.Classes
 
         #endregion
 
-        #region TO DO
-
-        public void Winner()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
 
 
 

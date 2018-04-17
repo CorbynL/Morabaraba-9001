@@ -11,9 +11,15 @@ namespace Morabaraba_9001
         {
             // Set the stage
             SetConsoleProperties();
-
+            
             gameSession = new GameSession();
             gameSession.Start();
+
+            if (Console.ReadLine() == "y")
+            {
+                Main(null);
+            }
+            else Environment.Exit(0);
         }
 
         #region Set Console Properties for the game
