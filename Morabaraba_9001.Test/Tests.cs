@@ -45,6 +45,7 @@ namespace Morabaraba_9001.Test
         [Test]
         public void Only12CowsPlacedForEachPlayer()
         {
+            //Simulate entire placing phase
             GameSession g = new GameSession();
             for (int i = 0; i < 24; i++)
             {
@@ -54,9 +55,11 @@ namespace Morabaraba_9001.Test
             //Placing phase is over
             Assert.True(g.CurrentPhase == GameSession.Phase.Moving);
 
+            // List of cows each player owns
             Cow[] player1Cows = g.board.getCowsByPlayer(0).ToArray();
             Cow[] player2Cows = g.board.getCowsByPlayer(1).ToArray();
 
+            // Each player must have 12 cows
             Assert.True(player1Cows.Length == 12 && player2Cows.Length == 12);
         }
 
@@ -64,15 +67,20 @@ namespace Morabaraba_9001.Test
         public void CowsCannotMoveDuringPlacement ()
         {
             int counter = 0;
-
             GameSession g = new GameSession();
+
+            //Simulate placing phase (24 turns)
             for (int i = 0; i < 24; i++)
             {
+                //increment if Phase = Placing
                 if (g.CurrentPhase == GameSession.Phase.Placing) { counter++; }
                 g.Play(i);
                 
-            }            
+            }    
+            //Each turn should have be in placing phase (24 turns)
             Assert.True(counter == 24);
+
+            //Placing phase is over, Phase sould be Moving
             Assert.True(g.CurrentPhase == GameSession.Phase.Moving);
         }
 
@@ -85,6 +93,7 @@ namespace Morabaraba_9001.Test
         {
             int[] allMoves = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
             GameSession g = new GameSession();
+
             int[][] ExpectedMoves = new int[][]
         {
          new int[] {1,3,9},
@@ -113,17 +122,17 @@ namespace Morabaraba_9001.Test
          new int[] {14,20,22},
         };
             g.board.initialiseCows();
-            for (int i = 0; i < ExpectedMoves.Length; i++)
-            {
-               
 
-                Debug.WriteLine("asedwqaer wretwewesrfsrgsrf\n\n\n\n\n\n\n\n");
+            for (int i = 0; i < ExpectedMoves.Length; i++)
+            {       
+                //Move cow to each possible poition from it's placement
                 foreach (int move in ExpectedMoves[i])
                 {
                     Assert.That(g.board.IsValidMove(i, move));
                 }
                 int[] invalidMoves = allMoves.Where(x => !ExpectedMoves[i].Contains(x)).ToArray();
 
+                // Try to move cow to all other unconnected spaces
                 foreach (int move in invalidMoves)
                 {
                     Assert.That(!g.board.IsValidMove(i, move));
@@ -268,17 +277,23 @@ namespace Morabaraba_9001.Test
             {
                 for (int z = 0; z < ExpectedMoves[i].Length; z++)
                 {
+                    //Reset board with one cow at specified position
                     b.initialiseCows();
                     b.Place(0, allMoves[i]);
-                    b.Move(0, i, ExpectedMoves[i][z]);
-                    int[] numCows = b.Cows.Select(x => (int)x.PlayerID).ToArray();
-                    int num = 0;
 
+                    //Move cow to all connected spaces from it's current poisition
+                    b.Move(0, i, ExpectedMoves[i][z]);
+
+                    //Get number of cows on board
+                    int[] numCows = b.Cows.Select(x => (int)x.PlayerID).ToArray();
+                    int num = 0;    
+                    //.Aggregate was too hard apparently
                     for (int j = 0; j < numCows.Length; j++)
                     {
                         if (numCows[j] == 0) { num++; }
                     }
 
+                    //After move, number of cows on board should still be one.
                     Assert.That(num == 1);
                 }
             }
