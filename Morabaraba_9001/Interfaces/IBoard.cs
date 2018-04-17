@@ -39,6 +39,12 @@ namespace Morabaraba_9001
 
         bool IsValidMove(int pos, int newPos);
 
+        void makeCowsFly(int player);
+
         void initialiseCows();
+
+        void UpdateMills();
+
+        bool canMoveCow(int pos);
     }
 }
