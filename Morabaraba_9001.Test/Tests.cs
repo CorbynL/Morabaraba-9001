@@ -455,24 +455,61 @@ namespace Morabaraba_9001.Test
             g.Play(22); // Player 2 to G4
             g.Play(2); // Player 1 to A7 - mill is formed
 
-            //Now in killing phase
-           // Assert.That(g.CurrentPhase == GameSession.Phase.)
+            g.Play(22); // Kill cow at G4
+            g.Play(21); // Try kill cow at G1 (Second kill)
 
-            Assert.That(false);
+            Assert.That(g.board.Cows[22].PlayerID == -1); //Assert that the first cow is indeed dead
+            Assert.That(g.board.Cows[21].PlayerID == 1); //Assert that the second cow is still there and belongs to Player 2
         }
 
         [Test]
         public void MillCowIsSafeIfNonMillCowsExist ()
         {
             //TODO: You cannot kill a cow in a mill if there exists cows that are not in a mill
-            Assert.That(false);
+            GameSession g = new GameSession();
+
+            g.Play(0); // Player 1 to A1
+            g.Play(21); // Player 2 to G1
+            g.Play(1); // Player 1 to A4
+            g.Play(22); // Player 2 to G4
+            g.Play(2); // Player 1 to A7 - mill is formed (A1,A4,A7)
+            g.Play(22); // Kill cow at G4
+            g.Play(22); // Player 2 to G4
+            g.Play(3); // Player 1 to B2
+            
+            //We now have player one with 4 cows: 3 in a mill and one loose, so we can try see which cows we can kill
+            
+            // Try kill Player 1's cows A1 and B2 as Player 2 
+            Assert.False(g.board.CanKillAt(1, 0)); //Assert that you can't kill cow at A1 since its in a mill and safe since B2 is not in a mill            
+            Assert.True(g.board.CanKillAt(1, 3)); //Assert that you can kill cow at B2 since it is not in a mill            
         }
 
         [Test]
         public void CanKillMillCowIfAllCowsInMills ()
         {
             //TODO: You can kill a cow in a mill if all cows are in mills
-            Assert.That(false);
+
+            GameSession g = new GameSession();
+
+            g.Play(0); // Player 1 to A1
+            g.Play(21); // Player 2 to G1
+            g.Play(1); // Player 1 to A4
+            g.Play(22); // Player 2 to G4
+            g.Play(2); // Player 1 to A7 - first mill is formed (A1,A4,A7)
+            g.Play(22); // Kill cow at G4
+            g.Play(22); // Player 2 to G4
+            g.Play(3); // Player 1 to B2
+            g.Play(18); // Player 2 to F2
+            g.Play(4); // Player 1 to B4
+            g.Play(19); // Player 2 to F4
+            g.Play(5); // Player 1 to B6 - second mill is formed (B2,B4,B6)
+
+            Cow[] x = g.board.Cows;
+            //We now have player one with 6 cows with 3 in each mill
+
+            //Try kill Player 1's cows A1 and B2 as Player 2
+            Assert.True(g.board.CanKillAt(1, 0)); //Assert that you can kill cow at A1 since all player 1's cows in a mill            
+            Assert.True(g.board.CanKillAt(1, 3)); //Assert that you can kill cow at B2 since all player 1's cows in a mill
         }
 
         [Test]

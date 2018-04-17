@@ -22,7 +22,7 @@ namespace Morabaraba_9001.Classes
             board = new Board();
             CurrentPlayer = Player.Red;
             CurrentPhase = Phase.Placing;
-            CowsLeft = 8;
+            CowsLeft = 24;
         }
 
 
@@ -40,10 +40,7 @@ namespace Morabaraba_9001.Classes
         public virtual void Play(int input)
         {
             switch (CurrentPhase)
-            {
-                //
-                // Move to method when completed
-                //
+            {                
                 #region Placing
                 case Phase.Placing:
                     CowsLeft--;
