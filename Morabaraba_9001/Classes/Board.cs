@@ -66,30 +66,9 @@ namespace Morabaraba_9001.Classes
         #endregion
 
         #region Output to Console
-        public void DrawBoard()
-        {
-            Console.WriteLine(String.Format(getBoardString(), (object[])BoardPopulation(Cows)));
-        }
 
-        private string getBoardString()
-        {
-            Console.Clear();
-            StringBuilder builder = new StringBuilder("\n\n\n\n\t     1     2     3     4     5     6     7\n\n");
-            builder.Append("\t A   ({0}) -------------({1})---------------({2})\n\n");
-            builder.Append("\t     |   \\             |              /  |    \n\n");
-            builder.Append("\t B   |    ({3})---------({4})---------({5})    |\n\n");
-            builder.Append("\t     |     |  \\        |       /   |     |    \n\n");
-            builder.Append("\t C   |     |    ({6})---({7})---({8})    |     |    \n\n");
-            builder.Append("\t     |     |     |           |     |     |    \n\n");
-            builder.Append("\t D  ({9})---({10})---({11})         ({12})---({13})---({14})\n\n");
-            builder.Append("\t     |     |     |           |     |     |    \n\n");
-            builder.Append("\t E   |     |    ({15})---({16})---({17})    |     |    \n\n");
-            builder.Append("\t     |     | /         |         \\ |     |\n\n");
-            builder.Append("\t F   |    ({18})---------({19})---------({20})    |\n\n");
-            builder.Append("\t     | /               |              \\  |    \n\n");
-            builder.Append("\t G   ({21}) -------------({22})---------------({23})    ");
-            return builder.ToString();
-        }
+
+        
 
         #endregion
 
