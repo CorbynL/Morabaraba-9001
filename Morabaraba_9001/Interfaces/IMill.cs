@@ -9,7 +9,6 @@ namespace Morabaraba_9001.Interfaces
         int[] Positions { get; }
         bool isNew { get; }
         int Id { get; }
-
         void updateMill(int newID,bool isNew);
     }
 }

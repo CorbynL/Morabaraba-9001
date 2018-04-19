@@ -7,7 +7,7 @@ namespace Morabaraba_9001
     public interface IGameSession
     {
         IBoard board { get; }
-        int CastInput();        
+        //int CastInput();        
         void Play(int input);
         void Winner();
     }

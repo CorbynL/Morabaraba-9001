@@ -11,40 +11,40 @@ namespace Morabaraba_9001
 
         Mill[] Mills { get;}
 
-        void Place(int ID, int Destination);
+        void Place(Cow Cow, int Destination);
 
         void Move(int firstDestination , int secondDestination);
 
         //void UpdateMills();
 
-        void KillCow(int Destination);
+        void Kill(int Destination);
 
-        bool CanKillAt(int ID, int Destination);
+        //bool CanKillAt(int ID, int Destination);
 
-        void DrawBoard();
+        //void DrawBoard();
 
-        bool CanPlaceAt(int Position);
+        //bool CanPlaceAt(int Position);
 
-        int getMove();
+        //int getMove();
 
-        bool isPlayerCow(int currentPlayer, int input);
+        //bool isPlayerCow(int currentPlayer, int input);
 
-        bool isCowAt(int input);
+        //bool isCowAt(int input);
 
-        int numCowRemaining(int currentPlayer);
+        //int numCowRemaining(int currentPlayer);
 
-        IEnumerable<Cow> getCowsByPlayer(int ID);
+        //IEnumerable<Cow> getCowsByPlayer(int ID);
 
-        bool areNewMills(int currentPlayer);
+        //bool areNewMills(int currentPlayer);
 
-        bool canMoveFrom(int ID, int Destination);
+        //bool canMoveFrom(int ID, int Destination);
 
-        bool canMoveTo(int ID, int firstDestination, int secondDestination);
+        //bool canMoveTo(int ID, int firstDestination, int secondDestination);
 
-        void makeCowsFly(int player);
+        //void makeCowsFly(int player);
 
         void initialiseCows();
 
-        void UpdateMills();        
+        //void UpdateMills();        
     }
 }
