@@ -4,13 +4,18 @@ using System.Text;
 
 namespace Morabaraba_9001.Classes
 {
-    class InputOutput
+    /// <summary>
+    /// Handles all interaction with the console
+    /// </summary>
+    static class External 
     {
 
-        #region User Input
-        
-        // Converts the the coordinates to index        (returns -1 if invalid)
-        private int ConvertUserInput(string s)
+        /// <summary>
+        /// Converts the coordinates to an index on the board
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        static private int convertUserInput(string s)
         {
             switch (s.ToLower())
             {
@@ -43,67 +48,100 @@ namespace Morabaraba_9001.Classes
             }
         }
 
-        public int getPlaceInput()
+        /// <summary>
+        /// Contains the board string
+        /// </summary>
+        /// <returns></returns>
+        static private string BoardString()
         {
-            Console.WriteLine("\nPlease enter a coordinate:");
+            Console.Clear();
+            StringBuilder builder = new StringBuilder("\n\n\n\n\t     1     2     3     4     5     6     7\n\n");
+            builder.Append("\t A   ({0}) -------------({1})---------------({2})\n\n");
+            builder.Append("\t     |   \\             |              /  |    \n\n");
+            builder.Append("\t B   |    ({3})---------({4})---------({5})    |\n\n");
+            builder.Append("\t     |     |  \\        |       /   |     |    \n\n");
+            builder.Append("\t C   |     |    ({6})---({7})---({8})    |     |    \n\n");
+            builder.Append("\t     |     |     |           |     |     |    \n\n");
+            builder.Append("\t D  ({9})---({10})---({11})         ({12})---({13})---({14})\n\n");
+            builder.Append("\t     |     |     |           |     |     |    \n\n");
+            builder.Append("\t E   |     |    ({15})---({16})---({17})    |     |    \n\n");
+            builder.Append("\t     |     | /         |         \\ |     |\n\n");
+            builder.Append("\t F   |    ({18})---------({19})---------({20})    |\n\n");
+            builder.Append("\t     | /               |              \\  |    \n\n");
+            builder.Append("\t G   ({21}) -------------({22})---------------({23})    ");
+            builder.Append("\n\t The game is in {24} state and it is Player: {0}'s turn\n");
+            return builder.ToString();
+        }
 
-            int input = ConvertUserInput(Console.ReadLine());
+        /// <summary>
+        /// Get the Input to place a cow
+        /// </summary>
+        /// <returns></returns>
+        static public int PlaceInput()
+        {
+            Console.WriteLine("\nPlease enter a coordinate to place your cow:");
+
+            int input = convertUserInput(Console.ReadLine());
             while (true)
             {
                 if (input != -1 )//&& board.CanPlaceAt(input))
                     return input;
                 Console.WriteLine("\nInvalid coordinate input. Please enter a VALID coordinate:");
-                input = ConvertUserInput(Console.ReadLine());
+                input = convertUserInput(Console.ReadLine());
             }
         }
 
-        public int getMoveFromInput()
+        /// <summary>
+        ///  Asks to select a cow and returns the input
+        /// </summary>
+        /// <returns></returns>
+        static public int MoveFromInput()
         {
-            Console.WriteLine("\nPlease select the cow you want to move");
-            int posFrom = ConvertUserInput(Console.ReadLine());
+            Console.WriteLine("\nPlease select the cow you want to move:\n");
+            int posFrom = convertUserInput(Console.ReadLine());
             while (true)
             {
                 if (posFrom != -1)
-                {
                     return posFrom;
-                }
-                Console.WriteLine("\nInvalid choice. Please choose a VALID cow:");
-                posFrom = ConvertUserInput(Console.ReadLine());
+                Console.WriteLine("\nInvalid choice. Please choose a VALID cow:\n");
+                posFrom = convertUserInput(Console.ReadLine());
             }
         }
-        public int getMoveToInput()
+
+        /// <summary>
+        /// Asks to select the possition that you want to move a cow to
+        /// </summary>
+        /// <returns></returns>
+        static public int MoveToInput()
         {
-            Console.WriteLine("\nPlease select where you want you cow to move");
-            int posTo = ConvertUserInput(Console.ReadLine());
+            Console.WriteLine("\nPlease select where you want you cow to move:\n");
+            int posTo = convertUserInput(Console.ReadLine());
             while (true)
             {
                 if (posTo != -1)
-                {
                     return posTo;
-                }
-                posTo = ConvertUserInput(Console.ReadLine());
-                Console.WriteLine("\nInvalid choice. Please choose a VALID cow:");
+                posTo = convertUserInput(Console.ReadLine());
+                Console.WriteLine("\nInvalid choice. Please choose a VALID cow:\n");
             }
         }
-        
 
-        public int getKillPosInput()
+
+
+        /// <summary>
+        ///  Asks to select a cow to kill
+        /// </summary>
+        /// <returns></returns>
+        static public int KillPosInput()
         {
-            Console.WriteLine("\nYou formed a mill, choose an enemy cow to kill");
-            int input = ConvertUserInput(Console.ReadLine());
+            Console.WriteLine("\nYou formed a mill, choose an enemy cow to kill:\n");
+            int input = convertUserInput(Console.ReadLine());
             while (true)
             {
                 if (input != -1)
                     return input;
-                Console.WriteLine("\nYou cannot kill that cow, choose a different enemy cow to kill");
-                input = ConvertUserInput(Console.ReadLine());
+                Console.WriteLine("\nYou cannot kill that cow, choose a different enemy cow to kill:\n");
+                input = convertUserInput(Console.ReadLine());
             }
         }
-
-        #endregion
-
-
-
-
     }
 }
