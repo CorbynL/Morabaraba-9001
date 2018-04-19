@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Morabaraba_9001.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Morabaraba_9001.Classes
@@ -52,7 +54,7 @@ namespace Morabaraba_9001.Classes
         /// Contains the board string
         /// </summary>
         /// <returns></returns>
-        static private string BoardString()
+        static public void DrawBoard(ICow[] Cows, string State, string PlayerName)
         {
             Console.Clear();
             StringBuilder builder = new StringBuilder("\n\n\n\n\t     1     2     3     4     5     6     7\n\n");
@@ -69,8 +71,19 @@ namespace Morabaraba_9001.Classes
             builder.Append("\t F   |    ({18})---------({19})---------({20})    |\n\n");
             builder.Append("\t     | /               |              \\  |    \n\n");
             builder.Append("\t G   ({21}) -------------({22})---------------({23})    ");
-            builder.Append("\n\t The game is in {24} state and it is Player: {0}'s turn\n");
-            return builder.ToString();
+  
+            Console.WriteLine(String.Format(builder.ToString(), (object[])BoardPopulation(Cows)));
+            Console.WriteLine(String.Format("\n\t The game is in {0} state and it is Player: {1}'s turn\n", State, PlayerName));
+        }
+        
+        /// <summary>
+        /// Used to Get each symbol of each Cow and add it to the board string
+        /// </summary>
+        /// <param name="cows"></param>
+        /// <returns></returns>
+        static IEnumerable<string> BoardPopulation(IEnumerable<ICow> cows)
+        {
+            return cows.Select(x => (x.Symbol.ToString())).ToArray();
         }
 
         /// <summary>
