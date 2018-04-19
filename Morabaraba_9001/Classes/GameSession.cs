@@ -23,13 +23,13 @@ namespace Morabaraba_9001.Classes
 
         private Phase Current_Phase;
 
-        public GameSession(IBoard b, IPlayer p1, IPlayer p2, ICowBox cow)
+        public GameSession(IBoard b, IPlayer p1, IPlayer p2, ICowBox cow, IReferee r)
         {
             board = b;
             Player_1 = p1;
             Player_1 = p2;
             box = cow;
-            Current_Phase = Phase.Placing;
+            referee = r;
 
         }
         
