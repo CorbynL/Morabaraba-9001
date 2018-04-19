@@ -12,7 +12,7 @@ namespace Morabaraba_9001.Interfaces
         IPlayer Player_2 { get; }
         ICowBox box { get; }
         IReferee referee { get; }
-        void Play(int input);
+        void Play();
         void Winner();
     }
 }
