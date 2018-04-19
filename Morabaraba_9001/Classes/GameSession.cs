@@ -23,12 +23,12 @@ namespace Morabaraba_9001.Classes
 
         private Phase Current_Phase;
 
-        public GameSession()
+        public GameSession(IBoard b, IPlayer p1, IPlayer p2, ICowBox cow)
         {
-            board = new Board();
-            Player_1 = new Player();
-            Player_1 = new Player();
-            box = new CowBox();
+            board = b;
+            Player_1 = p1;
+            Player_1 = p2;
+            box = cow;
             Current_Phase = Phase.Placing;
 
         }
