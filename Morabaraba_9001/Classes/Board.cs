@@ -126,32 +126,32 @@ namespace Morabaraba_9001.Classes
         }
 
         //Check if none flying cow is surrounded
-        public bool canMoveFrom(int ID, int Destination)
+        public bool canMoveFrom(Color c, int Destination)
         {            
-            if (numCowRemaining(ID) == 3)
+            if (numCowRemaining(c) == 3)
             {
-                makeCowsFly(ID);
+                makeCowsFly(c);
             }       
 
-            int[] EmptyNeighbours = MoveSets[Destination].Where(x => Cows[x].PlayerID == -1).ToArray();
+            int[] EmptyNeighbours = MoveSets[Destination].Where(x => Cows[x].Color == Color.Black).ToArray();
             if (EmptyNeighbours.Length == 0 && typeof(FlyingCow) != Cows[Destination].GetType())
                 return false;
 
-            return Cows[Destination].PlayerID == ID; 
+            return Cows[Destination].Color == c; 
                 
         }
 
         public bool canMoveTo(int ID, int firstDestination, int secondDestination)
         {
-            Cow c = getCowAt(firstDestination);
+            ICow c = Occupant(firstDestination);
             if (typeof(FlyingCow) == Cows[firstDestination].GetType())
                 return CanPlaceAt(secondDestination);
 
-            int[] EmptyNeighbours = MoveSets[firstDestination].Where(x => Cows[x].PlayerID == -1).ToArray();
+            int[] EmptyNeighbours = MoveSets[firstDestination].Where(x => Cows[x].Color == Color.Black).ToArray();
             if (EmptyNeighbours.Length == 0)
                 return false;
 
-            return Cows[secondDestination].PlayerID == -1 && MoveSets[firstDestination].Contains(secondDestination);
+            return Cows[secondDestination].Color == Color.Black && MoveSets[firstDestination].Contains(secondDestination);
         }
         #endregion
 
@@ -230,12 +230,12 @@ namespace Morabaraba_9001.Classes
         #region Cow Funcitons
 
         // Returns the number of cows remaining on the board for the given player
-        public int numCowRemaining(int playerID)
+        public int numCowRemaining(Color c)
         {
             int count = 0;
             foreach(Cow current in Cows)
             {
-                if (current.PlayerID == playerID)
+                if (current.Color == c)
                     count++;
             }
             return count;
