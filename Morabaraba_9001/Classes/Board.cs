@@ -269,7 +269,7 @@ namespace Morabaraba_9001.Classes
 
         public void Place(ICow Cow, int Destination)
         {
-            throw new NotImplementedException();
+            Cows[Destination] = Cow;
         }
 
         public void Kill(int Destination)
