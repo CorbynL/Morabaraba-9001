@@ -28,10 +28,5 @@ namespace Morabaraba_9001.Classes
         {
             isNew = false;
         }
-
-        public void updateMill(Color c, bool isNew)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
