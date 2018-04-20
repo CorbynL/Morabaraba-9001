@@ -46,17 +46,19 @@ namespace Morabaraba_9001.Classes
 
         public void Play()
         {
+            //I dont think this is right. Exposing board.Cows to everything else
             External.DrawBoard(board.Cows, Current_Phase.ToString(), Current_Player.Color.ToString());
-            int input = External.PlaceInput();
+            int input; 
 
             switch (Current_Phase)
             {                
                 case Phase.Placing:
+                    input = External.PlaceInput();
                     DoPlacePhase(input);
-
                     break;
                 case Phase.Killing:
                     input = External.KillPosInput();
+                    DoKillPhase(input);
                     break;
                 case Phase.Moving:
                     input = External.MoveToInput();
@@ -65,13 +67,33 @@ namespace Morabaraba_9001.Classes
             }
         }
 
+        //I've done it this way to prevent a loop when asking for input. For testing purposes
+        //Needs additional printing functionallity
         private void DoPlacePhase(int input)
         {            
             if (referee.CanPlace(Current_Player.Color, input))
             {
                 Current_Player.Place(input, board);
-                if (box.IsEmpty()) { Current_Phase = Phase.Moving; return; }
+
+                if (board.areNewMills(Current_Player.Color)){
+                    Current_Phase = Phase.Killing;
+                }               
+                else if (box.IsEmpty()) { Current_Phase = Phase.Moving; return; }
                 else SwitchPlayer();
+            }
+        }
+
+        private void DoKillPhase(int input)
+        {
+            if (referee.CanKill(Current_Player.Color, input))
+            {
+                Current_Player.Kill(input, board);
+                if(box.IsEmpty()) {
+                    Current_Phase = Phase.Moving;
+                    return;
+                }
+                Current_Phase = Phase.Placing;
+                SwitchPlayer();
             }
         }
 
