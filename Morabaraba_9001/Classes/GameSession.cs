@@ -46,6 +46,10 @@ namespace Morabaraba_9001.Classes
             {
                 case Phase.Placing:
                     input = External.PlaceInput();
+                    if(referee.CanPlace(Current_Player.Color, input))
+                    {
+                        Current_Player.Place(input, board);
+                    }
                     break;
                 case Phase.Killing:
                     input = External.KillPosInput();
