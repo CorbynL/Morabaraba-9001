@@ -1,4 +1,5 @@
 ﻿using Morabaraba_9001.Classes;
+using Morabaraba_9001.Interfaces;
 using System;
 
 namespace Morabaraba_9001
@@ -11,9 +12,14 @@ namespace Morabaraba_9001
         {
             // Set the stage
             SetConsoleProperties();
-            
-            gameSession = new GameSession();
-            gameSession.Start();
+
+            ICowBox box = new CowBox();
+            IBoard board = new Board();
+            IPlayer P1 = new Player(Color.Red);
+            IPlayer P2 = new Player(Color.Blue);
+            IReferee referee = new Referee();
+
+            P1 = new Player()
 
             if (Console.ReadLine() == "y")
             {
