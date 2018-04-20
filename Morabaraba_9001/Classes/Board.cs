@@ -173,18 +173,18 @@ namespace Morabaraba_9001.Classes
                 }
                 else if (current.color != Color.Black)
                 {
-                    current.updateMill(-1, false);
+                    current.updateMill(Color.Black, false);
                 }
             }
         }
             
 
-        public bool areNewMills(int playerID)
+        public bool areNewMills(Color playerID)
         {
             UpdateMills();
             foreach (Mill mill in Mills)
             {
-                if (mill.Id == playerID && mill.isNew) { return true; }
+                if (mill.color == playerID && mill.isNew) { return true; }
             }
             return false;
         }
