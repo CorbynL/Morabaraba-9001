@@ -21,6 +21,8 @@ namespace Morabaraba_9001
 
             IGameSession gameSession = new GameSession(board, P1, P2, box, referee);
 
+            gameSession.Start();
+
             if (Console.ReadLine() == "y")
             {
                 Main(null);
