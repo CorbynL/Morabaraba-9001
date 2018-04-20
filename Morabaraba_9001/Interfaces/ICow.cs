@@ -6,7 +6,7 @@ namespace Morabaraba_9001.Interfaces
 {
     public interface ICow
     {
-        IPlayer PlayerID { get; }
+        Color Color { get; }
         char Symbol { get; }        
     }
 }
