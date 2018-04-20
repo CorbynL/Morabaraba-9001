@@ -161,17 +161,17 @@ namespace Morabaraba_9001.Classes
         {
             foreach (Mill current in Mills)
             {
-                int playerID = Cows[current.Positions[0]].PlayerID;
-                if (playerID == Cows[current.Positions[1]].PlayerID && playerID == Cows[current.Positions[2]].PlayerID)
+                Color playerID = Cows[current.Positions[0]].Color;
+                if (playerID == Cows[current.Positions[1]].Color && playerID == Cows[current.Positions[2]].Color)
                 {
-                    if (current.Id != playerID)
+                    if (current.color != playerID)
                     {
                         current.updateMill(playerID, true);
                     }
-                    else if (current.Id == playerID)
+                    else if (current.color == playerID)
                         current.updateMill(playerID, false);
                 }
-                else if (current.Id != -1)
+                else if (current.color != Color.Black)
                 {
                     current.updateMill(-1, false);
                 }
