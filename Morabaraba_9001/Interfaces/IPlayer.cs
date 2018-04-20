@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Morabaraba_9001.Interfaces
 {
-    public enum Color { Red, Blue };
+    public enum Color { Red, Blue, Black };
 
     public interface IPlayer
     {
