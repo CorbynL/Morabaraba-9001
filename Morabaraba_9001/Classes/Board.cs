@@ -33,7 +33,7 @@ namespace Morabaraba_9001.Classes
         public void initialiseCows()
         {
             Cows = new ICow[24];
-            Cows = Cows.Select((x, index) => new Cow(index, -1)).ToArray();
+            Cows = Cows.Select((x, index) => new Cow(index, Color.Black)).ToArray();
         }
 
         public IEnumerable<ICow> getCowsByPlayer(Color c)
@@ -200,7 +200,7 @@ namespace Morabaraba_9001.Classes
             if (Destination == -1)
                 return false;
             //Long Check: First see if the cow you want to kill is not empty or your own, then check if it's in a mill but if all cows are in a mill then you can kill it.
-            return (Cows[Destination].Color != Color.Black && Cows[Destination].Color != ID) && (!CowInAMill(getOppColor(ID), Destination) || AreAllCowsInMills(getOppColor(ID));
+            return (Cows[Destination].Color != Color.Black && Cows[Destination].Color != ID) && (!CowInAMill(getOppColor(ID), Destination) || AreAllCowsInMills(getOppColor(ID)));
         }
 
         private bool CowInAMill (Color ID, int Destination)
@@ -258,11 +258,11 @@ namespace Morabaraba_9001.Classes
             throw new NotImplementedException();
         }
         
-        public void makeCowsFly(int player)
+        public void makeCowsFly(Color c)
         {
             Cows = Cows.Select(x =>
                 {
-                    if ((int)x.Color == player) { return new FlyingCow(x.Position, -1); }
+                    if (x.Color == c) { return new FlyingCow(x.Position, Color.Black); }
                     else return x;
                 }
                 ).ToArray();
