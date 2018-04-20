@@ -33,7 +33,34 @@ namespace Morabaraba_9001.Interfaces
 
         public bool CanMove(Color color, int FirstDestination, int SecondDestination)
         {
-            throw new NotImplementedException();
+            int[][] MoveSets = new int[][] {
+                new int[] { 1, 3, 9 },              //0
+                 new int[] { 0, 2, 4 },             //1
+                 new int[] { 1, 5, 14 },            //2
+                 new int[] { 0, 4, 6, 10 },         //3
+                 new int[] { 1, 3, 5, 7 },          //4
+                 new int[] { 2, 4, 8, 13 },         //5
+                 new int[] { 3, 7, 11 },            //6
+                 new int[] { 4, 6, 8 },             //7
+                 new int[] { 5, 7, 12 },            //8
+                 new int[] { 0, 10, 21 },           //9
+                 new int[] { 3, 9, 11, 18 },        //10
+                 new int[] { 6, 10, 15 },           //11
+                 new int[] { 8, 13, 17 },           //12
+                 new int[] { 5, 12, 14, 20 },       //13
+                 new int[] { 2, 13, 23 },           //14
+                 new int[] { 11, 16, 18 },          //15
+                 new int[] { 15, 17, 19 },          //16
+                 new int[] { 12, 16, 20 },          //17
+                 new int[] { 10, 15, 19, 21 },      //18
+                 new int[] { 16, 18, 20, 22 },      //19
+                 new int[] { 13, 17, 19, 23 },      //20
+                 new int[] { 9, 18, 22 },           //21
+                 new int[] { 19, 21, 23 },          //22
+                 new int[] { 14, 20, 22 },          //23
+            };
+
+            return Array.Exists(MoveSets[FirstDestination], element => element == SecondDestination);
         }
 
         public bool CanPlace(Color color, int Destination)
