@@ -8,9 +8,13 @@ namespace Morabaraba_9001.Interfaces
     public class Referee : IReferee
     {
 
+        private IBoard Board;
+        private ICowBox Box;
+
         public Referee(IBoard board, ICowBox box)
         {
-
+            Board = board;
+            Box = box;
         }
 
         public bool AreFlying(Color color)
@@ -30,7 +34,10 @@ namespace Morabaraba_9001.Interfaces
 
         public bool CanPlace(Color color, int Destination)
         {
-            throw new NotImplementedException();
+            bool hasCows = (Box.RemainingCows(color) > 0);
+            bool spaceIsFree = Board.Occupant(Destination).Color == Color.Black;
+
+            return hasCows && spaceIsFree;
         }
     }
 }
