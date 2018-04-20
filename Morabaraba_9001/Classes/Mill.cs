@@ -11,7 +11,7 @@ namespace Morabaraba_9001.Classes
         public bool isNew  {get; private set; }
         public Color color { get; private set; }
 
-        public Mill(int[] Positions, Color c)
+        public Mill(int[] Positions, Color c = Color.Black)
         {
             this.Positions = Positions;
             isNew = false;
