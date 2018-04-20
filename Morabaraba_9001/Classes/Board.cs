@@ -120,9 +120,9 @@ namespace Morabaraba_9001.Classes
         }
 
         // Returns true if the cow is owned by the player
-        public bool isPlayerCow(int playerId, int pos)
+        public bool isPlayerCow(Color c, int pos)
         {
-            return Cows[pos].PlayerID == playerId;
+            return Cows[pos].Color == c;
         }
 
         //Check if none flying cow is surrounded
