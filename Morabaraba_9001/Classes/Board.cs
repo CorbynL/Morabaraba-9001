@@ -203,9 +203,9 @@ namespace Morabaraba_9001.Classes
             return (Cows[Destination].Color != Color.Black && Cows[Destination].Color != ID) && (!CowInAMill(getOppColor(ID), Destination) || AreAllCowsInMills(getOppColor(ID));
         }
 
-        private bool CowInAMill (int ID, int Destination)
+        private bool CowInAMill (Color ID, int Destination)
         {
-            Mill[] PlayerOwnedMills = Mills.Where(x => x.Id == ID).ToArray();
+            Mill[] PlayerOwnedMills = Mills.Where(x => x.color == ID).ToArray();
             foreach (Mill mill in PlayerOwnedMills)
                 if (mill.Positions[0] == Destination
                     || mill.Positions[1] == Destination
@@ -262,7 +262,7 @@ namespace Morabaraba_9001.Classes
         {
             Cows = Cows.Select(x =>
                 {
-                    if ((int)x.PlayerID == player) { return new FlyingCow(x.Position, x.PlayerID); }
+                    if ((int)x.Color == player) { return new FlyingCow(x.Position, -1); }
                     else return x;
                 }
                 ).ToArray();
