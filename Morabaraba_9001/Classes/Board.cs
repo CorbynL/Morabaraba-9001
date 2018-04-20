@@ -114,9 +114,9 @@ namespace Morabaraba_9001.Classes
             Cows[firstDestination] = new Cow(firstDestination, Color.Black);
         }
 
-        public Cow getCowAt(int pos)
+        public ICow Occupant(int Destination)
         {
-            return Cows[pos];
+            return Cows[Destination];
         }
 
         // Returns true if the cow is owned by the player
@@ -274,11 +274,6 @@ namespace Morabaraba_9001.Classes
                     else return x;
                 }
                 ).ToArray();
-        }
-
-        public ICow Occupant(int Destination)
-        {
-            return Cows[Destination];
         }
 
         public void Place(ICow Cow, int Destination)
