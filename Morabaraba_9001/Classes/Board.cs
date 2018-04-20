@@ -192,7 +192,7 @@ namespace Morabaraba_9001.Classes
         // Removes a cow at a given destination
         public void KillCow(int Destination)
         {
-            Cows[Destination] = new Cow(Cows[Destination].Position);
+            Cows[Destination] = new Cow(Cows[Destination].Position, Color.Black);
         }
 
         public bool CanKillAt(int ID, int Destination)
