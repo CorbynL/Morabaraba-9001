@@ -245,15 +245,7 @@ namespace Morabaraba_9001.Classes
         {
             return Cows.ElementAt(pos).Position != -1;
         }
-
-
-        public void Place(int ID, int Destination)
-        {
-            Cows[Destination].changeID(ID);             
-        }
-
        
-
         public bool CanPlaceAt(int Position)
         {
             return Cows.ElementAt(Position).PlayerID == -1;
