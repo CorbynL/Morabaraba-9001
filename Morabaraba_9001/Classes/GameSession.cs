@@ -27,7 +27,7 @@ namespace Morabaraba_9001.Classes
         {
             board = b;
             Player_1 = p1;
-            Player_1 = p2;
+            Player_2 = p2;
             box = cow;
             referee = r;
 
@@ -38,7 +38,10 @@ namespace Morabaraba_9001.Classes
             Current_Player = Player_1;
             Current_Phase = Phase.Placing;
 
-            Play();
+            while (true)
+            {
+                Play();
+            }
         }
 
         public void Play()
@@ -49,11 +52,16 @@ namespace Morabaraba_9001.Classes
             {
                 case Phase.Placing:
                     External.DrawBoard(board.Cows, Current_Phase.ToString(), Current_Player.Color.ToString());
+
                     input = External.PlaceInput();
-                    if(referee.CanPlace(Current_Player.Color, input))
+                    while (!referee.CanPlace(Current_Player.Color, input))
                     {
-                        Current_Player.Place(input, board);
+                        input = External.PlaceInput();
                     }
+
+                    Current_Player.Place(input, board);
+                    SwitchPlayer();
+
                     break;
                 case Phase.Killing:
                     input = External.KillPosInput();
@@ -72,7 +80,8 @@ namespace Morabaraba_9001.Classes
 
         private void SwitchPlayer()
         {
-            throw new NotImplementedException();
+            if (Current_Player.Color == Color.Red) { Current_Player = Player_2; }
+            else Current_Player = Player_1;
         }
 
         public void Winner()
