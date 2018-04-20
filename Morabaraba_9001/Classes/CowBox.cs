@@ -32,5 +32,10 @@ namespace Morabaraba_9001.Classes
             Cows = list.ToArray();
             return cow;
         }
+
+        public bool IsEmpty()
+        {
+            return Cows.Length == 0;
+        }
     }
 }

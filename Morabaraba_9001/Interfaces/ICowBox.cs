@@ -8,5 +8,6 @@ namespace Morabaraba_9001.Interfaces
     {
         ICow TakeCow(Color c);
         int RemainingCows(Color c);
+        bool IsEmpty();
     }
 }
