@@ -214,10 +214,10 @@ namespace Morabaraba_9001.Classes
             return false;
         }
 
-        private bool AreAllCowsInMills (int ID)
+        private bool AreAllCowsInMills (Color ID)
         {
-            Mill[] PlayerOwnedMills = Mills.Where(x => x.Id == ID).ToArray();
-            Cow[] PlayerOwnedCows = Cows.Where(x => x.PlayerID == ID).ToArray();
+            Mill[] PlayerOwnedMills = Mills.Where(x => x.color == ID).ToArray();
+            ICow[] PlayerOwnedCows = Cows.Where(x => x.Color == ID).ToArray();
 
             for (int i = 0; i < PlayerOwnedCows.Length; i++)
                 if (!CowInAMill(ID, PlayerOwnedCows[i].Position))
