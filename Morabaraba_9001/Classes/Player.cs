@@ -14,7 +14,17 @@ namespace Morabaraba_9001.Classes
             Color = color;
         }
 
-        public bool Place(int position, IBoard board)
+        public void Place(int position, IBoard board)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Kill(int position, IBoard board)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Move(int firstPosition, int secondPosition, IBoard board)
         {
             throw new NotImplementedException();
         }
