@@ -9,7 +9,7 @@ namespace Morabaraba_9001.Classes
     public class Board : IBoard
     {
         //public IEnumerable<Cow> Cows { get; private set; }        // Remove this if everyone is happy with it
-        public Cow[] Cows { get; set; }                                          // Note the change to an array to simplify placing cows
+        public ICow[] Cows { get; set; }                                          // Note the change to an array to simplify placing cows
         public Mill[] Mills { get; private set; }
 
         ICow[] IBoard.Cows => throw new NotImplementedException();
@@ -32,13 +32,13 @@ namespace Morabaraba_9001.Classes
         // Create an array of default cows
         public void initialiseCows()
         {
-            Cows = new Cow[24];
+            Cows = new ICow[24];
             Cows = Cows.Select((x, index) => new Cow(index, -1)).ToArray();
         }
 
-        public IEnumerable<Cow> getCowsByPlayer(int ID)
+        public IEnumerable<ICow> getCowsByPlayer(Color c)
         {
-            return Cows.Where(x => (int)x.PlayerID == ID);
+            return Cows.Where(x => x.Color == c);
         }
 
         // Create empty array of empty mills
@@ -110,7 +110,7 @@ namespace Morabaraba_9001.Classes
 
         public void Move(int firstDestination, int secondDestination)
         {        
-            Cows[secondDestination] = new Cow(secondDestination, Cows[firstDestination].PlayerID);
+            Cows[secondDestination] = new Cow(secondDestination, Cows[firstDestination].PlayerID.Color);
             Cows[firstDestination] = new Cow(firstDestination);
         }
 
@@ -278,7 +278,7 @@ namespace Morabaraba_9001.Classes
 
         public ICow Occupant(int Destination)
         {
-            throw new NotImplementedException();
+            return Cows[Destination];
         }
 
         public void Place(ICow Cow, int Destination)
