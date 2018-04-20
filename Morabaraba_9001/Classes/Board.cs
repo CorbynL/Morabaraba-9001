@@ -248,7 +248,7 @@ namespace Morabaraba_9001.Classes
        
         public bool CanPlaceAt(int Position)
         {
-            return Cows.ElementAt(Position).PlayerID == -1;
+            return Cows.ElementAt(Position).Color == Color.Black;
         }
 
         #endregion
