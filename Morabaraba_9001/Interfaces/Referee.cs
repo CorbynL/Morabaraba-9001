@@ -22,9 +22,12 @@ namespace Morabaraba_9001.Interfaces
             throw new NotImplementedException();
         }
 
-        public bool CanKill(Color color, int Destination)
+        public bool CanKill(Color Color, int Destination)
         {
-            throw new NotImplementedException();
+            bool notYourCow = !Board.isPlayerCow(Color, Destination);
+            bool notInMill = !Board.CowInAMill(Color, Destination);
+
+            return notInMill && notInMill;
         }
 
         public bool CanMove(Color color, int FirstDestination, int SecondDestination)
