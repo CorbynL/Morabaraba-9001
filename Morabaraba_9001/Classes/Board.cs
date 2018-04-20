@@ -150,7 +150,7 @@ namespace Morabaraba_9001.Classes
 
         #region Mill Functions
 
-        public void UpdateMills()           // This should be private... once we figure out how to use it for testing
+        private void UpdateMills()           // This should be private... once we figure out how to use it for testing
         {
             foreach (Mill current in Mills)
             {
@@ -174,7 +174,6 @@ namespace Morabaraba_9001.Classes
 
         public bool areNewMills(Color playerID)
         {
-            UpdateMills();
             foreach (Mill mill in Mills)
             {
                 if (mill.color == playerID && mill.isNew) { return true; }
@@ -196,7 +195,7 @@ namespace Morabaraba_9001.Classes
             return (Cows[Destination].Color != Color.Black && Cows[Destination].Color != ID) && (!CowInAMill(getOppColor(ID), Destination) || AreAllCowsInMills(getOppColor(ID)));
         }
 
-        private bool CowInAMill (Color ID, int Destination)
+        public bool CowInAMill (Color ID, int Destination)
         {
             IMill[] PlayerOwnedMills = Mills.Where(x => x.color == ID).ToArray();
             foreach (Mill mill in PlayerOwnedMills)
@@ -270,11 +269,12 @@ namespace Morabaraba_9001.Classes
         public void Place(ICow Cow, int Destination)
         {
             Cows[Destination] = Cow;
+            UpdateMills();
         }
 
         public void Kill(int Destination)
         {
-            throw new NotImplementedException();
+            Cows[Destination] = new Cow();
         }
     }
 }
