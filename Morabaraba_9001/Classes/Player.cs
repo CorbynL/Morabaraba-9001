@@ -24,7 +24,7 @@ namespace Morabaraba_9001.Classes
 
         public void Kill(int position, IBoard board)
         {
-            throw new NotImplementedException();
+            board.Kill(position);
         }
 
         public void Move(int firstPosition, int secondPosition, IBoard board)
