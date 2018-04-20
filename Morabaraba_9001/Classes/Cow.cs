@@ -14,7 +14,7 @@ namespace Morabaraba_9001.Classes
 
         public Color Color { get; private set; }
 
-        public Cow(int Position = -1, Color Color)
+        public Cow(int Position = -1, Color Color = Color.Black)
         {
             this.Position = Position;
             this.Color = Color;
