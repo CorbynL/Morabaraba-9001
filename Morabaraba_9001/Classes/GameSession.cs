@@ -46,21 +46,13 @@ namespace Morabaraba_9001.Classes
 
         public void Play()
         {
-            int input;
+            External.DrawBoard(board.Cows, Current_Phase.ToString(), Current_Player.Color.ToString());
+            int input = External.PlaceInput();
 
             switch (Current_Phase)
-            {
+            {                
                 case Phase.Placing:
-                    External.DrawBoard(board.Cows, Current_Phase.ToString(), Current_Player.Color.ToString());
-
-                    input = External.PlaceInput();
-                    while (!referee.CanPlace(Current_Player.Color, input))
-                    {
-                        input = External.PlaceInput();
-                    }
-
-                    Current_Player.Place(input, board);
-                    SwitchPlayer();
+                    DoPlacePhase(input);
 
                     break;
                 case Phase.Killing:
@@ -73,10 +65,22 @@ namespace Morabaraba_9001.Classes
             }
         }
 
+        private void DoPlacePhase(int input)
+        {            
+            if (referee.CanPlace(Current_Player.Color, input))
+            {
+                Current_Player.Place(input, board);
+                if (box.IsEmpty()) { Current_Phase = Phase.Moving; return; }
+                else SwitchPlayer();
+            }
+        }
+
         private void SwitchState ()
         {
             throw new NotImplementedException();
         }
+
+
 
         private void SwitchPlayer()
         {
