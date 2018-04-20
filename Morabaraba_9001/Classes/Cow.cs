@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Morabaraba_9001.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,14 +9,15 @@ namespace Morabaraba_9001.Classes
     {
         public int Position { get; private set; }
 
-        public int PlayerID { get; private set; }
 
         public char Symbol { get; private set; }
 
-        public Cow(int Position = -1, int PlayerID = -1)
+        public Color Color { get; private set; }
+
+        public Cow(int Position = -1, Color Color)
         {
             this.Position = Position;
-            this.PlayerID = PlayerID;
+            this.Color = Color;
             getSymbol();
             
         }
@@ -24,21 +26,21 @@ namespace Morabaraba_9001.Classes
             Position = Destination;
         }
 
-        public void changeID(int ID)
+        public void changeID()
         {
-            PlayerID = ID;
+            this.Color = Color;
             getSymbol();
         }
 
         private void getSymbol()
         {
-            switch (PlayerID)
+            switch (Color)
             {
-                case 0: Symbol = 'R';
+                case Color.Red: Symbol = 'R';
                     break;
-                case 1: Symbol = 'B';
+                case Color.Blue: Symbol = 'B';
                     break;
-                case -1: Symbol = ' ';
+                case Color.Black: Symbol = ' ';
                     break;
                 default: throw new ArgumentException("Given ID is invalid");
 
