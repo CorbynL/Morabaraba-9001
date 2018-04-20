@@ -6,7 +6,6 @@ namespace Morabaraba_9001
 {
     class Program
     {
-        private static GameSession gameSession;
 
         static void Main(string[] args)
         {
@@ -15,8 +14,8 @@ namespace Morabaraba_9001
 
             ICowBox box = new CowBox();
             IBoard board = new Board();
-            IPlayer P1 = new Player(Color.Red);
-            IPlayer P2 = new Player(Color.Blue);
+            IPlayer P1 = new Player(Color.Red, box);
+            IPlayer P2 = new Player(Color.Blue,box);
             IReferee referee = new Referee(board,box);
 
             IGameSession gameSession = new GameSession(board, P1, P2, box, referee);
