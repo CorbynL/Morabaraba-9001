@@ -9,12 +9,8 @@ namespace Morabaraba_9001.Classes
     public class Board : IBoard
     {
         //public IEnumerable<Cow> Cows { get; private set; }        // Remove this if everyone is happy with it
-        public ICow[] Cows { get; set; }                                          // Note the change to an array to simplify placing cows
-        public Mill[] Mills { get; private set; }
-
-        ICow[] IBoard.Cows => throw new NotImplementedException();
-
-        IMill[] IBoard.Mills => throw new NotImplementedException();
+        public ICow[] Cows { get; private set; }                                          // Note the change to an array to simplify placing cows
+        public IMill[] Mills { get; private set; }
 
         private IEnumerable<string> BoardPopulation(IEnumerable<Cow> cows)
         {
@@ -71,10 +67,7 @@ namespace Morabaraba_9001.Classes
         #endregion
 
         #region Output to Console
-
-
         
-
         #endregion
 
         #region Move functions
@@ -205,7 +198,7 @@ namespace Morabaraba_9001.Classes
 
         private bool CowInAMill (Color ID, int Destination)
         {
-            Mill[] PlayerOwnedMills = Mills.Where(x => x.color == ID).ToArray();
+            IMill[] PlayerOwnedMills = Mills.Where(x => x.color == ID).ToArray();
             foreach (Mill mill in PlayerOwnedMills)
                 if (mill.Positions[0] == Destination
                     || mill.Positions[1] == Destination
@@ -216,7 +209,7 @@ namespace Morabaraba_9001.Classes
 
         private bool AreAllCowsInMills (Color ID)
         {
-            Mill[] PlayerOwnedMills = Mills.Where(x => x.color == ID).ToArray();
+            IMill[] PlayerOwnedMills = Mills.Where(x => x.color == ID).ToArray();
             ICow[] PlayerOwnedCows = Cows.Where(x => x.Color == ID).ToArray();
 
             for (int i = 0; i < PlayerOwnedCows.Length; i++)
