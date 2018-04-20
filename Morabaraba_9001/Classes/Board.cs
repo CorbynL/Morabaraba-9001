@@ -195,12 +195,12 @@ namespace Morabaraba_9001.Classes
             Cows[Destination] = new Cow(Cows[Destination].Position, Color.Black);
         }
 
-        public bool CanKillAt(int ID, int Destination)
+        public bool CanKillAt(Color ID, int Destination)
         {
             if (Destination == -1)
                 return false;
             //Long Check: First see if the cow you want to kill is not empty or your own, then check if it's in a mill but if all cows are in a mill then you can kill it.
-            return (Cows[Destination].PlayerID != -1 && Cows[Destination].PlayerID != ID) && (!CowInAMill((ID + 1) % 2, Destination) || AreAllCowsInMills((ID + 1) % 2));
+            return (Cows[Destination].Color != Color.Black && Cows[Destination].Color != ID) && (!CowInAMill(getOppColor(ID), Destination) || AreAllCowsInMills(getOppColor(ID));
         }
 
         private bool CowInAMill (int ID, int Destination)
@@ -274,6 +274,12 @@ namespace Morabaraba_9001.Classes
                     else return x;
                 }
                 ).ToArray();
+        }
+
+        private Color getOppColor(Color c)
+        {
+            if (c == Color.Red) { return Color.Blue; }
+            else return Color.Red;
         }
 
         public void Place(ICow Cow, int Destination)
