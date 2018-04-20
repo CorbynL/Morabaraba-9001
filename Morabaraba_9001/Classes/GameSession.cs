@@ -40,16 +40,19 @@ namespace Morabaraba_9001.Classes
 
         public void Play()
         {
+            int input;
+
             switch (Current_Phase)
             {
                 case Phase.Placing:
-                    throw new NotImplementedException();
+                    input = External.PlaceInput();
                     break;
                 case Phase.Killing:
-                    throw new NotImplementedException();
+                    input = External.KillPosInput();
                     break;
                 case Phase.Moving:
-                    throw new NotImplementedException();
+                    input = External.MoveToInput();
+                    input = External.MoveFromInput();
                     break;                
             }
         }
