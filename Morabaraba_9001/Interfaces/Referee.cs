@@ -26,8 +26,9 @@ namespace Morabaraba_9001.Interfaces
         {
             bool notYourCow = !Board.isPlayerCow(Color, Destination);
             bool notInMill = !Board.CowInAMill(Color, Destination);
+            bool cowAtPos = !Board.isPlayerCow(Color.Black, Destination);        // Checks that there is actually a cow at the possition
 
-            return notInMill && notInMill;
+            return notInMill && notInMill && cowAtPos;
         }
 
         public bool CanMove(Color color, int FirstDestination, int SecondDestination)
