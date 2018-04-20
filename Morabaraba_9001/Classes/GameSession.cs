@@ -5,6 +5,8 @@ using Morabaraba_9001.Interfaces;
 
 namespace Morabaraba_9001.Classes
 {
+    public enum Phase { Placing, Killing, Moving, Winning }
+
     public class GameSession : IGameSession
     {
         public IBoard board { get; private set; }
@@ -17,9 +19,7 @@ namespace Morabaraba_9001.Classes
 
         public ICowBox box { get; private set; }
 
-        public IReferee referee { get; private set; }
-
-        private enum Phase { Placing, Killing, Moving, Winning }
+        public IReferee referee { get; private set; }        
 
         private Phase Current_Phase;
 
@@ -35,7 +35,10 @@ namespace Morabaraba_9001.Classes
         
         public void Start()
         {
+            Current_Player = Player_1;
+            Current_Phase = Phase.Placing;
 
+            Play();
         }
 
         public void Play()
@@ -45,6 +48,7 @@ namespace Morabaraba_9001.Classes
             switch (Current_Phase)
             {
                 case Phase.Placing:
+                    External.DrawBoard(board.Cows, Current_Phase.ToString(), Current_Player.Color.ToString());
                     input = External.PlaceInput();
                     if(referee.CanPlace(Current_Player.Color, input))
                     {
