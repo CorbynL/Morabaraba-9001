@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Morabaraba_9001.Interfaces;
 
 namespace Morabaraba_9001.Classes
 {
@@ -10,6 +11,10 @@ namespace Morabaraba_9001.Classes
         //public IEnumerable<Cow> Cows { get; private set; }        // Remove this if everyone is happy with it
         public Cow[] Cows { get; set; }                                          // Note the change to an array to simplify placing cows
         public Mill[] Mills { get; private set; }
+
+        ICow[] IBoard.Cows => throw new NotImplementedException();
+
+        IMill[] IBoard.Mills => throw new NotImplementedException();
 
         private IEnumerable<string> BoardPopulation(IEnumerable<Cow> cows)
         {
@@ -271,5 +276,19 @@ namespace Morabaraba_9001.Classes
                 ).ToArray();
         }
 
+        public ICow Occupant(int Destination)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Place(ICow Cow, int Destination)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Kill(int Destination)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
