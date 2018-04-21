@@ -61,8 +61,10 @@ namespace Morabaraba_9001.Classes
                     DoKillPhase(input);
                     break;
                 case Phase.Moving:
-                    input = External.MoveToInput();
                     input = External.MoveFromInput();
+                    DoMovePhase1(input);
+                    input = External.MoveToInput();
+                    DoMovePhase2(input);
                     break;                
             }
         }
@@ -96,11 +98,25 @@ namespace Morabaraba_9001.Classes
             }
         }
 
+        private void DoMovePhase1(int input)
+        {
+
+
+        }
+
+
+        private void DoMovePhase2(int input)
+        {
+
+
+        }
+
+        /*
         private void SwitchState()
         {
             throw new NotImplementedException();
         }
-
+        */
 
 
         private void SwitchPlayer()

@@ -149,6 +149,8 @@ namespace Morabaraba_9001.Classes
         */
 
         #endregion
+
+
         #region Mill Functions
 
         
@@ -259,10 +261,6 @@ namespace Morabaraba_9001.Classes
 
         #endregion
 
-        public int getMove()
-        {
-            throw new NotImplementedException();
-        }
         
         public void makeCowsFly(Color c)
         {
