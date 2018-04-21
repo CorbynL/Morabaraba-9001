@@ -84,10 +84,10 @@ namespace Morabaraba_9001.Classes
 
         private void DoKillPhase(int input)
         {
-            if (referee.CanKill(Current_Player.Color, input))
-            {
-                Current_Player.Kill(input, board);
-                if(box.IsEmpty()) {
+
+            if (Current_Player.Kill(input, board,referee)){
+                if (box.IsEmpty())
+                {
                     Current_Phase = Phase.Moving;
                     return;
                 }
