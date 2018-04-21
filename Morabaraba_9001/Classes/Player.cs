@@ -23,12 +23,16 @@ namespace Morabaraba_9001.Classes
                 board.Place(cow, position);
                 return true;
             }
-            return false;
+            else return false;
         }
 
-        public void Kill(int position, IBoard board)
+        public bool Kill(int position, IBoard board, IReferee referee)
         {
-            board.Kill(position);
+            if (referee.CanKill(Color, position)){
+                board.Kill(position);
+                return true;
+            }
+            else return false;
         }
 
         public void Move(int firstPosition, int secondPosition, IBoard board)

@@ -10,7 +10,7 @@ namespace Morabaraba_9001.Interfaces
     {
         Color Color { get; }
         bool Place(int position, IBoard board,IReferee referee);
-        void Kill(int position, IBoard board);
+        bool Kill(int position, IBoard board, IReferee referee);
         void Move(int firstPosition, int secondPosition, IBoard board);
     }
 }
