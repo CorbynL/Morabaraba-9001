@@ -70,34 +70,41 @@ namespace Morabaraba_9001.Test
             IPlayer p1 = new Player(Color.Red,box);
             p1.Place(pos, b, r);
 
+            //Cow was placed at empty position
             if(c == Color.Black)
             {
+                //p1 has ll cows left
                 Assert.True(box.RemainingCows(p1.Color) == 11);
             }
 
+            //Position was occupied => no cow was placed
+            //p1 still has all his cows
             else { Assert.True(box.RemainingCows(p1.Color) == 12); }
         }
 
-        // [Test]
-        // public void Only12CowsPlacedForEachPlayer()
-        // {
-        //     //Simulate entire placing phase
-        //     GameSession g = new GameSession();
-        //     for (int i = 0; i < 24; i++)
-        //     {
-        //         g.Play(i);
-        //     }
+        [Test]
+        public void Only12CowsPlacedForEachPlayer()
+        {
+            IBoard b = new Board();
+            ICowBox box = new CowBox();
+            IReferee r = new Referee(b, box);
+            IPlayer p = new Player(Color.Red, box);
 
-        //     //Placing phase is over
-        //     Assert.True(g.CurrentPhase == GameSession.Phase.Moving);
+            //Place all of p's cows
+            for(int i = 0; i < 12; i++)
+            {
+                p.Place(i, b, r);
+            }
+            //Board should have all 12 of p's cows
+            Assert.True(b.numCowsOnBoard() == 12);
 
-        //     // List of cows each player owns
-        //     Cow[] player1Cows = g.board.getCowsByPlayer(0).ToArray();
-        //     Cow[] player2Cows = g.board.getCowsByPlayer(1).ToArray();
+            //try to place another cow for p
+            p.Place(13, b, r);
 
-        //     // Each player must have 12 cows
-        //     Assert.True(player1Cows.Length == 12 && player2Cows.Length == 12);
-        // }
+            //Verify that no new cow has been placed
+            Assert.True(b.numCowsOnBoard() == 12);
+            
+        }
 
         // [Test]
         // public void CowsCannotMoveDuringPlacement ()
