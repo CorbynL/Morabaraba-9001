@@ -13,7 +13,7 @@ namespace Morabaraba_9001.Test
     [TestFixture]
     public class Tests
     {
-       // #region TESTS: Start and Placement Phases
+        #region TESTS: Start and Placement Phases
 
         [Test]
         public void BoardIsEmptyWhenGameStarts ()
@@ -127,9 +127,9 @@ namespace Morabaraba_9001.Test
         //     Assert.True(g.CurrentPhase == GameSession.Phase.Moving);
         // }
 
-        // #endregion
+        #endregion
 
-        // #region TESTS: Moving Phase
+        #region TESTS: Moving Phase
 
         // [Test]
         // public void CowCanOnlyMoveToConnectedSpace ()
@@ -330,9 +330,9 @@ namespace Morabaraba_9001.Test
         //     Assert.False(g.board.canMoveFrom(0, 0));
         // }
 
-        // #endregion
+        #endregion
 
-        // #region TESTS: Flying Phase
+        #region TESTS: Flying Phase
 
         // [Test]
         // public void CanCowsFlyAtFlyPhase()
@@ -373,27 +373,30 @@ namespace Morabaraba_9001.Test
         //         int[] unconnectSpaces = positions.Where(x => !ExpectedMoves[place].Contains(x)).ToArray();
         //     }
         // }
-        // #endregion
+        #endregion
 
-        // #region TESTS: General        
+        #region TESTS: General        
 
-        // [Test]
-        // public void ThreePlayerCowsInAlineFormsAMill ()
-        // {
-        //     GameSession g = new GameSession();
+        [Test]
+        public void ThreePlayerCowsInAlineFormsAMill()
+        {
+            IBoard board = new Board();
+            ICowBox box = new CowBox();
+            IPlayer p = new Player(Color.Red, box);
+            IReferee referee = new Referee(board, box);
 
-        //     //Place two cows in a row
-        //     g.board.Place(0, 0);
-        //     g.board.Place(0, 1);
+            //Place 2 cows in a row, no mills form
+            Assert.False(board.areNewMills(Color.Red));
+            p.Place(0, board, referee);
+            Assert.False(board.areNewMills(Color.Red));
+            p.Place(1, board, referee);
+            Assert.False(board.areNewMills(Color.Red));
 
-        //     //Assert that no new mills have been formed
-        //     g.board.UpdateMills();
-        //     Assert.False(g.board.areNewMills(0));
+            //Place 3rd cow in a row, mill forms
+            p.Place(2, board, referee);
+            Assert.True(board.areNewMills(Color.Red));
 
-        //     //place third cow in a row and assert that a mill has been formed
-        //     g.board.Place(0, 2);
-        //     Assert.True(g.board.areNewMills(0));
-        // }
+        }
 
         // [Test]
         // public void MillIsInvalidIfCowsAreDifferentIDs ()
@@ -572,7 +575,7 @@ namespace Morabaraba_9001.Test
         //     Assert.That(false);
         // }
 
-        // #endregion
+        #endregion
 
     }
 }
