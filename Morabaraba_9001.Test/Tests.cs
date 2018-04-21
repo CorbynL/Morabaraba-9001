@@ -398,20 +398,27 @@ namespace Morabaraba_9001.Test
 
         }
 
-        // [Test]
-        // public void MillIsInvalidIfCowsAreDifferentIDs ()
-        // {
-        //     GameSession g = new GameSession();
+        [Test]
+        public void MillIsInvalidIfCowsAreDifferentIDs()
+        {
+            IBoard board = new Board();
+            ICowBox box = new CowBox();
+            IPlayer p1 = new Player(Color.Red, box);
+            IPlayer p2 = new Player(Color.Blue, box);
+            IReferee referee = new Referee(board, box);
 
-        //     //Place two cows 3 in a row, with differnt player Id's
-        //     g.board.Place(0, 0);
-        //     g.board.Place(1, 1);
-        //     g.board.Place(0, 2);
+            //Player 1 and player 2 place cows next to each other
+            Assert.False(board.areNewMills(Color.Red));
+            p1.Place(0, board, referee);
+            Assert.False(board.areNewMills(Color.Red));
+            p2.Place(1, board, referee);
+            Assert.False(board.areNewMills(Color.Red));
 
-        //     //Assert that no player has a new mill
-        //     Assert.False(g.board.areNewMills(0));
-        //     Assert.False(g.board.areNewMills(1));
-        // }
+            //3rd cow is placed next to the above cows, no mill forms for either place
+            p1.Place(2, board, referee);
+            Assert.False(board.areNewMills(Color.Red));
+            Assert.False(board.areNewMills(Color.Blue));
+        }
 
         // // THIS IS BRIAN's PROPERTY SO GITTTT OFF MY PROPERTY
         // [Test]
