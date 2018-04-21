@@ -17,6 +17,14 @@ namespace Morabaraba_9001.Interfaces
             Box = box;
         }
 
+        public bool CanSelect(Color color, IBoard board, int Position)
+        {
+            bool isYourCow = board.Occupant(Position).Color == color;
+            bool cowNotSurrounded = !board.IsSurrounded(Position);
+
+            return isYourCow && cowNotSurrounded;
+        }
+
         public bool AreFlying(Color color)
         {
             throw new NotImplementedException();
@@ -60,14 +68,12 @@ namespace Morabaraba_9001.Interfaces
                  new int[] { 14, 20, 22 },          //23
             };
 
-            bool isPlayerCow = Board.isPlayerCow(Color.Black, FirstDestination);
             bool isValidMove = Array.Exists(MoveSets[FirstDestination], element => element == SecondDestination);
-            bool noCowInMove = !Board.isPlayerCow(Color.Black, SecondDestination);
+            bool noCowInMove = Board.Occupant(SecondDestination).Color == Color.Black;
 
-            return isPlayerCow && isValidMove && noCowInMove;
+            return isValidMove && noCowInMove;
         }
-
-
+       
         public bool CanPlace(Color color, int Destination)
         {
             bool hasCows = (Box.RemainingCows(color) > 0);
