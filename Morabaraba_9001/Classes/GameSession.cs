@@ -5,7 +5,7 @@ using Morabaraba_9001.Interfaces;
 
 namespace Morabaraba_9001.Classes
 {
-    public enum Phase { Placing, Killing, Moving, Winning }
+    public enum Phase { Placing, Killing, Moving, Winning}
 
     public class GameSession : IGameSession
     {
@@ -61,8 +61,8 @@ namespace Morabaraba_9001.Classes
                     DoKillPhase(input);
                     break;
                 case Phase.Moving:
-                    input = External.MoveToInput();
                     input = External.MoveFromInput();
+                    DoMovePhase(input);
                     break;                
             }
         }
@@ -77,8 +77,25 @@ namespace Morabaraba_9001.Classes
                 {
                     Current_Phase = Phase.Killing;
                 }
-                else if (box.IsEmpty()) { Current_Phase = Phase.Moving; return; }
+                else if (box.IsEmpty()){
+                    Current_Phase = Phase.Moving; SwitchPlayer(); return;
+                }
                 else SwitchPlayer();
+            }
+        }
+
+        private void DoMovePhase(int input)
+        {
+            if (Current_Player.Select(input, board, referee)){
+                int inputTo = External.MoveToInput();
+
+                if (Current_Player.Move(input, inputTo, board, referee)){
+                    if (board.areNewMills(Current_Player.Color))
+                    {
+                        Current_Phase = Phase.Killing;
+                    }
+                    else SwitchPlayer();
+                }
             }
         }
 
