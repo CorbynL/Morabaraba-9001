@@ -136,25 +136,36 @@ namespace Morabaraba_9001.Test
 
         #region TESTS: Moving Phase
 
-        // [Test]
-        // public void CowCanOnlyMoveToConnectedSpace ()
-        // {            
-        //     GameSession g = new GameSession();
-        //     int[] possibleMoves = { 1, 3, 9 }, invalidMoves = { 0, 2, 4, 23 };
 
-        //     g.Play(0);
+        [Test]
+        public void CowCanOnlyMoveToConnectedSpace()
+        {
+            int[] allMoves = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
 
-        //     foreach (int move in possibleMoves)
-        //     {
-        //         Assert.That(g.board.canMoveFrom(0, 0));
-        //         Assert.That(g.board.canMoveTo(0, 0, move));
-        //     }            
-        //     foreach (int move in invalidMoves)
-        //     {
-        //         Assert.That(g.board.canMoveFrom(0, 0));
-        //         Assert.That(!g.board.canMoveTo(0, 0, move));
-        //     }
-        // }       
+            for (int i = 0; i < 24; i++)
+            { 
+                IBoard b = new Board();
+                ICowBox box = Substitute.For<ICowBox>();
+                box.TakeCow(Arg.Any<Color>()).Returns(new Cow(-1, Color.Red));
+
+                IReferee r = new Referee(b, box);
+
+                b.Place(new Cow(-1, Color.Red), i);
+
+                int[] ValidMoves = b.ConnectedSpaces(i);
+                int[] inValidMoves = allMoves.Where(x => !ValidMoves.Contains(x)).ToArray();
+
+                foreach(int a in ValidMoves)
+                {
+                    Assert.True(r.CanMove(Color.Red,i,a,Phase.Moving));
+                }
+                foreach(int z in inValidMoves)
+                {
+                    Assert.False(r.CanMove(Color.Red, i, z, Phase.Moving));
+                }
+
+            }
+        }
 
 
         // static bool isCowtoPlace(int idx, int[] places)
