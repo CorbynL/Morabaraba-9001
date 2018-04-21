@@ -18,5 +18,6 @@ namespace Morabaraba_9001.Interfaces
         bool CowInAMill(Color ID, int Destination);
         bool isPlayerCow(Color c, int pos);
         bool areNewMills(Color playerID);
+        int numCowsOnBoard();
     }
 }

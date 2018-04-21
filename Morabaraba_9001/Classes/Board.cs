@@ -221,6 +221,17 @@ namespace Morabaraba_9001.Classes
 
         #region Cow Funcitons
 
+        public int numCowsOnBoard()
+        {
+            int num = 0;
+
+            foreach(Cow c in Cows)
+            {
+                if(c.Color != Color.Black) { num++; }
+            }
+            return num;
+        }
+
         // Returns the number of cows remaining on the board for the given player
         public int numCowRemaining(Color c)
         {
