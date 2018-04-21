@@ -68,7 +68,8 @@ namespace Morabaraba_9001.Test
             ICowBox box = new CowBox();
             IReferee r = new Referee(b,box);
             IPlayer p1 = new Player(Color.Red,box);
-            p1.Place(pos, b, r);
+            
+            p1.Place(pos, b, r, Phase.Placing);
 
             //Cow was placed at empty position
             if(c == Color.Black)
@@ -93,39 +94,43 @@ namespace Morabaraba_9001.Test
             //Place all of p's cows
             for(int i = 0; i < 12; i++)
             {
-                p.Place(i, b, r);
+                p.Place(i, b, r, Phase.Placing);
             }
             //Board should have all 12 of p's cows
             Assert.True(b.numCowsOnBoard() == 12);
 
             //try to place another cow for p
-            p.Place(13, b, r);
+            p.Place(13, b, r, Phase.Placing);
 
             //Verify that no new cow has been placed
             Assert.True(b.numCowsOnBoard() == 12);
             
         }
 
-        // [Test]
-        // public void CowsCannotMoveDuringPlacement ()
-        // {
-        //     int counter = 0;
-        //     GameSession g = new GameSession();
 
-        //     //Simulate placing phase (24 turns)
-        //     for (int i = 0; i < 24; i++)
-        //     {
-        //         //increment if Phase = Placing
-        //         if (g.CurrentPhase == GameSession.Phase.Placing) { counter++; }
-        //         g.Play(i);
+        [Test]
+        public void CowsCannotMoveDuringPlacement()
+        {
+            IBoard b = new Board();
 
-        //     }    
-        //     //Each turn should have be in placing phase (24 turns)
-        //     Assert.True(counter == 24);
+            ICowBox box = Substitute.For<ICowBox>();
+            box.TakeCow(Arg.Any<Color>()).Returns(new Cow(-1, Color.Red));
 
-        //     //Placing phase is over, Phase sould be Moving
-        //     Assert.True(g.CurrentPhase == GameSession.Phase.Moving);
-        // }
+            IPlayer p1 = new Player(Color.Red,box);
+
+            IReferee r = new Referee(b, box);
+
+            for(int i = 0; i < 23; i++)
+            {
+                p1.Place(i, b, r,Phase.Placing);
+                int[] moves = b.ConnectedSpaces(i);                
+
+                foreach(int m in moves)
+                {
+                    Assert.False(p1.Move(i, m, b, r,Phase.Placing));
+                }
+            }
+        }
 
         #endregion
 
@@ -387,13 +392,13 @@ namespace Morabaraba_9001.Test
 
             //Place 2 cows in a row, no mills form
             Assert.False(board.areNewMills(Color.Red));
-            p.Place(0, board, referee);
+            p.Place(0, board, referee,Phase.Placing);
             Assert.False(board.areNewMills(Color.Red));
-            p.Place(1, board, referee);
+            p.Place(1, board, referee, Phase.Placing);
             Assert.False(board.areNewMills(Color.Red));
 
             //Place 3rd cow in a row, mill forms
-            p.Place(2, board, referee);
+            p.Place(2, board, referee, Phase.Placing);
             Assert.True(board.areNewMills(Color.Red));
 
         }
@@ -409,13 +414,13 @@ namespace Morabaraba_9001.Test
 
             //Player 1 and player 2 place cows next to each other
             Assert.False(board.areNewMills(Color.Red));
-            p1.Place(0, board, referee);
+            p1.Place(0, board, referee, Phase.Placing);
             Assert.False(board.areNewMills(Color.Red));
-            p2.Place(1, board, referee);
+            p2.Place(1, board, referee, Phase.Placing);
             Assert.False(board.areNewMills(Color.Red));
 
             //3rd cow is placed next to the above cows, no mill forms for either place
-            p1.Place(2, board, referee);
+            p1.Place(2, board, referee, Phase.Placing);
             Assert.False(board.areNewMills(Color.Red));
             Assert.False(board.areNewMills(Color.Blue));
         }
