@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Morabaraba_9001.Interfaces;
+using Morabaraba_9001.Classes;
 
 namespace Morabaraba_9001.Interfaces
 {
@@ -10,6 +11,7 @@ namespace Morabaraba_9001.Interfaces
 
         private IBoard Board;
         private ICowBox Box;
+
 
         public Referee(IBoard board, ICowBox box)
         {
@@ -39,9 +41,12 @@ namespace Morabaraba_9001.Interfaces
             return notInMill && notInMill && cowAtPos;
         }
 
-        public bool CanMove(Color color, int FirstDestination, int SecondDestination)
+        public bool CanMove(Color color, int FirstDestination, int SecondDestination, Phase currPhase)
         {
-            int[][] MoveSets = new int[][] {
+            if (currPhase == Phase.Moving)
+            {
+
+                int[][] MoveSets = new int[][] {
                  new int[] { 1, 3, 9 },             //0
                  new int[] { 0, 2, 4 },             //1
                  new int[] { 1, 5, 14 },            //2
@@ -68,18 +73,24 @@ namespace Morabaraba_9001.Interfaces
                  new int[] { 14, 20, 22 },          //23
             };
 
-            bool isValidMove = Array.Exists(MoveSets[FirstDestination], element => element == SecondDestination);
-            bool noCowInMove = Board.Occupant(SecondDestination).Color == Color.Black;
+                bool isValidMove = Array.Exists(MoveSets[FirstDestination], element => element == SecondDestination);
+                bool noCowInMove = Board.Occupant(SecondDestination).Color == Color.Black;
 
-            return isValidMove && noCowInMove;
+                return isValidMove && noCowInMove;
+            }
+            else return false;
         }
        
-        public bool CanPlace(Color color, int Destination)
+        public bool CanPlace(Color color, int Destination, Phase currPhase)
         {
-            bool hasCows = (Box.RemainingCows(color) > 0);
-            bool spaceIsFree = Board.Occupant(Destination).Color == Color.Black;
+            if (currPhase == Phase.Placing)
+            {
+                bool hasCows = (Box.RemainingCows(color) > 0);
+                bool spaceIsFree = Board.Occupant(Destination).Color == Color.Black;
 
-            return hasCows && spaceIsFree;
+                return hasCows && spaceIsFree;
+            }
+            else return false;
         }
     }
 }

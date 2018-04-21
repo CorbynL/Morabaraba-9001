@@ -13,12 +13,11 @@ namespace Morabaraba_9001.Interfaces
         void Place(ICow Cow, int Destination);
         void Move(int firstDestination , int secondDestination);
         void Kill(int Destination);
-        void initialiseCows();
-        void initialiseMills();
         bool CowInAMill(Color ID, int Destination);
         bool isPlayerCow(Color c, int pos);
         bool areNewMills(Color playerID);
         int numCowsOnBoard();
         bool IsSurrounded(int Position);
+        int[] ConnectedSpaces(int Position);
     }
 }

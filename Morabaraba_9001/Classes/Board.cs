@@ -220,6 +220,11 @@ namespace Morabaraba_9001.Classes
 
         #region Cow Funcitons
 
+        public int[] ConnectedSpaces(int Position)
+        {
+            return MoveSets[Position];
+        }
+
         public int numCowsOnBoard()
         {
             int num = 0;

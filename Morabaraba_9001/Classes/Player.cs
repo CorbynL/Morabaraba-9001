@@ -16,9 +16,9 @@ namespace Morabaraba_9001.Classes
             Box = box;
         }
 
-        public bool Place(int position, IBoard board, IReferee referee)
+        public bool Place(int position, IBoard board, IReferee referee, Phase currPhase)
         {
-            if (referee.CanPlace(Color, position)){
+            if (referee.CanPlace(Color, position, currPhase)){
                 ICow cow = Box.TakeCow(Color);
                 board.Place(cow, position);
                 return true;
@@ -43,9 +43,9 @@ namespace Morabaraba_9001.Classes
             else return false;
         }
 
-        public bool Move(int Destination, int secondPosition, IBoard board, IReferee referee)
+        public bool Move(int Destination, int secondPosition, IBoard board, IReferee referee, Phase currPhase)
         {
-            if (referee.CanMove(Color, Destination, secondPosition)){
+            if (referee.CanMove(Color, Destination, secondPosition, currPhase)){
                 board.Move(Destination, secondPosition);
                 return true;
             }
