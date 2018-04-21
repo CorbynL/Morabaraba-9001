@@ -167,104 +167,62 @@ namespace Morabaraba_9001.Test
             }
         }
 
+        static object[] MoveToPositionsOfOccupiedandNotOccupiuedSpaces = new object[]
+        {
+                new object[] {0 ,new int[] { 1, 3, 9 },       Color.Black},
+                new object[] {1 ,new int[] { 0, 2, 4 },       Color.Black},
+                new object[] {2 ,new int[] { 1, 5, 14 },      Color.Black},
+                new object[] {3 ,new int[] { 0, 4, 6, 10 },   Color.Black},
+                new object[] {4 ,new int[] { 1, 3, 5, 7 },    Color.Black},
+                new object[] {5 ,new int[] { 2, 4, 8, 13 },   Color.Black},
+                new object[] {6 ,new int[] { 3, 7, 11 },      Color.Black},
+                new object[] {7 ,new int[] { 4, 6, 8 },       Color.Black},
+                new object[] {8 ,new int[] { 5, 7, 12 },      Color.Black},
+                new object[] {9 ,new int[] { 0, 10, 21 },     Color.Black},
+                new object[] {10 ,new int[] { 3, 9, 11, 18 },  Color.Black},
+                new object[] {11 ,new int[] { 6, 10, 15 },     Color.Red},
+                new object[] {12 ,new int[] { 8, 13, 17 },     Color.Red},
+                new object[] {13 ,new int[] { 5, 12, 14, 20 }, Color.Red},
+                new object[] {14 ,new int[] { 2, 13, 23 },     Color.Red},
+                new object[] {15 ,new int[] { 11, 16, 18 },    Color.Red},
+                new object[] {16 ,new int[] { 15, 17, 19 },    Color.Red},
+                new object[] {17 ,new int[] { 12, 16, 20 },    Color.Red},
+                new object[] {18 ,new int[] { 10, 15, 19, 21 },Color.Red},
+                new object[] {19 ,new int[] { 16, 18, 20, 22 },Color.Red},
+                new object[] {20 ,new int[] { 13, 17, 19, 23 },Color.Red},
+                new object[] {21 ,new int[] { 9, 18, 22 },     Color.Red},
+                new object[] {22 ,new int[] { 19, 21, 23 },    Color.Red},
+                new object[] {23 ,new int[] { 14, 20, 22 },    Color.Red}
+        };
 
-        // static bool isCowtoPlace(int idx, int[] places)
-        // {
-        //     if (places.Contains(idx))
-        //     {
-        //         return true;
-        //     }
-        //     else return false;
-        // }
+        [Test]
+        [TestCaseSource(nameof(MoveToPositionsOfOccupiedandNotOccupiuedSpaces))]
+        public static void OnlyMoveToEmptySpace(int pos, int[] moves, Color c)
+        {
+            IBoard board = Substitute.For<IBoard>();
+            board.Occupant(Arg.Any<int>()).Returns(new Cow(-1, c));
+            IPlayer P = Substitute.For<IPlayer>();
+            ICowBox box = Substitute.For<ICowBox>();
+            box.RemainingCows(Arg.Any<Color>()).Returns(12);
+            IReferee r = new Referee(board, box);
 
-        // static Cow placeCow(Cow cow)
-        // {
-        //     return new Cow(cow.Position, 0);
-        // }
+            if(c == Color.Red)
+            {
+                foreach(int m1 in moves)
+                {
+                    Assert.False(r.CanMove(Color.Red, pos, m1, Phase.Moving));
+                }
 
-        // [Test]
-        // public static void OnlyMoveToEmptySpace ()
-        // {
-        //     int[][] ExpectedMoves = new int[][]
-        //{
-        //  new int[] {1,3,9},
-        //  new int[] {0,2,4},
-        //  new int[] {1,5,14},
-        //  new int[] {0,4,6},
-        //  new int[] {1,3,5,7},
-        //  new int[] {2,4,8,13},
-        //  new int[] {4,7,11},
-        //  new int[] {4,6,8},
-        //  new int[] {5,7,12},
-        //  new int[] {0,10,21},
-        //  new int[] {3,9,11,18},
-        //  new int[] {6,10,15},
-        //  new int[] {8,13,17},
-        //  new int[] {5,12,14,20},
-        //  new int[] {2,13,23},
-        //  new int[] {11,16,18},
-        //  new int[] {15,17,19},
-        //  new int[] {12,16,20},
-        //  new int[] {10,15,19,21},
-        //  new int[] {16,18,20,22},
-        //  new int[] {13,17,19,23},
-        //  new int[] {9,18,22},
-        //  new int[] {19,21,23},
-        //  new int[] {14,20,22},
-        //};
+            }
+            if (c == Color.Black)
+            {
+                foreach (int m2 in moves)
+                {
+                    Assert.True(r.CanMove(Color.Red, pos, m2, Phase.Moving));
+                }
 
-        //     GameSession g = new GameSession();
-        //     g.board.initialiseCows();
-        //     Cow[][] a =
-        //         {
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[0]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[1]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[2]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[3]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[4]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[5]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[6]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[7]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[8]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[9]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[10]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[11]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[12]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[13]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[14]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[15]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[16]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[17]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[18]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[19]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[20]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[21]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[22]) ? placeCow(new Cow(idx, 0)) : x).ToArray(),
-        //         g.board.Cows.Select((x, idx) => isCowtoPlace(idx, ExpectedMoves[23]) ? placeCow(new Cow(idx, 0)) : x).ToArray()
-        //         };                
-
-        //     //Cant move to occupied spaces
-        //     for(int i = 0; i < 1; i++)
-        //     {
-        //         g.board.Cows = a[i];
-        //         foreach(int move in ExpectedMoves[i])
-        //         {
-        //             Assert.That(!g.board.canMoveFrom(0, i));
-        //             Assert.That(!g.board.canMoveTo(0, i, move));
-        //         }
-        //     }
-
-        //     //Reset board
-        //     g.board.initialiseCows();
-        //     g.Play(0);
-
-        //     //Can move to unoccupied spaces
-        //     foreach (int move in ExpectedMoves[0])
-        //     {               
-        //         Assert.That(g.board.canMoveFrom(0, 0));
-        //         Assert.That(g.board.canMoveTo(0, 0, move));                
-        //     }
-        // }
+            }
+        }
 
         // [Test]
         // public void MoveCreatesNoDuplicates()
