@@ -34,7 +34,7 @@ namespace Morabaraba_9001.Interfaces
         public bool CanMove(Color color, int FirstDestination, int SecondDestination)
         {
             int[][] MoveSets = new int[][] {
-                new int[] { 1, 3, 9 },              //0
+                 new int[] { 1, 3, 9 },             //0
                  new int[] { 0, 2, 4 },             //1
                  new int[] { 1, 5, 14 },            //2
                  new int[] { 0, 4, 6, 10 },         //3
@@ -60,8 +60,13 @@ namespace Morabaraba_9001.Interfaces
                  new int[] { 14, 20, 22 },          //23
             };
 
-            return Array.Exists(MoveSets[FirstDestination], element => element == SecondDestination);
+            bool isPlayerCow = Board.isPlayerCow(Color.Black, FirstDestination);
+            bool isValidMove = Array.Exists(MoveSets[FirstDestination], element => element == SecondDestination);
+            bool noCowInMove = !Board.isPlayerCow(Color.Black, SecondDestination);
+
+            return isPlayerCow && isValidMove && noCowInMove;
         }
+
 
         public bool CanPlace(Color color, int Destination)
         {
