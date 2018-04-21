@@ -70,16 +70,13 @@ namespace Morabaraba_9001.Classes
         //Needs additional printing functionallity
         private void DoPlacePhase(int input)
         {            
-            if (referee.CanPlace(Current_Player.Color, input))
-            {
-                Current_Player.Place(input, board);
+                Current_Player.Place(input, board,referee);
 
                 if (board.areNewMills(Current_Player.Color)){
                     Current_Phase = Phase.Killing;
                 }               
                 else if (box.IsEmpty()) { Current_Phase = Phase.Moving; return; }
                 else SwitchPlayer();
-            }
         }
 
         private void DoKillPhase(int input)
