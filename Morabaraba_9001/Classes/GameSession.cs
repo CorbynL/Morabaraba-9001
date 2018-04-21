@@ -3,9 +3,10 @@ using System.Linq;
 using Morabaraba_9001.Classes;
 using Morabaraba_9001.Interfaces;
 
+
 namespace Morabaraba_9001.Classes
 {
-    public enum Phase { Placing, Killing, Moving, Winning}
+    public enum Phase { Placing, Killing, Moving, Winning }
 
     public class GameSession : IGameSession
     {
@@ -21,7 +22,7 @@ namespace Morabaraba_9001.Classes
 
         public IReferee referee { get; private set; }        
 
-        private Phase Current_Phase;
+        public Phase Current_Phase { get; private set; }
 
         public GameSession(IBoard b, IPlayer p1, IPlayer p2, ICowBox cow, IReferee r)
         {
@@ -71,7 +72,7 @@ namespace Morabaraba_9001.Classes
         //Needs additional printing functionallity
         private void DoPlacePhase(int input)
         {            
-                if(Current_Player.Place(input, board, referee))
+                if(Current_Player.Place(input, board, referee, Current_Phase))
             {
                 if (board.areNewMills(Current_Player.Color))
                 {
@@ -89,7 +90,7 @@ namespace Morabaraba_9001.Classes
             if (Current_Player.Select(input, board, referee)){
                 int inputTo = External.MoveToInput();
 
-                if (Current_Player.Move(input, inputTo, board, referee)){
+                if (Current_Player.Move(input, inputTo, board, referee,Current_Phase)){
                     if (board.areNewMills(Current_Player.Color))
                     {
                         Current_Phase = Phase.Killing;
