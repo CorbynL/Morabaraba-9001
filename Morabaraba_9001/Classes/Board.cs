@@ -32,10 +32,15 @@ namespace Morabaraba_9001.Classes
             Cows = Cows.Select((x, index) => new Cow(index, Color.Black)).ToArray();
         }
 
+
         public IEnumerable<ICow> getCowsByPlayer(Color c)
         {
             return Cows.Where(x => x.Color == c);
         }
+
+        #endregion
+
+        #region Mill Functions
 
         // Create empty array of empty mills
         public void initialiseMills()
@@ -64,9 +69,6 @@ namespace Morabaraba_9001.Classes
             };
         }
 
-        #endregion
-
-        #region Move functions
 
         public int[][] MoveSets = new int[][]
         {
@@ -158,8 +160,7 @@ namespace Morabaraba_9001.Classes
 
         #endregion
         #region Mill Functions
-
-        
+     
         private void UpdateMills()           // This should be private... once we figure out how to use it for testing
         {
             foreach (Mill current in Mills)
@@ -190,21 +191,7 @@ namespace Morabaraba_9001.Classes
             }
             return false;
         }
-        /*
-        // Removes a cow at a given destination
-        public void KillCow(int Destination)
-        {
-            Cows[Destination] = new Cow(Cows[Destination].Position, Color.Black);
-        }
-        */
 
-        public bool CanKillAt(Color ID, int Destination)
-        {
-            if (Destination == -1)
-                return false;
-            //Long Check: First see if the cow you want to kill is not empty or your own, then check if it's in a mill but if all cows are in a mill then you can kill it.
-            return (Cows[Destination].Color != Color.Black && Cows[Destination].Color != ID) && (!CowInAMill(getOppColor(ID), Destination) || AreAllCowsInMills(getOppColor(ID)));
-        }
 
         public bool CowInAMill (Color ID, int Destination)
         {
@@ -216,6 +203,7 @@ namespace Morabaraba_9001.Classes
                     return true;
             return false;
         }
+
 
         private bool AreAllCowsInMills (Color ID)
         {
@@ -255,23 +243,31 @@ namespace Morabaraba_9001.Classes
             return count;
         }
 
+
         public bool isCowAt(int pos)
         {
             return Cows.ElementAt(pos).Color != Color.Black;
         }
        
+
         public bool CanPlaceAt(int Position)
         {
             return Cows.ElementAt(Position).Color == Color.Black;
         }
 
+
+        public bool CanKillAt(Color ID, int Destination)
+        {
+            if (Destination == -1)
+                return false;
+            //Long Check: First see if the cow you want to kill is not empty or your own, then check if it's in a mill but if all cows are in a mill then you can kill it.
+            return (Cows[Destination].Color != Color.Black && Cows[Destination].Color != ID) && (!CowInAMill(getOppColor(ID), Destination) || AreAllCowsInMills(getOppColor(ID)));
+        }
+
         #endregion
 
-        public int getMove()
-        {
-            throw new NotImplementedException();
-        }
-        
+        #region GamePlay functions
+
         public void makeCowsFly(Color c)
         {
             Cows = Cows.Select(x =>
@@ -281,6 +277,7 @@ namespace Morabaraba_9001.Classes
                 }
                 ).ToArray();
         }
+
 
         private Color getOppColor(Color c)
         {
@@ -300,5 +297,92 @@ namespace Morabaraba_9001.Classes
         {
             Cows[Destination] = new Cow();
         }
+
+
+        #endregion
+
+
+
+
+
+
+        #region Old Code
+
+        /*
+
+        // Removes a cow at a given destination
+        public void KillCow(int Destination)
+        {
+            Cows[Destination] = new Cow(Cows[Destination].Position, Color.Black);
+        }
+
+
+
+                // Is there an algorithm to get all the moves from a certain position?
+        public int[][] MoveSets = new int[][]
+        {
+         new int[] {1,3,9},             //0
+         new int[] {0,2,4},             //1
+         new int[] {1,5,14},            //2
+         new int[] {0,4,6,10},          //3
+         new int[] {1,3,5,7},           //4
+         new int[] {2,4,8,13},          //5
+         new int[] {3,7,11},            //6
+         new int[] {4,6,8},             //7
+         new int[] {5,7,12},            //8
+         new int[] {0,10,21},           //9
+         new int[] {3,9,11,18},         //10
+         new int[] {6,10,15},           //11
+         new int[] {8,13,17},           //12
+         new int[] {5,12,14,20},        //13
+         new int[] {2,13,23},           //14
+         new int[] {11,16,18},          //15
+         new int[] {15,17,19},          //16
+         new int[] {12,16,20},          //17
+         new int[] {10,15,19,21},       //18
+         new int[] {16,18,20,22},       //19
+         new int[] {13,17,19,23},       //20
+         new int[] {9,18,22},           //21
+         new int[] {19,21,23},          //22
+         new int[] {14,20,22},          //23
+        };
+        
+
+
+        
+        //Check if none flying cow is surrounded
+        public bool canMoveFrom(Color c, int Destination)
+        {            
+            if (numCowRemaining(c) == 3)
+            {
+                makeCowsFly(c);
+            }       
+
+            int[] EmptyNeighbours = MoveSets[Destination].Where(x => Cows[x].Color == Color.Black).ToArray();
+            if (EmptyNeighbours.Length == 0 && typeof(FlyingCow) != Cows[Destination].GetType())
+                return false;
+
+            return Cows[Destination].Color == c; 
+                
+        }
+        
+        public bool canMoveTo(int ID, int firstDestination, int secondDestination)
+        {
+            ICow c = Occupant(firstDestination);
+            if (typeof(FlyingCow) == Cows[firstDestination].GetType())
+                return CanPlaceAt(secondDestination);
+
+            int[] EmptyNeighbours = MoveSets[firstDestination].Where(x => Cows[x].Color == Color.Black).ToArray();
+            if (EmptyNeighbours.Length == 0)
+                return false;
+
+            return Cows[secondDestination].Color == Color.Black && MoveSets[firstDestination].Contains(secondDestination);
+        }
+
+
+
+
+            */
+        #endregion
     }
 }
