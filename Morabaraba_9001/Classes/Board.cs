@@ -68,8 +68,6 @@ namespace Morabaraba_9001.Classes
 
         #region Move functions
 
-        /*
-        // Is there an algorithm to get all the moves from a certain position?
         public int[][] MoveSets = new int[][]
         {
          new int[] {1,3,9},             //0
@@ -97,7 +95,17 @@ namespace Morabaraba_9001.Classes
          new int[] {19,21,23},          //22
          new int[] {14,20,22},          //23
         };
-        */
+
+        public bool IsSurrounded(int Position)
+        {
+            foreach(int space in MoveSets[Position]){
+                if (!isCowAt(space)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
 
         public void Move(int firstDestination, int secondDestination)
         {        
@@ -249,7 +257,7 @@ namespace Morabaraba_9001.Classes
 
         public bool isCowAt(int pos)
         {
-            return Cows.ElementAt(pos).Position != -1;
+            return Cows.ElementAt(pos).Color != Color.Black;
         }
        
         public bool CanPlaceAt(int Position)
