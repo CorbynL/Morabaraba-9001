@@ -31,13 +31,12 @@ namespace Morabaraba_9001.Classes
             box = cow;
             referee = r;
 
+            Current_Player = Player_1;
+            Current_Phase = Phase.Placing;
         }
         
         public void Start()
         {
-            Current_Player = Player_1;
-            Current_Phase = Phase.Placing;
-
             while (true)
             {
                 Play();
