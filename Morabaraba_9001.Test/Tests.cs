@@ -31,18 +31,52 @@ namespace Morabaraba_9001.Test
             Assert.AreEqual(gameSession.Current_Player.Color, Color.Red);
         }
 
-        // [Test]
-        // public void CowsPlacedOnEmptySpacesOnly ()
-        // {
-        //     Board b = new Board();
-        //     // Place a cow at possition 0
-        //     b.Cows[0] = new Cow(0,1);
-        //     // Check that you can not place a cow at possition 0
-        //     Assert.That(!b.CanPlaceAt(0));
-        //     // Check that you can place a cow at a blank possition
-        //     Assert.That(b.CanPlaceAt(1));
-        //     //TODO: Check to see that when we place a cow, that it can only be placed on an empty space
-        // }
+        static object[] TryToPlaceCowsAt = new object[]
+        {
+            new object[] {0,11,Color.Black},
+            new object[] {1,11,Color.Black},
+            new object[] {2,11,Color.Black},
+            new object[] {3,11,Color.Black},
+            new object[] {4,11,Color.Black},
+            new object[] {5,11,Color.Black},
+            new object[] {6,11,Color.Black},
+            new object[] {7,11,Color.Black},
+            new object[] {8,11,Color.Black},
+            new object[] {9,11,Color.Black},
+            new object[] {10,12,Color.Red},
+            new object[] {11,12,Color.Red},
+            new object[] {12,12,Color.Red},
+            new object[] {13,12,Color.Red},
+            new object[] {14,12,Color.Red},
+            new object[] {15,12,Color.Red},
+            new object[] {16,12,Color.Red},
+            new object[] {17,12,Color.Red},
+            new object[] {18,12,Color.Red},
+            new object[] {19,12,Color.Red},
+            new object[] {20,12,Color.Red},
+            new object[] {21,12,Color.Red},
+            new object[] {22,12,Color.Red},
+            new object[] {23,12,Color.Red},
+        };
+
+        [Test]
+        [TestCaseSource(nameof(TryToPlaceCowsAt))]
+        public void CowsPlacedOnEmptySpacesOnly(int pos, int numLeft, Color c)
+        {
+            IBoard b = Substitute.For<IBoard>();
+            b.Occupant(Arg.Any<int>()).Returns(new Cow(-1,c));
+            ICowBox box = new CowBox();
+            IReferee r = new Referee(b,box);
+            IPlayer p1 = new Player(Color.Red,box);
+            p1.Place(pos, b, r);
+
+            if(c == Color.Black)
+            {
+                Assert.True(box.RemainingCows(p1.Color) == 11);
+            }
+
+            else { Assert.True(box.RemainingCows(p1.Color) == 12); }
+        }
 
         // [Test]
         // public void Only12CowsPlacedForEachPlayer()
