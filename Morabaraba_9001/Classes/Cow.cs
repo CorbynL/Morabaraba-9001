@@ -9,7 +9,6 @@ namespace Morabaraba_9001.Classes
     {
         public int Position { get; private set; }
 
-
         public char Symbol { get; private set; }
 
         public Color Color { get; private set; }

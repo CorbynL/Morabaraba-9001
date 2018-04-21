@@ -66,12 +66,9 @@ namespace Morabaraba_9001.Classes
 
         #endregion
 
-        #region Output to Console
-        
-        #endregion
-
         #region Move functions
 
+        /*
         // Is there an algorithm to get all the moves from a certain position?
         public int[][] MoveSets = new int[][]
         {
@@ -100,6 +97,7 @@ namespace Morabaraba_9001.Classes
          new int[] {19,21,23},          //22
          new int[] {14,20,22},          //23
         };
+        */
 
         public void Move(int firstDestination, int secondDestination)
         {        
@@ -118,6 +116,7 @@ namespace Morabaraba_9001.Classes
             return Cows[pos].Color == c;
         }
 
+        /*
         //Check if none flying cow is surrounded
         public bool canMoveFrom(Color c, int Destination)
         {            
@@ -133,7 +132,7 @@ namespace Morabaraba_9001.Classes
             return Cows[Destination].Color == c; 
                 
         }
-
+        
         public bool canMoveTo(int ID, int firstDestination, int secondDestination)
         {
             ICow c = Occupant(firstDestination);
@@ -146,10 +145,13 @@ namespace Morabaraba_9001.Classes
 
             return Cows[secondDestination].Color == Color.Black && MoveSets[firstDestination].Contains(secondDestination);
         }
-        #endregion
+        
+        */
 
+        #endregion
         #region Mill Functions
 
+        
         private void UpdateMills()           // This should be private... once we figure out how to use it for testing
         {
             foreach (Mill current in Mills)
@@ -170,7 +172,7 @@ namespace Morabaraba_9001.Classes
                 }
             }
         }
-            
+        
 
         public bool areNewMills(Color playerID)
         {
@@ -180,12 +182,13 @@ namespace Morabaraba_9001.Classes
             }
             return false;
         }
-
+        /*
         // Removes a cow at a given destination
         public void KillCow(int Destination)
         {
             Cows[Destination] = new Cow(Cows[Destination].Position, Color.Black);
         }
+        */
 
         public bool CanKillAt(Color ID, int Destination)
         {
@@ -277,11 +280,13 @@ namespace Morabaraba_9001.Classes
             else return Color.Red;
         }
 
+        
         public void Place(ICow Cow, int Destination)
         {
             Cows[Destination] = Cow;
             UpdateMills();
         }
+        
 
         public void Kill(int Destination)
         {
