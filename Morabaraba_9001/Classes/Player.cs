@@ -35,9 +35,21 @@ namespace Morabaraba_9001.Classes
             else return false;
         }
 
-        public void Move(int firstPosition, int secondPosition, IBoard board)
+        public bool Select(int position, IBoard board, IReferee referee)
         {
-            throw new NotImplementedException();
+            if (referee.CanSelect(Color, board, position)){
+                return true;
+            }
+            else return false;
+        }
+
+        public bool Move(int Destination, int secondPosition, IBoard board, IReferee referee)
+        {
+            if (referee.CanMove(Color, Destination, secondPosition)){
+                board.Move(Destination, secondPosition);
+                return true;
+            }
+            else return false;
         }
     }
 }

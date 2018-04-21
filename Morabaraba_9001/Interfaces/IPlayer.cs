@@ -11,6 +11,7 @@ namespace Morabaraba_9001.Interfaces
         Color Color { get; }
         bool Place(int position, IBoard board,IReferee referee);
         bool Kill(int position, IBoard board, IReferee referee);
-        void Move(int firstPosition, int secondPosition, IBoard board);
+        bool Move(int Destination, int secondPosition, IBoard board, IReferee referee);
+        bool Select(int position, IBoard board, IReferee referee);
     }
 }
