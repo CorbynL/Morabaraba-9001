@@ -16,12 +16,14 @@ namespace Morabaraba_9001.Classes
             Box = box;
         }
 
-        public void Place(int position, IBoard board, IReferee referee)
+        public bool Place(int position, IBoard board, IReferee referee)
         {
             if (referee.CanPlace(Color, position)){
                 ICow cow = Box.TakeCow(Color);
                 board.Place(cow, position);
+                return true;
             }
+            return false;
         }
 
         public void Kill(int position, IBoard board)

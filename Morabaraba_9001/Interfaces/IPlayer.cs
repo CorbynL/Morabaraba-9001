@@ -9,7 +9,7 @@ namespace Morabaraba_9001.Interfaces
     public interface IPlayer
     {
         Color Color { get; }
-        void Place(int position, IBoard board,IReferee referee);
+        bool Place(int position, IBoard board,IReferee referee);
         void Kill(int position, IBoard board);
         void Move(int firstPosition, int secondPosition, IBoard board);
     }
