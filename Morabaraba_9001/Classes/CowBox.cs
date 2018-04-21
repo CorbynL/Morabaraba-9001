@@ -21,7 +21,7 @@ namespace Morabaraba_9001.Classes
 
         public int RemainingCows(Color c)
         {
-            return Cows.Select(x => x.Color == c).ToArray().Length;
+            return Cows.Where(x => x.Color == c).ToArray().Length;
         }
 
         public ICow TakeCow(Color c)
