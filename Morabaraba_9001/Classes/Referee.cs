@@ -34,7 +34,7 @@ namespace Morabaraba_9001.Interfaces
         public bool CanKill(Color Color, int Destination)
         {
             bool notYourCow = !Board.isPlayerCow(Color, Destination);
-            bool notInMill = !Board.CowInAMill(Color, Destination);
+            bool notInMill = !Board.CowInAMill(getOppColor(Color), Destination);
             bool cowAtPos = !Board.isPlayerCow(Color.Black, Destination);        // Checks that there is actually a cow at the possition
 
             return notInMill && notInMill && cowAtPos;
@@ -96,6 +96,12 @@ namespace Morabaraba_9001.Interfaces
                 return hasCows && spaceIsFree;
             }
             else return false;
+        }
+
+        private Color getOppColor(Color c)
+        {
+            if (c == Color.Red) { return Color.Blue; }
+            else return Color.Red;
         }
     }
 }
