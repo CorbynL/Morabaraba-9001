@@ -236,12 +236,31 @@ namespace Morabaraba_9001.Classes
         {
             int num = 0;
 
-            foreach(Cow c in Cows)
+            foreach(ICow c in Cows)
             {
                 if(c.Color != Color.Black) { num++; }
             }
             return num;
         }
+
+
+        /// <summary>
+        /// Returns the number of Cows left on the board. 
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        
+        public int numPlayerCowsOnBoard(Color player)
+        {
+            int num = 0;
+
+            foreach(ICow current in Cows)
+            {
+                if (current.Color == player) { num++; }
+            }
+            return num;
+        }
+        
 
         /// <summary>
         /// Returns the number of cows remaining on the board for the given player
@@ -270,10 +289,13 @@ namespace Morabaraba_9001.Classes
             {
                 if(a.Color ==c)
                 {
-                    foreach(int pos in ConnectedSpaces(a.Position))
+                    foreach(int[] current in MoveSets)
                     {
-                        if (Cows[pos].Color == Color.Black)
-                            return true;
+                        foreach(int pos in current)
+                        {
+                            if (Cows[pos].Color == Color.Black)
+                                return true;
+                        }
                     }
                 }
             }

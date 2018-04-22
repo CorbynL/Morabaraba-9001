@@ -64,6 +64,8 @@ namespace Morabaraba_9001.Classes
                     DoMovePhase(input);
                     break;
                 case Phase.Winning:
+                    Console.WriteLine("WINER!!!");
+                    Console.ReadKey();
 
                 break;
             }
@@ -104,12 +106,18 @@ namespace Morabaraba_9001.Classes
         private void DoKillPhase(int input)
         {
             if (Current_Player.Kill(input, board,referee)){
-                if (box.IsEmpty())
+                if (Current_Player.IsLooser(board, oppositionColor()))
+                {
+                    SwitchPlayer();                 // Switch back to the winner
+                    Current_Phase = Phase.Winning;
+                }
+                else if (box.IsEmpty())
                 {
                     Current_Phase = Phase.Moving;
                     return;
                 }
-                Current_Phase = Phase.Placing;
+                else
+                    Current_Phase = Phase.Placing;
                 SwitchPlayer();
             }
         }
@@ -119,6 +127,15 @@ namespace Morabaraba_9001.Classes
         {
             if (Current_Player.Color == Color.Red) { Current_Player = Player_2; }
             else Current_Player = Player_1;
+        }
+
+        private Color oppositionColor()
+        {
+            if (Current_Player.Color == Color.Red)
+                return Color.Blue;
+            else
+                return Color.Red;
+                
         }
 
         public void Winner()

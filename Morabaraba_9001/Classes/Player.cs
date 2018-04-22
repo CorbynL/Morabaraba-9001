@@ -51,5 +51,16 @@ namespace Morabaraba_9001.Classes
             }
             else return false;
         }
+
+        /// <summary>
+        /// Checks the board to see if the 
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public bool IsLooser(IBoard board, Color color)
+        {
+            return (board.canAnyCowMove(color) == false || board.numPlayerCowsOnBoard(color) <= 2) && Box.IsEmpty();     // Checks to see if a player has any moves left
+        }
     }
 }

@@ -21,5 +21,6 @@ namespace Morabaraba_9001.Interfaces
         int[] ConnectedSpaces(int Position);
         void drawBoard(string State, string PlayerName);
         bool canAnyCowMove(Color c);
+        int numPlayerCowsOnBoard(Color player);
     }
 }
