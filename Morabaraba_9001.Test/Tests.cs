@@ -223,7 +223,7 @@ namespace Morabaraba_9001.Test
             }
         }
 
-        static object[][] CreateCowAtPositionAndMoveToAllPossibleConnectedSpaces = new object[][]
+        static object[][] CowPositionsAndConnectedSpaces = new object[][]
         {
             new object[] { 0, new int[] {1,3,9} },
             new object[] { 1, new int[] {0,2,4} },
@@ -253,7 +253,7 @@ namespace Morabaraba_9001.Test
 
 
         [Test]
-        [TestCaseSource(nameof(CreateCowAtPositionAndMoveToAllPossibleConnectedSpaces))]
+        [TestCaseSource(nameof(CowPositionsAndConnectedSpaces))]
         public static void MoveCreatesNoDuplicates(int pos, int[] moves)
         {
             foreach (int move in moves)
@@ -271,70 +271,39 @@ namespace Morabaraba_9001.Test
             }       
         }
 
-        // [Test]
-        // public void CowSelectedHasEmptySpacesToMoveTo ()
-        // {
-        //     GameSession g = new GameSession();
-
-        //     //Place initial piece
-        //     g.board.Place(0, 0);
-
-        //     // Initial pieces' connected spaces
-        //     int[] validMoves = new int[] { 1, 3, 9 };
-
-        //     //Surround initial piece
-        //     foreach(int i in validMoves)
-        //     {
-        //         g.board.Place(0, i);
-        //     }
-
-        //     //Assert that it cannot move to any connected spaces
-        //     Assert.False(g.board.canMoveFrom(0, 0));
-        // }
 
         #endregion
 
         #region TESTS: Flying Phase
 
-        // [Test]
-        // public void CanCowsFlyAtFlyPhase()
-        // {
-        //     int[] positions = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
-        //     int[][] ExpectedMoves = new int[][]
-        // {
-        //  new int[] {1,3,9},
-        //  new int[] {0,2,4},
-        //  new int[] {1,5,14},
-        //  new int[] {0,4,6,10},
-        //  new int[] {1,3,5,7},
-        //  new int[] {2,4,8,13},
-        //  new int[] {3,7,11},
-        //  new int[] {4,6,8},
-        //  new int[] {5,7,12},
-        //  new int[] {0,10,21},
-        //  new int[] {3,9,11,18},
-        //  new int[] {6,10,15},
-        //  new int[] {8,13,17},
-        //  new int[] {5,12,14,20},
-        //  new int[] {2,13,23},
-        //  new int[] {11,16,18},
-        //  new int[] {15,17,19},
-        //  new int[] {12,16,20},
-        //  new int[] {10,15,19,21},
-        //  new int[] {16,18,20,22},
-        //  new int[] {13,17,19,23},
-        //  new int[] {9,18,22},
-        //  new int[] {19,21,23},
-        //  new int[] {14,20,22},
-        // };
+        static int[] Positions = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
 
-        //     GameSession g = new GameSession();
+        [Test]
+        [TestCaseSource(nameof(Positions))]
+        public static void CanCowsFlyAtFlyPhase(int pos)
+        {
+            for (int i = 0; i < 22; i++)
+                for (int j = i + 1; j < 23; j++)
+                    for (int k = j + 1; k < 24; k++)
+                    {
+                        IBoard b = new Board();
+                        ICowBox box = new CowBox();
+                        IReferee r = new Referee(b, box);
 
-        //     foreach (int place in positions)
-        //     {
-        //         int[] unconnectSpaces = positions.Where(x => !ExpectedMoves[place].Contains(x)).ToArray();
-        //     }
-        // }
+                        b.Place(new Cow(-1, Color.Red), i);
+                        b.Place(new Cow(-1, Color.Red), j);
+                        b.Place(new Cow(-1, Color.Red), k);
+                        
+                        int[] EmptyPositions = Positions.Where(x => x != i && x != j && x != k).ToArray();
+
+                        for (int l = 0; l < EmptyPositions.Length; l++)
+                        {
+                            Assert.True(r.CanMove(Color.Red, i, EmptyPositions[l], Phase.Moving));
+                            Assert.True(r.CanMove(Color.Red, j, EmptyPositions[l], Phase.Moving));
+                            Assert.True(r.CanMove(Color.Red, k, EmptyPositions[l], Phase.Moving));
+                        }
+                    }              
+        }
         #endregion
 
         #region TESTS: General        
