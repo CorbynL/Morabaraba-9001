@@ -79,7 +79,7 @@ namespace Morabaraba_9001.Classes
         static public void Winner(Color c)
         {
             Console.Clear();
-            Console.WriteLine(String.Format("\n\n\n\n\n\n\n\t PLAYER {0} WINS!!!", c.ToString()));
+            Console.WriteLine(String.Format("\n\n\n\n\n\n\n\t PLAYER {0} WINS!!!", c.ToString().ToUpper()));
             Console.ReadKey();
 
         }
