@@ -93,7 +93,7 @@ namespace Morabaraba_9001.Classes
 
                 if(board.numPlayerCowsOnBoard(Current_Player.Color) == 3)               //  If flying 
                 {
-                    Winner(input, inputTo);
+                    Flying(input, inputTo);
                 }
                 else if (Current_Player.Move(input, inputTo, board, referee,Current_Phase))
                 {
@@ -143,7 +143,7 @@ namespace Morabaraba_9001.Classes
             return Current_Player.Color == Color.Red ? Color.Blue: Color.Red;
         }
 
-        public void Winner(int input, int inputTo)
+        public void Flying(int input, int inputTo)
         {
             if (Current_Player.MoveFlying(input, inputTo, board, referee, Current_Phase))
             {
