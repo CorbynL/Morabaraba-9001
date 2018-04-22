@@ -279,17 +279,16 @@ namespace Morabaraba_9001.Test
         static int[] Positions = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
 
         [Test]
-        [TestCaseSource(nameof(Positions))]
-        public static void CanCowsFlyAtFlyPhase(int pos)
-        {
-            for (int i = 0; i < 22; i++)
+        
+        public static void CanCowsFlyAtFlyPhase()
+        {            for (int i = 0; i < 22; i++)
                 for (int j = i + 1; j < 23; j++)
-                    for (int k = j + 1; k < 24; k++)
+                    for (int k = j + 1; k < 24; k++)                    
                     {
                         IBoard b = new Board();
                         ICowBox box = new CowBox();
                         IReferee r = new Referee(b, box);
-
+                        
                         b.Place(new Cow(-1, Color.Red), i);
                         b.Place(new Cow(-1, Color.Red), j);
                         b.Place(new Cow(-1, Color.Red), k);
@@ -298,9 +297,9 @@ namespace Morabaraba_9001.Test
 
                         for (int l = 0; l < EmptyPositions.Length; l++)
                         {
-                            Assert.True(r.CanMove(Color.Red, i, EmptyPositions[l], Phase.Moving));
-                            Assert.True(r.CanMove(Color.Red, j, EmptyPositions[l], Phase.Moving));
-                            Assert.True(r.CanMove(Color.Red, k, EmptyPositions[l], Phase.Moving));
+                            Assert.True(r.CanFlyTo(Color.Red, EmptyPositions[l], Phase.Moving));
+                            Assert.True(r.CanFlyTo(Color.Red, EmptyPositions[l], Phase.Moving));
+                            Assert.True(r.CanFlyTo(Color.Red, EmptyPositions[l], Phase.Moving));
                         }
                     }              
         }
@@ -351,65 +350,67 @@ namespace Morabaraba_9001.Test
             Assert.False(board.areNewMills(Color.Blue));
         }
 
-        // // THIS IS BRIAN's PROPERTY SO GITTTT OFF MY PROPERTY
-        // [Test]
-        // public void MillIsInvalidIfCowsNotInConnectedLine ()
-        // {
-        //     //TODO: Check that the cows that will form a mill are in a line and connected in spaces
+        // THIS IS BRIAN's PROPERTY SO GITTTT OFF MY PROPERTY
 
-        //     Board
-        //         b = new Board(), //Check mill forms if not in straight line
-        //         c = new Board(), //Check if mill forms if in straight line but one or two cows has different ID's
-        //         d = new Board(); //Check if 3 cows with the same ID's in a line form a mill
+        IMill[] Mills = new Mill[] 
+        {
+            new Mill(new int[] { 0, 1, 2 }),        // A1, A4, A7
+            new Mill(new int[] { 3, 4, 5 } ),       // B2, B4, B6
+            new Mill(new int[] { 6, 7, 8 }),        // C3, C4, C5
+            new Mill(new int[] { 9, 10, 11 }),      // D1, D2, D3
+            new Mill(new int[] { 12, 13, 14 }),     // D5, D6, D7
+            new Mill(new int[] { 15, 16, 17 }),     // E3, E4, E5
+            new Mill(new int[] { 18, 19, 20 }),     // F2, F4, F6
+            new Mill(new int[] { 21, 22, 23 }),     // G1, G4, G7
+            new Mill(new int[] { 0, 9, 21 }),       // A1, D1, G1
+            new Mill(new int[] { 3, 10, 18 }),      // B2, D2, F2
+            new Mill(new int[] { 6, 11, 15 }),      // C3, D3, E3
+            new Mill(new int[] { 1, 4, 7 }),        // A4, B4, C4
+            new Mill(new int[] { 16, 19, 22 }),     // E4, F4, G4
+            new Mill(new int[] { 8, 12, 17 }),      // C5, D5, E5
+            new Mill(new int[] { 5, 13, 20 }),      // B6, D6, F6
+            new Mill(new int[] { 2, 14, 23 }),      // A7, D7, G7
+            new Mill(new int[] { 0, 3, 6 }),        // A1, B2, C3
+            new Mill(new int[] { 15, 18, 21 }),     // E3, F2, G1
+            new Mill(new int[] { 2, 5, 8 }),        // C5, B6, A7
+            new Mill(new int[] { 17, 20, 23 })      // E5, F6, G7
+        };
 
-        //     //Oblique line
-        //     b.Place(0, 0);
-        //     b.Place(0, 1);
-        //     b.Place(0, 3);
+        [Test]        
+        public void MillIsInvalidIfCowsNotInConnectedLine()
+        {
+            //TODO: Check that the cows that will form a mill are in a line and connected in spaces           
 
-        //     //In a line, but different cow
-        //     c.Place(0, 0);
-        //     c.Place(0, 1);
-        //     c.Place(1, 2);
+            for (int i = 0; i < 22; i++)
+                for (int j = i + 1; j < 23; j++)
+                    for (int k = j + 1; k < 24; k++)
+                    {
+                        IBoard b = new Board();
+                        ICowBox box = new CowBox();
+                        IReferee r = new Referee(b, box);  
+                        
+                        b.Place(new Cow(-1, Color.Red), i);
+                        b.Place(new Cow(-1, Color.Red), j);
+                        b.Place(new Cow(-1, Color.Red), k);
 
-        //     //In a line
-        //     d.Place(0, 0);
-        //     d.Place(0, 1);
-        //     d.Place(0, 2);
+                        IMill[] AnyMills = Mills.Where(x => x.Positions[0] == i && x.Positions[1] == j && x.Positions[2] == k).ToArray();
 
-        //     //Check for any new mills
-        //     b.UpdateMills();
-        //     c.UpdateMills();
-        //     d.UpdateMills();
+                        if (AnyMills.Length == 0)
+                            Assert.False(b.areNewMills(Color.Red));
+                        else
+                            Assert.True(b.areNewMills(Color.Red));
+                        
+                    }
 
-        //     Mill[] b_mills = b.Mills.Where(x => x.Id == 0).ToArray();
-        //     Mill[] c_mills = c.Mills.Where(x => x.Id == 0).ToArray();
-        //     Mill[] d_mills = d.Mills.Where(x => x.Id == 0).ToArray();
+        }
 
-        //     Assert.That(b_mills.Length == 0);
-        //     Assert.That(c_mills.Length == 0);
-        //     Assert.That(d_mills.Length == 1);
-        // }
+        [Test]
+        public void KillingFromAMillHappensOnce()
+        {
+            //TODO: When a mill is formed, it can only kill a cow once in the same turn it is formed and not again after if it continues to exist
 
-        // [Test]
-        // public void KillingFromAMillHappensOnce ()
-        // {
-        //     //TODO: When a mill is formed, it can only kill a cow once in the same turn it is formed and not again after if it continues to exist
-
-        //     GameSession g = new GameSession();
-
-        //     g.Play(0); // Player 1 to A1
-        //     g.Play(21); // Player 2 to G1
-        //     g.Play(1); // Player 1 to A4
-        //     g.Play(22); // Player 2 to G4
-        //     g.Play(2); // Player 1 to A7 - mill is formed
-
-        //     g.Play(22); // Kill cow at G4
-        //     g.Play(21); // Try kill cow at G1 (Second kill)
-
-        //     Assert.That(g.board.Cows[22].PlayerID == -1); //Assert that the first cow is indeed dead
-        //     Assert.That(g.board.Cows[21].PlayerID == 1); //Assert that the second cow is still there and belongs to Player 2
-        // }
+            
+        }
 
         // [Test]
         // public void MillCowIsSafeIfNonMillCowsExist ()
