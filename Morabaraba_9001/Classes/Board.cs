@@ -38,6 +38,11 @@ namespace Morabaraba_9001.Classes
             return Cows.Where(x => x.Color == c);
         }
 
+        public void drawBoard(string State, string PlayerName)
+        {
+            External.DrawBoard(Cows, State, PlayerName);
+        }
+
         #endregion
 
         #region Mill Functions

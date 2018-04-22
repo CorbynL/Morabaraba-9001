@@ -19,5 +19,6 @@ namespace Morabaraba_9001.Interfaces
         int numCowsOnBoard();
         bool IsSurrounded(int Position);
         int[] ConnectedSpaces(int Position);
+        void drawBoard(string State, string PlayerName);
     }
 }

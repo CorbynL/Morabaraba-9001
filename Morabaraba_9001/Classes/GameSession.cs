@@ -47,8 +47,7 @@ namespace Morabaraba_9001.Classes
 
         public void Play()
         {
-            //I dont think this is right. Exposing board.Cows to everything else
-            External.DrawBoard(board.Cows, Current_Phase.ToString(), Current_Player.Color.ToString());
+            board.drawBoard(Current_Phase.ToString(), Current_Player.Color.ToString());      // Changed this so that board.Cows is not public anymore
             int input; 
 
             switch (Current_Phase)
@@ -69,7 +68,7 @@ namespace Morabaraba_9001.Classes
         }
 
         //I've done it this way to prevent a loop when asking for input. For testing purposes
-        //Needs additional printing functionallity
+        // Needs additional printing functionallity
         private void DoPlacePhase(int input)
         {            
                 if(Current_Player.Place(input, board, referee, Current_Phase))
@@ -88,7 +87,7 @@ namespace Morabaraba_9001.Classes
         private void DoMovePhase(int input)
         {
             if (Current_Player.Select(input, board, referee)){
-                int inputTo = External.MoveToInput();
+                int inputTo = External.MoveToInput();                                   // We might need to move this for testing but lets see how it goes
 
                 if (Current_Player.Move(input, inputTo, board, referee,Current_Phase)){
                     if (board.areNewMills(Current_Player.Color))
@@ -98,6 +97,7 @@ namespace Morabaraba_9001.Classes
                     else SwitchPlayer();
                 }
             }
+            
         }
 
         private void DoKillPhase(int input)
