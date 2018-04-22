@@ -62,7 +62,10 @@ namespace Morabaraba_9001.Classes
                 case Phase.Moving:
                     input = External.MoveFromInput();
                     DoMovePhase(input);
-                    break;                
+                    break;
+                case Phase.Winning:
+
+                break;
             }
         }
 

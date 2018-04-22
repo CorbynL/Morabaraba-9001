@@ -8,7 +8,6 @@ namespace Morabaraba_9001.Interfaces
 {
     public class Referee : IReferee
     {
-
         private IBoard Board;
         private ICowBox Box;
 
@@ -92,5 +91,22 @@ namespace Morabaraba_9001.Interfaces
             }
             else return false;
         }
+
+        /// <summary>
+        /// Checks the board to see if the 
+        /// </summary>
+        /// <param name="board"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public bool IsPlayerLooser(IBoard board ,Color color)
+        {
+            return Board.canAnyCowMove(color); //== false ||  ;     // Checks to see if a player has any moves left
+
+
+            // Not finished yet
+        }
+
+
+
     }
 }

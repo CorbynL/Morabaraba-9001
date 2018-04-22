@@ -165,6 +165,7 @@ namespace Morabaraba_9001.Classes
         */
 
         #endregion
+
         #region Mill Functions
      
         private void UpdateMills()           // This should be private... once we figure out how to use it for testing
@@ -242,7 +243,11 @@ namespace Morabaraba_9001.Classes
             return num;
         }
 
-        // Returns the number of cows remaining on the board for the given player
+        /// <summary>
+        /// Returns the number of cows remaining on the board for the given player
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
         public int numCowRemaining(Color c)
         {
             int count = 0;
@@ -252,6 +257,27 @@ namespace Morabaraba_9001.Classes
                     count++;
             }
             return count;
+        }
+
+        /// <summary>
+        /// Checks if any cows a player owns can move. Returns true if any can move.
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public bool canAnyCowMove(Color c)
+        {
+            foreach(ICow a in Cows)
+            {
+                if(a.Color ==c)
+                {
+                    foreach(int pos in ConnectedSpaces(a.Position))
+                    {
+                        if (Cows[pos].Color == Color.Black)
+                            return true;
+                    }
+                }
+            }
+            return true;
         }
 
 

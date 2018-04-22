@@ -58,7 +58,7 @@ namespace Morabaraba_9001.Classes
         {
             Console.Clear();
             StringBuilder builder = new StringBuilder("\n\n\n\n\t     1     2     3     4     5     6     7\n\n");
-            builder.Append("\t A   ({0}) -------------({1})---------------({2})\n\n");
+            builder.Append("\t A  ({0})---------------({1})---------------({2})\n\n");
             builder.Append("\t     |   \\             |              /  |    \n\n");
             builder.Append("\t B   |    ({3})---------({4})---------({5})    |\n\n");
             builder.Append("\t     |     |  \\        |       /   |     |    \n\n");
@@ -70,7 +70,7 @@ namespace Morabaraba_9001.Classes
             builder.Append("\t     |     | /         |         \\ |     |\n\n");
             builder.Append("\t F   |    ({18})---------({19})---------({20})    |\n\n");
             builder.Append("\t     | /               |              \\  |    \n\n");
-            builder.Append("\t G   ({21}) -------------({22})---------------({23})    ");
+            builder.Append("\t G  ({21})---------------({22})---------------({23})    ");
   
             Console.WriteLine(String.Format(builder.ToString(), (object[])BoardPopulation(Cows)));
             Console.WriteLine(String.Format("\n The game is in {0} state and it is Player: {1}'s turn\n", State, PlayerName));
