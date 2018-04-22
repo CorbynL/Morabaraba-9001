@@ -131,8 +131,39 @@ namespace Morabaraba_9001.Classes
             return Cows[pos].Color == c;
         }
 
-        #endregion
+        /*
+        //Check if none flying cow is surrounded
+        public bool canMoveFrom(Color c, int Destination)
+        {            
+            if (numCowRemaining(c) == 3)
+            {
+                makeCowsFly(c);
+            }       
 
+            int[] EmptyNeighbours = MoveSets[Destination].Where(x => Cows[x].Color == Color.Black).ToArray();
+            if (EmptyNeighbours.Length == 0 && typeof(FlyingCow) != Cows[Destination].GetType())
+                return false;
+
+            return Cows[Destination].Color == c; 
+                
+        }
+        
+        public bool canMoveTo(int ID, int firstDestination, int secondDestination)
+        {
+            ICow c = Occupant(firstDestination);
+            if (typeof(FlyingCow) == Cows[firstDestination].GetType())
+                return CanPlaceAt(secondDestination);
+
+            int[] EmptyNeighbours = MoveSets[firstDestination].Where(x => Cows[x].Color == Color.Black).ToArray();
+            if (EmptyNeighbours.Length == 0)
+                return false;
+
+            return Cows[secondDestination].Color == Color.Black && MoveSets[firstDestination].Contains(secondDestination);
+        }
+        
+        */
+
+        #endregion
         #region Mill Functions
      
         private void UpdateMills()           // This should be private... once we figure out how to use it for testing
@@ -288,42 +319,6 @@ namespace Morabaraba_9001.Classes
         #region Old Code
 
         /*
-
-
-                //Check if none flying cow is surrounded
-        public bool canMoveFrom(Color c, int Destination)
-        {            
-            if (numCowRemaining(c) == 3)
-            {
-                makeCowsFly(c);
-            }       
-
-            int[] EmptyNeighbours = MoveSets[Destination].Where(x => Cows[x].Color == Color.Black).ToArray();
-            if (EmptyNeighbours.Length == 0 && typeof(FlyingCow) != Cows[Destination].GetType())
-                return false;
-
-            return Cows[Destination].Color == c; 
-                
-        }
-        
-        public bool canMoveTo(int ID, int firstDestination, int secondDestination)
-        {
-            ICow c = Occupant(firstDestination);
-            if (typeof(FlyingCow) == Cows[firstDestination].GetType())
-                return CanPlaceAt(secondDestination);
-
-            int[] EmptyNeighbours = MoveSets[firstDestination].Where(x => Cows[x].Color == Color.Black).ToArray();
-            if (EmptyNeighbours.Length == 0)
-                return false;
-
-            return Cows[secondDestination].Color == Color.Black && MoveSets[firstDestination].Contains(secondDestination);
-        }
-        
-
-
-
-
-
 
         // Removes a cow at a given destination
         public void KillCow(int Destination)

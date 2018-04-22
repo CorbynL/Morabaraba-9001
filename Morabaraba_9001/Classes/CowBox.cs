@@ -8,13 +8,13 @@ namespace Morabaraba_9001.Classes
     {
         private ICow[] Cows;
 
-        public CowBox(int NumTotalCows =10)
+        public CowBox()
         {
-            Cows = new ICow[NumTotalCows];
+            Cows = new ICow[24];
 
-            for (int i = 0; i < NumTotalCows; i++)
+            for (int i = 0; i < 24; i++)
             {
-                if (i < (NumTotalCows/2)) { Cows[i] = new Cow(-1, Color.Red); }
+                if (i < 12) { Cows[i] = new Cow(-1, Color.Red); }
                 else { Cows[i] = new Cow(-1, Color.Blue); }
             }
         }
