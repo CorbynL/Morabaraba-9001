@@ -8,7 +8,7 @@ namespace Morabaraba_9001.Classes
     {
         private ICow[] Cows;
 
-        public CowBox(int NumTotalCows = 10)
+        public CowBox(int NumTotalCows = 24)
         {
             Cows = new ICow[NumTotalCows];
 

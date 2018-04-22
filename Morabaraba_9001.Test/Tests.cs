@@ -9,15 +9,15 @@ using Morabaraba_9001.Interfaces;
 using Morabaraba_9001.Factories;
 
 namespace Morabaraba_9001.Test
-{ 
+{
     [TestFixture]
     public class Tests
     {
         #region TESTS: Start and Placement Phases
 
         [Test]
-        public void BoardIsEmptyWhenGameStarts ()
-        {            
+        public void BoardIsEmptyWhenGameStarts()
+        {
             IBoard b = new Board();
             ICow[] c = b.Cows.Where(x => x.Color == Color.Black).ToArray();
             Assert.That(c.Length == 24);
@@ -27,7 +27,7 @@ namespace Morabaraba_9001.Test
         public void PlayerWithRedCowsGoesFirst()
         {
             //TODO: Make sure that the the player who goes first has the dark cows   
-            IGameSession gameSession  = GameSessionFactory.CreateGameSession();
+            IGameSession gameSession = GameSessionFactory.CreateGameSession();
             Assert.AreEqual(gameSession.Current_Player.Color, Color.Red);
         }
 
@@ -64,15 +64,15 @@ namespace Morabaraba_9001.Test
         public void CowsPlacedOnEmptySpacesOnly(int pos, int numLeft, Color c)
         {
             IBoard b = Substitute.For<IBoard>();
-            b.Occupant(Arg.Any<int>()).Returns(new Cow(-1,c));
+            b.Occupant(Arg.Any<int>()).Returns(new Cow(-1, c));
             ICowBox box = new CowBox();
-            IReferee r = new Referee(b,box);
-            IPlayer p1 = new Player(Color.Red,box);
-            
+            IReferee r = new Referee(b, box);
+            IPlayer p1 = new Player(Color.Red, box);
+
             p1.Place(pos, b, r, Phase.Placing);
 
             //Cow was placed at empty position
-            if(c == Color.Black)
+            if (c == Color.Black)
             {
                 //p1 has ll cows left
                 Assert.True(box.RemainingCows(p1.Color) == 11);
@@ -92,7 +92,7 @@ namespace Morabaraba_9001.Test
             IPlayer p = new Player(Color.Red, box);
 
             //Place all of p's cows
-            for(int i = 0; i < 12; i++)
+            for (int i = 0; i < 12; i++)
             {
                 p.Place(i, b, r, Phase.Placing);
             }
@@ -103,7 +103,7 @@ namespace Morabaraba_9001.Test
             p.Place(13, b, r, Phase.Placing);
 
             //Verify that no new cow has been placed
-            Assert.True(b.numCowsOnBoard() == 12);          
+            Assert.True(b.numCowsOnBoard() == 12);
         }
 
 
@@ -115,18 +115,18 @@ namespace Morabaraba_9001.Test
             ICowBox box = Substitute.For<ICowBox>();
             box.TakeCow(Arg.Any<Color>()).Returns(new Cow(-1, Color.Red));
 
-            IPlayer p1 = new Player(Color.Red,box);
+            IPlayer p1 = new Player(Color.Red, box);
 
             IReferee r = new Referee(b, box);
 
-            for(int i = 0; i < 23; i++)
+            for (int i = 0; i < 23; i++)
             {
-                p1.Place(i, b, r,Phase.Placing);
-                int[] moves = b.ConnectedSpaces(i);                
+                p1.Place(i, b, r, Phase.Placing);
+                int[] moves = b.ConnectedSpaces(i);
 
-                foreach(int m in moves)
+                foreach (int m in moves)
                 {
-                    Assert.False(p1.Move(i, m, b, r,Phase.Placing));
+                    Assert.False(p1.Move(i, m, b, r, Phase.Placing));
                 }
             }
         }
@@ -142,7 +142,7 @@ namespace Morabaraba_9001.Test
             int[] allMoves = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
 
             for (int i = 0; i < 24; i++)
-            { 
+            {
                 IBoard b = new Board();
                 ICowBox box = Substitute.For<ICowBox>();
                 box.TakeCow(Arg.Any<Color>()).Returns(new Cow(-1, Color.Red));
@@ -154,11 +154,11 @@ namespace Morabaraba_9001.Test
                 int[] ValidMoves = b.ConnectedSpaces(i);
                 int[] inValidMoves = allMoves.Where(x => !ValidMoves.Contains(x)).ToArray();
 
-                foreach(int a in ValidMoves)
+                foreach (int a in ValidMoves)
                 {
-                    Assert.True(r.CanMove(Color.Red,i,a,Phase.Moving));
+                    Assert.True(r.CanMove(Color.Red, i, a, Phase.Moving));
                 }
-                foreach(int z in inValidMoves)
+                foreach (int z in inValidMoves)
                 {
                     Assert.False(r.CanMove(Color.Red, i, z, Phase.Moving));
                 }
@@ -205,9 +205,9 @@ namespace Morabaraba_9001.Test
             box.RemainingCows(Arg.Any<Color>()).Returns(12);
             IReferee r = new Referee(board, box);
 
-            if(c == Color.Red)
+            if (c == Color.Red)
             {
-                foreach(int m1 in moves)
+                foreach (int m1 in moves)
                 {
                     Assert.False(r.CanMove(Color.Red, pos, m1, Phase.Moving));
                 }
@@ -223,64 +223,53 @@ namespace Morabaraba_9001.Test
             }
         }
 
-        // [Test]
-        // public void MoveCreatesNoDuplicates()
-        // {
-        //     int[][] ExpectedMoves = new int[][]
-        // {
-        //  new int[] {1,3,9},
-        //  new int[] {0,2,4},
-        //  new int[] {1,5,14},
-        //  new int[] {0,4,6,10},
-        //  new int[] {1,3,5,7},
-        //  new int[] {2,4,8,13},
-        //  new int[] {3,7,11},
-        //  new int[] {4,6,8},
-        //  new int[] {5,7,12},
-        //  new int[] {0,10,21},
-        //  new int[] {3,9,11,18},
-        //  new int[] {6,10,15},
-        //  new int[] {8,13,17},
-        //  new int[] {5,12,14,20},
-        //  new int[] {2,13,23},
-        //  new int[] {11,16,18},
-        //  new int[] {15,17,19},
-        //  new int[] {12,16,20},
-        //  new int[] {10,15,19,21},
-        //  new int[] {16,18,20,22},
-        //  new int[] {13,17,19,23},
-        //  new int[] {9,18,22},
-        //  new int[] {19,21,23},
-        //  new int[] {14,20,22}
-        // };
-        //     int[] allMoves = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
-        //     Board b = new Board();
+        static object[][] CreateCowAtPositionAndMoveToAllPossibleConnectedSpaces = new object[][]
+        {
+            new object[] { 0, new int[] {1,3,9} },
+            new object[] { 1, new int[] {0,2,4} },
+            new object[] { 2, new int[] {1,5,14} },
+            new object[] { 3, new int[] {0,4,6,10} },
+            new object[] { 4, new int[] {1,3,5,7} },
+            new object[] { 5, new int[] {2,4,8,13} },
+            new object[] { 6, new int[] {3,7,11} },
+            new object[] { 7, new int[] {4,6,8} },
+            new object[] { 8, new int[] {5,7,12} },
+            new object[] { 9, new int[] {0,10,21} },
+            new object[] { 10, new int[] {3,9,11,18} },
+            new object[] { 11, new int[] {6,10,15} },
+            new object[] { 12, new int[] {8,13,17} },
+            new object[] { 13, new int[] {5,12,14,20} },
+            new object[] { 14, new int[] {2,13,23} },
+            new object[] { 15, new int[] {11,16,18} },
+            new object[] { 16, new int[] {15,17,19} },
+            new object[] { 17, new int[] {12,16,20} },
+            new object[] { 18, new int[] {10,15,19,21} },
+            new object[] { 19, new int[] {16,18,20,22} },
+            new object[] { 20, new int[] {13,17,19,23} },
+            new object[] { 21, new int[] {9,18,22} },
+            new object[] { 22, new int[] {19,21,23} },
+            new object[] { 23, new int[] {14,20,22} }
+        };
 
-        //     for (int i = 0; i < 23; i++)
-        //     {
-        //         for (int z = 0; z < ExpectedMoves[i].Length; z++)
-        //         {
-        //             //Reset board with one cow at specified position
-        //             b.initialiseCows();
-        //             b.Place(0, allMoves[i]);
 
-        //             //Move cow to all connected spaces from it's current poisition
-        //             b.Move(i, ExpectedMoves[i][z]);
+        [Test]
+        [TestCaseSource(nameof(CreateCowAtPositionAndMoveToAllPossibleConnectedSpaces))]
+        public static void MoveCreatesNoDuplicates(int pos, int[] moves)
+        {
+            foreach (int move in moves)
+            {
+                IBoard b = new Board();
+                ICowBox box = new CowBox();
+                IReferee r = new Referee(b, box);
 
-        //             //Get number of cows on board
-        //             int[] numCows = b.Cows.Select(x => (int)x.PlayerID).ToArray();
-        //             int num = 0;    
-        //             //.Aggregate was too hard apparently
-        //             for (int j = 0; j < numCows.Length; j++)
-        //             {
-        //                 if (numCows[j] == 0) { num++; }
-        //             }
+                b.Place(new Cow(-1, Color.Red), pos);
+                b.Move(pos, move);
 
-        //             //After move, number of cows on board should still be one.
-        //             Assert.That(num == 1);
-        //         }
-        //     }
-        // }
+                ICow oldPosition = b.Occupant(pos);
+                Assert.That(oldPosition.Color == Color.Black);
+                Assert.That(b.numCowsOnBoard() == 1);
+            }       
+        }
 
         // [Test]
         // public void CowSelectedHasEmptySpacesToMoveTo ()
