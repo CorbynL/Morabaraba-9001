@@ -73,7 +73,7 @@ namespace Morabaraba_9001.Classes
             builder.Append("\t G  ({21})---------------({22})---------------({23})    ");
   
             Console.WriteLine(String.Format(builder.ToString(), (object[])BoardPopulation(Cows)));
-            Console.WriteLine(String.Format("\n The game is in {0} state and it is Player: {1}'s turn\n", State, PlayerName));
+            Console.WriteLine(String.Format("\nState: {0} \t Player: {1}\n", State, PlayerName));
         }
         
         /// <summary>

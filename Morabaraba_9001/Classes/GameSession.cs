@@ -108,16 +108,18 @@ namespace Morabaraba_9001.Classes
             if (Current_Player.Kill(input, board,referee)){
                 if (Current_Player.IsLooser(board, oppositionColor()))
                 {
-                    SwitchPlayer();                 // Switch back to the winner
                     Current_Phase = Phase.Winning;
                 }
                 else if (box.IsEmpty())
                 {
+                    SwitchPlayer();
                     Current_Phase = Phase.Moving;
                     return;
                 }
                 else
+                {
                     Current_Phase = Phase.Placing;
+                }
                 SwitchPlayer();
             }
         }
