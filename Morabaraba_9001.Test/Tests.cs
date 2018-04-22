@@ -223,7 +223,7 @@ namespace Morabaraba_9001.Test
             }
         }
 
-        static object[][] CreateCowAtPositionAndMoveToAllPossibleConnectedSpaces = new object[][]
+        static object[][] CowPositionsAndConnectedSpaces = new object[][]
         {
             new object[] { 0, new int[] {1,3,9} },
             new object[] { 1, new int[] {0,2,4} },
@@ -253,7 +253,7 @@ namespace Morabaraba_9001.Test
 
 
         [Test]
-        [TestCaseSource(nameof(CreateCowAtPositionAndMoveToAllPossibleConnectedSpaces))]
+        [TestCaseSource(nameof(CowPositionsAndConnectedSpaces))]
         public static void MoveCreatesNoDuplicates(int pos, int[] moves)
         {
             foreach (int move in moves)
@@ -269,28 +269,13 @@ namespace Morabaraba_9001.Test
                 Assert.That(oldPosition.Color == Color.Black);
                 Assert.That(b.numCowsOnBoard() == 1);
             }       
+        }        
+
+        [Test]
+        public void CowSelectedHasEmptySpacesToMoveTo()
+        {
+            
         }
-
-        // [Test]
-        // public void CowSelectedHasEmptySpacesToMoveTo ()
-        // {
-        //     GameSession g = new GameSession();
-
-        //     //Place initial piece
-        //     g.board.Place(0, 0);
-
-        //     // Initial pieces' connected spaces
-        //     int[] validMoves = new int[] { 1, 3, 9 };
-
-        //     //Surround initial piece
-        //     foreach(int i in validMoves)
-        //     {
-        //         g.board.Place(0, i);
-        //     }
-
-        //     //Assert that it cannot move to any connected spaces
-        //     Assert.False(g.board.canMoveFrom(0, 0));
-        // }
 
         #endregion
 
