@@ -16,6 +16,6 @@ namespace Morabaraba_9001.Interfaces
         Phase Current_Phase { get; }
         void Start();
         void Play();
-        void Winner();
+        void Winner(int input, int inputTo);
     }
 }

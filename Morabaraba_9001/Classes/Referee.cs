@@ -80,6 +80,12 @@ namespace Morabaraba_9001.Interfaces
             else return false;
         }
        
+        public bool CanFlyTo(Color color, int SecondDestination, Phase currPhase)
+        {
+
+            return true;
+        }
+
         public bool CanPlace(Color color, int Destination, Phase currPhase)
         {
             if (currPhase == Phase.Placing)

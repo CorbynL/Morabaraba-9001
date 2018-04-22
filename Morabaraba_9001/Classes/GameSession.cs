@@ -64,9 +64,7 @@ namespace Morabaraba_9001.Classes
                     DoMovePhase(input);
                     break;
                 case Phase.Winning:
-                    Console.WriteLine("WINER!!!");
-                    Console.ReadKey();
-
+                    External.Winner(Current_Player.Color);
                 break;
             }
         }
@@ -93,12 +91,16 @@ namespace Morabaraba_9001.Classes
             if (Current_Player.Select(input, board, referee)){
                 int inputTo = External.MoveToInput();                                   // We might need to move this for testing but lets see how it goes
 
-                if (Current_Player.Move(input, inputTo, board, referee,Current_Phase)){
-                    if (board.areNewMills(Current_Player.Color))
-                    {
-                        Current_Phase = Phase.Killing;
-                    }
-                    else SwitchPlayer();
+                if(board.numPlayerCowsOnBoard(Current_Player.Color) == 3)               //  If flying 
+                {
+                    Winner(input, inputTo);
+                }
+                else if (Current_Player.Move(input, inputTo, board, referee,Current_Phase)){
+                if (board.areNewMills(Current_Player.Color))
+                {
+                    Current_Phase = Phase.Killing;
+                }
+                else SwitchPlayer();
                 }
             }
         }
@@ -140,9 +142,16 @@ namespace Morabaraba_9001.Classes
             return Current_Player.Color == Color.Red ? Color.Blue: Color.Red;
         }
 
-        public void Winner()
+        public void Winner(int input, int inputTo)
         {
-            throw new NotImplementedException();
+            if (Current_Player.MoveFlying(input, inputTo, board, referee, Current_Phase))
+            {
+                if (board.areNewMills(Current_Player.Color))
+                {
+                    Current_Phase = Phase.Killing;
+                }
+                SwitchPlayer();
+            }
         }
     }
 }

@@ -75,7 +75,15 @@ namespace Morabaraba_9001.Classes
             Console.WriteLine(String.Format(builder.ToString(), (object[])BoardPopulation(Cows)));
             Console.WriteLine(String.Format("\nState: {0} \t Player: {1}\n", State, PlayerName));
         }
-        
+
+        static public void Winner(Color c)
+        {
+            Console.Clear();
+            Console.WriteLine(String.Format("\n\n\n\n\n\n\n\t PLAYER {0} WINS!!!", c.ToString()));
+            Console.ReadKey();
+
+        }
+
         /// <summary>
         /// Used to Get each symbol of each Cow and add it to the board string
         /// </summary>

@@ -13,5 +13,6 @@ namespace Morabaraba_9001.Interfaces
         bool CanMove(Color color, int FirstDestination, int SecondDestination, Phase currPhase);
         bool AreFlying(Color color);
         bool CanSelect(Color color, IBoard board, int Position);
+        bool CanFlyTo(Color color, int SecondDestination, Phase currPhase);
     }
 }

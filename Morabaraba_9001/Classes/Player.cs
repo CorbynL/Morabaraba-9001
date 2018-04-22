@@ -52,6 +52,16 @@ namespace Morabaraba_9001.Classes
             else return false;
         }
 
+        public bool MoveFlying(int Destination, int secondPosition, IBoard board, IReferee referee, Phase currPhase)
+        {
+            if (referee.CanFlyTo(Color, secondPosition, currPhase))
+            {
+                board.Move(Destination, secondPosition);
+                return true;
+            }
+            else return false;
+        }
+
         /// <summary>
         /// Checks the board to see if the 
         /// </summary>
