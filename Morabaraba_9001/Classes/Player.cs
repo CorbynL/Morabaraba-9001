@@ -68,9 +68,13 @@ namespace Morabaraba_9001.Classes
         /// <param name="board"></param>
         /// <param name="color"></param>
         /// <returns></returns>
-        public bool IsLooser(IBoard board, Color color)
+        public bool IsWinner(IBoard board, Color color)
         {
-            return (board.canAnyCowMove(color) == false || board.numPlayerCowsOnBoard(color) <= 2) && Box.IsEmpty();     // Checks to see if a player has any moves left
+            bool NoCowCanMove = !board.canAnyCowMove(color);
+            bool numberLessThan3 = board.numPlayerCowsOnBoard(color) <= 2;
+            bool cowBoxIsEmpty = Box.IsEmpty();
+
+            return (NoCowCanMove || numberLessThan3) && cowBoxIsEmpty;    // Checks to see if a player has any moves left
         }
     }
 }

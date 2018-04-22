@@ -14,7 +14,7 @@ namespace Morabaraba_9001.Interfaces
         bool Kill(int position, IBoard board, IReferee referee);
         bool Move(int Destination, int secondPosition, IBoard board, IReferee referee, Phase currPhase);
         bool Select(int position, IBoard board, IReferee referee);
-        bool IsLooser(IBoard board, Color color);
+        bool IsWinner(IBoard board, Color color);
         bool MoveFlying(int Destination, int secondPosition, IBoard board, IReferee referee, Phase currPhase);
     }
 }

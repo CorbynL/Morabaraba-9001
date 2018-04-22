@@ -95,12 +95,13 @@ namespace Morabaraba_9001.Classes
                 {
                     Winner(input, inputTo);
                 }
-                else if (Current_Player.Move(input, inputTo, board, referee,Current_Phase)){
-                if (board.areNewMills(Current_Player.Color))
+                else if (Current_Player.Move(input, inputTo, board, referee,Current_Phase))
                 {
-                    Current_Phase = Phase.Killing;
-                }
-                else SwitchPlayer();
+                    if (board.areNewMills(Current_Player.Color))
+                    {
+                        Current_Phase = Phase.Killing;
+                    }
+                    else SwitchPlayer();
                 }
             }
         }
@@ -108,7 +109,7 @@ namespace Morabaraba_9001.Classes
         private void DoKillPhase(int input)
         {
             if (Current_Player.Kill(input, board,referee)){
-                if (Current_Player.IsLooser(board, oppositionColor()))
+                if (Current_Player.IsWinner(board, oppositionColor()))
                 {
                     Current_Phase = Phase.Winning;
                 }
@@ -120,9 +121,9 @@ namespace Morabaraba_9001.Classes
                 }
                 else
                 {
+                    SwitchPlayer();
                     Current_Phase = Phase.Placing;
                 }
-                SwitchPlayer();
             }
         }
 
