@@ -114,13 +114,6 @@ namespace Morabaraba_9001.Classes
             }
         }
 
-        /*
-        private void SwitchState()
-        {
-            throw new NotImplementedException();
-        }
-        */
-
 
         private void SwitchPlayer()
         {
