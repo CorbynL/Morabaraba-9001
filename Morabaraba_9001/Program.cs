@@ -1,5 +1,6 @@
 ﻿using Morabaraba_9001.Classes;
 using Morabaraba_9001.Interfaces;
+using Morabaraba_9001.Factories;
 using System;
 
 namespace Morabaraba_9001
@@ -12,13 +13,7 @@ namespace Morabaraba_9001
             // Set the stage
             SetConsoleProperties();
 
-            ICowBox box = new CowBox();
-            IBoard board = new Board();
-            IPlayer P1 = new Player(Color.Red, box);
-            IPlayer P2 = new Player(Color.Blue,box);
-            IReferee referee = new Referee(board,box);
-
-            IGameSession gameSession = new GameSession(board, P1, P2, box, referee);
+            IGameSession gameSession = GameSessionFactory.CreateGameSession();
 
             gameSession.Start();
 
