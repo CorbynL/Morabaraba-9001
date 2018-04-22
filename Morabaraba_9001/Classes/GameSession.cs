@@ -34,7 +34,6 @@ namespace Morabaraba_9001.Classes
 
             Current_Player = Player_1;
             Current_Phase = Phase.Placing;
-
         }
         
         public void Start()
@@ -71,7 +70,7 @@ namespace Morabaraba_9001.Classes
         // Needs additional printing functionallity
         private void DoPlacePhase(int input)
         {            
-                if(Current_Player.Place(input, board, referee, Current_Phase))
+            if(Current_Player.Place(input, board, referee, Current_Phase))
             {
                 if (board.areNewMills(Current_Player.Color))
                 {
@@ -97,12 +96,10 @@ namespace Morabaraba_9001.Classes
                     else SwitchPlayer();
                 }
             }
-            
         }
 
         private void DoKillPhase(int input)
         {
-
             if (Current_Player.Kill(input, board,referee)){
                 if (box.IsEmpty())
                 {
@@ -113,13 +110,6 @@ namespace Morabaraba_9001.Classes
                 SwitchPlayer();
             }
         }
-
-        /*
-        private void SwitchState()
-        {
-            throw new NotImplementedException();
-        }
-        */
 
 
         private void SwitchPlayer()

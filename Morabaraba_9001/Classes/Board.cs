@@ -115,9 +115,10 @@ namespace Morabaraba_9001.Classes
 
 
         public void Move(int firstDestination, int secondDestination)
-        {        
+        {
             Cows[secondDestination] = new Cow(secondDestination, Cows[firstDestination].Color);
             Cows[firstDestination] = new Cow(firstDestination, Color.Black);
+            UpdateMills();
         }
 
         public ICow Occupant(int Destination)

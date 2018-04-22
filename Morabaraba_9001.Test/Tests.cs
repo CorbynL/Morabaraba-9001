@@ -103,8 +103,7 @@ namespace Morabaraba_9001.Test
             p.Place(13, b, r, Phase.Placing);
 
             //Verify that no new cow has been placed
-            Assert.True(b.numCowsOnBoard() == 12);
-            
+            Assert.True(b.numCowsOnBoard() == 12);          
         }
 
 
