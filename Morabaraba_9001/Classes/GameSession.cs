@@ -129,13 +129,13 @@ namespace Morabaraba_9001.Classes
             else Current_Player = Player_1;
         }
 
+        /// <summary>
+        /// Returns the opposition color
+        /// </summary>
+        /// <returns></returns>
         private Color oppositionColor()
         {
-            if (Current_Player.Color == Color.Red)
-                return Color.Blue;
-            else
-                return Color.Red;
-                
+            return Current_Player.Color == Color.Red ? Color.Blue: Color.Red;
         }
 
         public void Winner()

@@ -248,8 +248,7 @@ namespace Morabaraba_9001.Classes
         /// Returns the number of Cows left on the board. 
         /// </summary>
         /// <param name="player"></param>
-        /// <returns></returns>
-        
+        /// <returns></returns>       
         public int numPlayerCowsOnBoard(Color player)
         {
             int num = 0;
@@ -261,22 +260,6 @@ namespace Morabaraba_9001.Classes
             return num;
         }
         
-
-        /// <summary>
-        /// Returns the number of cows remaining on the board for the given player
-        /// </summary>
-        /// <param name="c"></param>
-        /// <returns></returns>
-        public int numCowRemaining(Color c)
-        {
-            int count = 0;
-            foreach(Cow current in Cows)
-            {
-                if (current.Color == c)
-                    count++;
-            }
-            return count;
-        }
 
         /// <summary>
         /// Checks if any cows a player owns can move. Returns true if any can move.
