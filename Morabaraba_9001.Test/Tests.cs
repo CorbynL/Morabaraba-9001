@@ -352,7 +352,7 @@ namespace Morabaraba_9001.Test
 
         // THIS IS BRIAN's PROPERTY SO GITTTT OFF MY PROPERTY
 
-        IMill[] Mills = new Mill[] 
+        static IMill[] Mills = new Mill[] 
         {
             new Mill(new int[] { 0, 1, 2 }),        // A1, A4, A7
             new Mill(new int[] { 3, 4, 5 } ),       // B2, B4, B6
@@ -404,75 +404,71 @@ namespace Morabaraba_9001.Test
 
         }
 
-        [Test]
-        public void KillingFromAMillHappensOnce()
-        {
-            //TODO: When a mill is formed, it can only kill a cow once in the same turn it is formed and not again after if it continues to exist
+        //[Test]
+        //public void KillingFromAMillHappensOnce()
+        //{
+        //    //TODO: When a mill is formed, it can only kill a cow once in the same turn it is formed and not again after if it continues to exist
 
             
+        //}
+
+        [Test]
+        [TestCaseSource(nameof(Mills))]
+        public static void MillCowIsSafeIfNonMillCowsExist(IMill mill)
+        {
+            //TODO: You cannot kill a cow in a mill if there exists cows that are not in a mill
+            int[] placements = mill.Positions;
+            int[] AllOtherPositions = Positions.Where(x => x != placements[0] && x != placements[1] && x != placements[2]).ToArray();
+
+            foreach (int pos in AllOtherPositions)
+            {
+                IBoard b = new Board();
+                ICowBox box = new CowBox();
+                IReferee r = new Referee(b, box);
+
+                b.Place(new Cow(-1, Color.Red), placements[0]);
+                b.Place(new Cow(-1, Color.Red), placements[1]);
+                b.Place(new Cow(-1, Color.Red), placements[2]);
+
+                b.Place(new Cow(-1, Color.Red), pos);
+
+                foreach (int des in placements)
+                    Assert.False(r.CanKill(Color.Blue, des));
+            }
         }
 
-        // [Test]
-        // public void MillCowIsSafeIfNonMillCowsExist ()
-        // {
-        //     //TODO: You cannot kill a cow in a mill if there exists cows that are not in a mill
-        //     GameSession g = new GameSession();
+        //[Test]
+        //[TestCaseSource(nameof(Mills))]
+        //public void CanKillMillCowIfAllCowsInMills(IMill mill)
+        //{
+        //    //TODO: You can kill a cow in a mill if all cows are in mills
+        //    int[] placements = mill.Positions;            
+            
+        //    IBoard b = new Board();
+        //    ICowBox box = new CowBox();
+        //    IReferee r = new Referee(b, box);
 
-        //     g.Play(0); // Player 1 to A1
-        //     g.Play(21); // Player 2 to G1
-        //     g.Play(1); // Player 1 to A4
-        //     g.Play(22); // Player 2 to G4
-        //     g.Play(2); // Player 1 to A7 - mill is formed (A1,A4,A7)
-        //     g.Play(22); // Kill cow at G4
-        //     g.Play(22); // Player 2 to G4
-        //     g.Play(3); // Player 1 to B2
+        //    b.Place(new Cow(-1, Color.Red), placements[0]);
+        //    b.Place(new Cow(-1, Color.Red), placements[1]);
+        //    b.Place(new Cow(-1, Color.Red), placements[2]);            
 
-        //     //We now have player one with 4 cows: 3 in a mill and one loose, so we can try see which cows we can kill
+        //    foreach (int des in placements)
+        //        Assert.True(r.CanKill(Color.Blue, des));
+            
+        //}
 
-        //     // Try kill Player 1's cows A1 and B2 as Player 2 
-        //     Assert.False(g.board.CanKillAt(1, 0)); //Assert that you can't kill cow at A1 since its in a mill and safe since B2 is not in a mill            
-        //     Assert.True(g.board.CanKillAt(1, 3)); //Assert that you can kill cow at B2 since it is not in a mill            
-        // }
+         //[Test]
+         //public void PlayerCannotShootOwnCows ()
+         //{
+         //    //TODO: You cannot kill your own cows when you are about to kill
+         //    GameSession g = new GameSession();
 
-        // [Test]
-        // public void CanKillMillCowIfAllCowsInMills ()
-        // {
-        //     //TODO: You can kill a cow in a mill if all cows are in mills
+         //    g.Play(0); // Player 1 to A1
+         //    g.Play(21); // Player 2 to G1
 
-        //     GameSession g = new GameSession();
-
-        //     g.Play(0); // Player 1 to A1
-        //     g.Play(21); // Player 2 to G1
-        //     g.Play(1); // Player 1 to A4
-        //     g.Play(22); // Player 2 to G4
-        //     g.Play(2); // Player 1 to A7 - first mill is formed (A1,A4,A7)
-        //     g.Play(22); // Kill cow at G4
-        //     g.Play(22); // Player 2 to G4
-        //     g.Play(3); // Player 1 to B2
-        //     g.Play(18); // Player 2 to F2
-        //     g.Play(4); // Player 1 to B4
-        //     g.Play(19); // Player 2 to F4
-        //     g.Play(5); // Player 1 to B6 - second mill is formed (B2,B4,B6)
-
-        //     //We now have player one with 6 cows with 3 in each mill
-
-        //     //Try kill Player 1's cows A1 and B2 as Player 2
-        //     Assert.True(g.board.CanKillAt(1, 0)); //Assert that you can kill cow at A1 since all player 1's cows in a mill            
-        //     Assert.True(g.board.CanKillAt(1, 3)); //Assert that you can kill cow at B2 since all player 1's cows in a mill
-        // }
-
-        // [Test]
-        // public void PlayerCannotShootOwnCows ()
-        // {
-        //     //TODO: You cannot kill your own cows when you are about to kill
-        //     GameSession g = new GameSession();
-
-        //     g.Play(0); // Player 1 to A1
-        //     g.Play(21); // Player 2 to G1
-
-        //     //Try kill Player 1's cows A1 and B2 as Player 1
-        //     Assert.False(g.board.CanKillAt(0, 0)); //Assert that you can't kill cow at A1 since it belongs to player 1        
-        // }
+         //    //Try kill Player 1's cows A1 and B2 as Player 1
+         //    Assert.False(g.board.CanKillAt(0, 0)); //Assert that you can't kill cow at A1 since it belongs to player 1        
+         //}
 
         // [Test]
         // public void PlayerCannotShootEmptySpaces ()
